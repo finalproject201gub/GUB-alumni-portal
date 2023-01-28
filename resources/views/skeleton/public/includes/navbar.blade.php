@@ -169,33 +169,44 @@
             </li>
 
             <!-- Profile Dropdown Menu -->
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-user"></i>
+            <li class="nav-item dropdown user-menu">
+                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ asset('img/user2-160x160.jpg') }}" class="user-image img-circle elevation-2"
+                        alt="User Image">
+                    <span class="d-none d-md-inline">Alexander Pierce</span>
                 </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa-regular fa-address-card mr-2"></i> {{ __('Profile') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa-solid fa-gear mr-2"></i> {{ __('Account Setting') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa-solid fa-key mr-2"></i> {{ __('Change Password') }}
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            <i class="fa-solid fa-arrow-right-from-bracket mr-2"></i>
-                            {{ __('Sign Out') }}
-                        </a>
-                    </form>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <!-- User image -->
+                    <li class="user-header bg-primary">
+                        <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                            alt="User Image">
+
+                        <p>
+                            Alexander Pierce - Web Developer
+                            <small>Member since Nov. 2012</small>
+                        </p>
+                    </li>
+                    <!-- Menu Body -->
+                    <li class="user-body">
+                        <div class="row">
+                            <div class="col-4 text-center">
+                                <a href="#">Followers</a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#">Sales</a>
+                            </div>
+                            <div class="col-4 text-center">
+                                <a href="#">Friends</a>
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </li>
+                    <!-- Menu Footer-->
+                    <li class="user-footer">
+                        <a href="#" class="btn btn-default btn-flat">Profile</a>
+                        <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>

@@ -23,7 +23,7 @@
                 <form class="form-inline">
                     <div class="input-group input-group-sm">
                         <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                            aria-label="Search">
+                               aria-label="Search">
                         <div class="input-group-append">
                             <button class="btn btn-navbar" type="submit">
                                 <i class="fas fa-search"></i>
@@ -48,7 +48,7 @@
                     <!-- Message Start -->
                     <div class="media">
                         <img src="{{ asset('img/user1-128x128.jpg') }}" alt="User Avatar"
-                            class="img-size-50 mr-3 img-circle">
+                             class="img-size-50 mr-3 img-circle">
                         <div class="media-body">
                             <h3 class="dropdown-item-title">
                                 Brad Diesel
@@ -101,8 +101,8 @@
         <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <img src="{{ asset('img/user2-160x160.jpg') }}" class="user-image img-circle elevation-2"
-                    alt="User Image">
-                <span class="d-none d-md-inline">Alexander Pierce</span>
+                     alt="User Image">
+                <span class="d-none d-md-inline">{{ userFullName() }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <!-- User image -->
@@ -110,8 +110,7 @@
                     <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
 
                     <p>
-                        Alexander Pierce - Web Developer
-                        <small>Member since Nov. 2012</small>
+                        {{ userFullName() }} <small>Member since Nov. 2012</small>
                     </p>
                 </li>
                 <!-- Menu Body -->
@@ -131,8 +130,16 @@
                 </li>
                 <!-- Menu Footer-->
                 <li class="user-footer">
-                    <a href="#" class="btn btn-default btn-flat">Profile</a>
-                    <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <a href="{{ route('public.profile') }}" class="btn btn-default btn-flat">Profile</a>
+                        <a :href="route('logout')"
+                           class="btn btn-default btn-flat float-right"
+                           onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </a>
+                    </form>
                 </li>
             </ul>
         </li>

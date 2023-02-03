@@ -17,11 +17,11 @@
             <div class="row m-3">
                 <div class="user-block col-md-1 col-2">
                     <img class="img-circle" style="height:  60px; width: 60px; z-index: 2"
-                        src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
+                         src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
                 </div>
                 <div class="col-md-11 col-10">
                     <input type="text" class="form-control status-box" name="" id=""
-                        placeholder="What's on your mind?">
+                           placeholder="What's on your mind?">
                 </div>
             </div>
             <div class="row">
@@ -54,16 +54,19 @@
 
                             <p>I took this photo this morning. What do you guys think?</p>
                             <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
-                                Share</button>
+                                Share
+                            </button>
                             <button type="button" class="btn btn-default btn-sm"><i class="far fas fa-heart"></i>
-                                Like</button>
+                                Like
+                            </button>
                             <span class="float-right text-muted">127 likes - 3 comments</span>
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer card-comments">
                             <div class="card-comment">
                                 <!-- User image -->
-                                <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
+                                <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
+                                     alt="User Image">
 
                                 <div class="comment-text">
                                     <span class="username">
@@ -78,7 +81,8 @@
                             <!-- /.card-comment -->
                             <div class="card-comment">
                                 <!-- User image -->
-                                <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
+                                <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
+                                     alt="User Image">
 
                                 <div class="comment-text">
                                     <span class="username">
@@ -96,11 +100,11 @@
                         <div class="card-footer">
                             <form action="#" method="post">
                                 <img class="img-fluid img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
-                                    alt="Alt Text">
+                                     alt="Alt Text">
                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <input type="text" class="form-control form-control-sm"
-                                        placeholder="Press enter to post comment">
+                                           placeholder="Press enter to post comment">
                                 </div>
                             </form>
                         </div>
@@ -166,9 +170,11 @@
 
                             <!-- Social sharing buttons -->
                             <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
-                                Share</button>
+                                Share
+                            </button>
                             <button type="button" class="btn btn-default btn-sm"><i class="far fas fa-heart"></i>
-                                Like</button>
+                                Like
+                            </button>
                             <span class="float-right text-muted">45 likes - 2 comments</span>
                         </div>
                         <!-- /.card-body -->
@@ -176,7 +182,7 @@
                             <div class="card-comment">
                                 <!-- User image -->
                                 <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
-                                    alt="User Image">
+                                     alt="User Image">
 
                                 <div class="comment-text">
                                     <span class="username">
@@ -192,7 +198,7 @@
                             <div class="card-comment">
                                 <!-- User image -->
                                 <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
-                                    alt="User Image">
+                                     alt="User Image">
 
                                 <div class="comment-text">
                                     <span class="username">
@@ -211,11 +217,11 @@
                         <div class="card-footer">
                             <form action="#" method="post">
                                 <img class="img-fluid img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
-                                    alt="Alt Text">
+                                     alt="Alt Text">
                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
                                     <input type="text" class="form-control form-control-sm"
-                                        placeholder="Press enter to post comment">
+                                           placeholder="Press enter to post comment">
                                 </div>
                             </form>
                         </div>

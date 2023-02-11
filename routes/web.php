@@ -1,10 +1,8 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 require __DIR__ . '/auth.php';
 

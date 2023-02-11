@@ -3,6 +3,7 @@
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 require __DIR__ . '/auth.php';
 
@@ -13,4 +14,6 @@ Route::group(['as' => 'public.'], function () {
     Route::get('/profile', function () {
         return view('public.profile.index');
     })->name('profile');
+
+    Route::resource('/events', \App\Http\Controllers\Frontend\EventController::class);
 });

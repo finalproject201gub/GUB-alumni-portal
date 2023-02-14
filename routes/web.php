@@ -7,13 +7,23 @@ use Illuminate\Support\Facades\Session;
 
 require __DIR__ . '/auth.php';
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::group(['as' => 'public.'], function () {
-    Route::get('/', [HomeController::class, 'index'])->name('index');
-    Route::get('/profile', function () {
-        return view('public.profile.index');
-    })->name('profile');
+Route::group(['middleware' => 'auth'], function () {
 
-    Route::resource('/events', \App\Http\Controllers\Frontend\EventController::class);
+    Route::group(['as' => 'public.'], function () {
+        Route::get('/', [HomeController::class, 'index'])->name('index');
+
+        Route::get('/profile', function () {
+            return view('public.profile.index');
+        })->name('profile');
+
+        Route::resource('/events', \App\Http\Controllers\Frontend\EventController::class);
+
+    });
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
 });
+
+

@@ -21,7 +21,14 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+        // Job Board
+//        Route::resource('job-board');
+    });
 
 
 });

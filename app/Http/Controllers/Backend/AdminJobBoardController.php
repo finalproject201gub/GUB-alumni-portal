@@ -8,7 +8,7 @@ class AdminJobBoardController extends Controller
 {
     public function index()
     {
-
+        return "index";
     }
 
     public function store()

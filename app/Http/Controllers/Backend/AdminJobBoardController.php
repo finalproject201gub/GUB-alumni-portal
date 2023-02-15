@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class AdminJobBoardController extends Controller
 {
@@ -11,9 +12,14 @@ class AdminJobBoardController extends Controller
         return "index";
     }
 
-    public function store()
+    public function create()
     {
+        return view('backend.job-board.create');
+    }
 
+    public function store(Request $request)
+    {
+        dd($request->all());
     }
 
     public function edit()

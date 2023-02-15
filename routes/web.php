@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['prefix' => 'admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+        //Events
+        Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
 
         // Job Board
         Route::resource('/job-board', AdminJobBoardController::class);

@@ -24,6 +24,7 @@ class CreateJobBoardsTable extends Migration
             $table->double('salary');
             $table->string('location');
             $table->date('application_deadline');
+            $table->string('approve_status')->default('no')->comment('yes, no');
             $table->timestamps();
         });
     }

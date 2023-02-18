@@ -42,26 +42,26 @@
                 </p>
               </a>
           </li>
-          <li class="nav-header">Main Menu</li>
+{{--          <li class="nav-header">Main Menu</li>--}}
           <li class="nav-item menu-open">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-copy"></i>
               <p>
-                Example Nav item
+                Job Board
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="{{ url('admin/job-board/create') }}" class="nav-link active">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Item one</p>
+                  <p>Create Jobs</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ url('admin/job-board') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Item Two</p>
+                  <p>All Jobs</p>
                 </a>
               </li>
             </ul>

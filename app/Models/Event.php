@@ -39,18 +39,13 @@ class Event extends Model
         '8' => 'Other'
     ];
 
-    // public static function boot()
-    // {
-    //     parent::boot();
-    // }
-
     public function scopeSearch($query, $search)
     {
         return $query->where('title', 'like', '%' . $search . '%')
             ->orWhere('description', 'like', '%' . $search . '%')
             ->orWhere('location', 'like', '%' . $search . '%');
     }
-    
+
     public function getEventTypeNameAttribute()
     {
         return self::EVENT_TYPES[$this->event_type_id];

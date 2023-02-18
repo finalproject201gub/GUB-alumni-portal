@@ -2,92 +2,93 @@
 
 namespace App\Http\Controllers\Backend;
 
+use Carbon\Carbon;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\EventRequest;
+use App\Http\Requests\Backend\BackendEventRequest;
 
 class EventController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Display a listing of the event.
      */
     public function index(Request $request)
     {
-        $events = Event::query()->search($request->search)->latest()->get();
-        return view('admin.events.index', compact('events'));
+        $events = Event::query()
+            ->search($request->search)
+            ->latest()
+            ->paginate(15);
+
+        $events->getCollection()->transform(function ($event) {
+            $event->type = Event::EVENT_TYPES[$event->event_type_id];
+            $event->duration = Carbon::parse($event->start_at)->diffForHumans($event->end_at, true);
+            $event->create_date = date('d M Y', strtotime($event->created_at));
+            return $event;
+        });
+
+        return view('backend.event.index', compact('events'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new event.
      */
     public function create()
     {
-        return view('admin.events.create_update', [
+        return view('backend.event.create_update', [
             'event' => new Event(),
             'types' => Event::EVENT_TYPES,
         ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Store a newly created event in storage.
      */
-    public function store(EventRequest $request, Event $event)
+    public function store(BackendEventRequest $request, Event $event)
     {
         $event->create($request->validated());
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully');
+        return redirect()
+            ->route('events.index')
+            ->with('success', 'Event created successfully');
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified event.
      */
-    public function show($id)
+    public function show(Event $event)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Event $event)
-    {
-        return view('admin.events.create_update', [
+        return view('backend.event.show', [
             'event' => $event,
             'types' => Event::EVENT_TYPES,
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Show the form for editing the specified event.
      */
-    public function update(Request $request, $id)
+    public function edit(Event $event)
     {
-        //
+        return view('backend.event.create_update', [
+            'event' => $event,
+            'types' => Event::EVENT_TYPES,
+        ]);
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Update the specified event in storage.
+     */
+    public function update(BackendEventRequest $request, Event $event)
+    {
+        $event->update($request->validated());
+
+        return redirect()
+            ->route('events.index')
+            ->with('success', 'Event updated successfully');
+    }
+
+    /**
+     * Remove the specified event from storage.
      */
     public function destroy($id)
     {

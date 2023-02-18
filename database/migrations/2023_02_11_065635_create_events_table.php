@@ -20,6 +20,8 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_at')->nullable();
             $table->dateTime('end_at')->nullable();
             $table->string('location')->nullable();
+            $table->string('address')->nullable();
+            $table->string('web_link')->nullable();
             $table->tinyInteger('event_type_id')->nullable();
             $table->tinyInteger('created_by')->nullable();
             $table->tinyInteger('updated_by')->nullable();

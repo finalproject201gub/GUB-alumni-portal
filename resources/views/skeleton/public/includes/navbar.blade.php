@@ -15,7 +15,10 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ route('public.index') }}" class="nav-link active">Home</a>
+                    <a href="{{ route('public.index') }}" class="nav-link {{ routeNameMatched('public.index') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('public.events.index') }}" class="nav-link {{ routeNameMatched('public.events.index') }}">Events</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Jobs</a>

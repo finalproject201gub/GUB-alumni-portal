@@ -43,8 +43,8 @@
               </a>
           </li>
 {{--          <li class="nav-header">Main Menu</li>--}}
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item {{ routeNameMatched('job-board.*', 'menu-open') }}">
+            <a href="#" class="nav-link {{ routeNameMatched('job-board.*') }}">
               <i class="nav-icon fas fa-copy"></i>
               <p>
                 Job Board
@@ -53,13 +53,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{ url('admin/job-board/create') }}" class="nav-link active">
+                <a href="{{ url('admin/job-board/create') }}" class="nav-link {{ routeNameMatched('job-board.create') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Create Jobs</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ url('admin/job-board') }}" class="nav-link">
+                <a href="{{ url('admin/job-board') }}" class="nav-link {{ routeNameMatched('job-board.index') }}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>All Jobs</p>
                 </a>
@@ -67,7 +67,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{ route('events.index') }}" class="nav-link">
+            <a href="{{ route('events.index') }}" class="nav-link {{ routeNameMatched('events.*') }}">
                 <i class="nav-icon fa fa-calendar-alt"></i>
                 <p>
                   Events

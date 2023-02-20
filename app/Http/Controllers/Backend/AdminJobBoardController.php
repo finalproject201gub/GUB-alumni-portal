@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobBoard;
 use Illuminate\Http\Request;
 
 class AdminJobBoardController extends Controller
@@ -19,7 +20,19 @@ class AdminJobBoardController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            "title" => 'required',
+            "description" => 'required',
+            "job_type" => 'required',
+            "salary" => 'required',
+            "location" => 'required',
+            "application_deadline" => 'required',
+        ]);
+
+        JobBoard::query()
+            ->create($request->all() + ['user_id' => auth()->user()->id]);
+
+        return redirect('/admin/job-board/create')->with('success', 'Job Post Created Successfully!');
     }
 
     public function edit()

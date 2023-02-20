@@ -10,8 +10,9 @@
                 <div class="card my-3">
                     <h3 class="card-header">Job Board Create</h3>
                     <div class="card-body">
-                        <form action="{{ url('/admin/job-board/store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('job-board.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('POST')
                             <div class="form-group">
                                 <label for="">Title</label>
                                 <input class="form-control" type="text" name="title" id="">
@@ -27,7 +28,7 @@
                             <div class="form-group">
                                 <label for="">Job Type</label>
                                 <select class="form-control" name="job_type">
-                                    <option>---Select---</option>
+                                    <option value="">---Select---</option>
                                     <option value="intern">Intern</option>
                                     <option value="part-time">Part Time</option>
                                     <option value="fulltime">Full Time</option>
@@ -54,4 +55,20 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+    <script>
+
+        $(document).ready(function() {
+            toastr.options.timeOut = 3000;
+            toastr.options.progressBar = true;
+            @if (Session::has('error'))
+            toastr.error('{{ Session::get('error') }}');
+            @elseif(Session::has('success'))
+            toastr.success('{{ Session::get('success') }}');
+            @endif
+        });
+
+    </script>
 @endsection

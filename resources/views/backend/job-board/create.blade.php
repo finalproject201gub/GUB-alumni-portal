@@ -60,7 +60,7 @@
 @section('script')
     <script>
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             toastr.options.timeOut = 3000;
             toastr.options.progressBar = true;
             @if (Session::has('error'))

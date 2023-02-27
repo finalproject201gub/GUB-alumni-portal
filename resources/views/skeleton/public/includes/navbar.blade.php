@@ -18,7 +18,7 @@
                     <a href="{{ route('public.index') }}" class="nav-link active">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Jobs</a>
+                    <a href="{{ route('public.jobs.index') }}" class="nav-link">Jobs</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Contact</a>

@@ -37,27 +37,33 @@
                                     <td>{{ \Carbon\Carbon::parse($jobBoard->application_deadline)->format('d-M-Y') }}</td>
                                     @if($jobBoard->approve_status == 'no')
                                         <td>
-                                            <span style="color: white;font-weight: bold;background: red;padding: 1px 3px;border-radius: 5px;">
+                                            <span
+                                                style="color: white;font-weight: bold;background: red;padding: 1px 3px;border-radius: 5px;">
                                                 {{ ucfirst($jobBoard->approve_status) }}
                                             </span>
                                         </td>
                                     @else
                                         <td>
-                                            <span style="color: white;font-weight: bold;background: green;padding: 1px 3px;border-radius: 5px;;">
+                                            <span
+                                                style="color: white;font-weight: bold;background: green;padding: 1px 3px;border-radius: 5px;;">
                                                 {{ ucfirst($jobBoard->approve_status) }}
                                             </span>
                                         </td>
                                     @endif
                                     <td>
-                                        <div class="button-group">
-                                            <a class="btn btn-sm btn-info"
-                                               href="{{ route('job-board.edit', $jobBoard->id) }}">Edit</a>
-                                            |
-                                            <button class="btn btn-sm btn-danger"
-                                                    href="{{ route('job-board.destroy', $jobBoard->id) }}">
-                                                Delete
-                                            </button>
-                                        </div>
+                                        <a class="btn btn-sm btn-info"
+                                           href="{{ route('job-board.edit', $jobBoard->id) }}">Edit</a>
+                                        |
+                                        <button id="delete" onclick="document.getElementById({{ $jobBoard->id }}).submit();"
+                                                class="btn btn-sm btn-danger"
+                                        >
+                                            Delete
+                                        </button>
+                                        <form id="{{$jobBoard->id}}" method="POST"
+                                              action="{{ route('job-board.destroy', $jobBoard->id) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
 
                                     </td>
                                 </tr>

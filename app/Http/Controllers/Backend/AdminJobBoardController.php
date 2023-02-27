@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\JobBoard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminJobBoardController extends Controller
@@ -79,8 +80,19 @@ class AdminJobBoardController extends Controller
         return redirect('/admin/job-board')->with('success', 'Job Post Updated Successfully!');
     }
 
-    public function destroy()
+    public function destroy($id): RedirectResponse
     {
+        $jobBoard = JobBoard::query()
+            ->where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
+        if($jobBoard) {
+            $jobBoard->delete();
+            return redirect()->back()->with('success', 'Job Post Deleted Successfully!!');
+        }
+        else {
+            return redirect()->back()->with('error', 'Job Post Delete Failed!!');
+        }
     }
 }

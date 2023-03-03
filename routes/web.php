@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\JobBoardController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -17,7 +19,9 @@ Route::group(['middleware' => 'auth'], function () {
             return view('public.profile.index');
         })->name('profile');
 
-        Route::resource('/events', \App\Http\Controllers\Frontend\EventController::class);
+        Route::resource('/events', EventController::class);
+
+        Route::resource('/jobs', JobBoardController::class);
 
     });
 

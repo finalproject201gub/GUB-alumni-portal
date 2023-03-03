@@ -21,7 +21,7 @@
                     <a href="{{ route('public.events.index') }}" class="nav-link {{ routeNameMatched('public.events.index') }}">Events</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Jobs</a>
+                    <a href="{{ route('public.jobs.index') }}" class="nav-link">Jobs</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Contact</a>

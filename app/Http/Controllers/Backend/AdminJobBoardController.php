@@ -3,13 +3,21 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobBoard;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class AdminJobBoardController extends Controller
 {
     public function index()
     {
-        return "index";
+        $jobBoardList = JobBoard::query()
+            ->where('user_id', auth()->user()->id)
+            ->get();
+
+        return view('backend.job-board.index', [
+            'jobBoardList' => $jobBoardList,
+        ]);
     }
 
     public function create()
@@ -19,12 +27,31 @@ class AdminJobBoardController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            "title" => 'required',
+            "description" => 'required',
+            "job_type" => 'required',
+            "salary" => 'required',
+            "location" => 'required',
+            "application_deadline" => 'required',
+        ]);
+
+        JobBoard::query()
+            ->create($request->all() + ['user_id' => auth()->user()->id]);
+
+        return redirect('/admin/job-board/create')->with('success', 'Job Post Created Successfully!');
     }
 
-    public function edit()
+    public function edit($id)
     {
+        $jobBoard = JobBoard::query()
+            ->where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
+        return view('backend.job-board.edit', [
+            'jobBoard' => $jobBoard,
+        ]);
     }
 
     public function show()
@@ -32,13 +59,40 @@ class AdminJobBoardController extends Controller
 
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            "title" => 'required',
+            "description" => 'required',
+            "job_type" => 'required',
+            "salary" => 'required',
+            "location" => 'required',
+            "application_deadline" => 'required',
+        ]);
 
+        $jobBoard = JobBoard::query()
+            ->where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+        $jobBoard->update($request->all() + ['user_id' => auth()->user()->id]);
+
+        return redirect('/admin/job-board')->with('success', 'Job Post Updated Successfully!');
     }
 
-    public function destroy()
+    public function destroy($id): RedirectResponse
     {
+        $jobBoard = JobBoard::query()
+            ->where('id', $id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
+        if($jobBoard) {
+            $jobBoard->delete();
+            return redirect()->back()->with('success', 'Job Post Deleted Successfully!!');
+        }
+        else {
+            return redirect()->back()->with('error', 'Job Post Delete Failed!!');
+        }
     }
 }

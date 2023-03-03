@@ -18,8 +18,8 @@ class CreateJobBoardsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->text('title');
             $table->text('description');
-            $table->string('image');
-            $table->json('tags');
+            $table->string('image')->nullable();
+            $table->json('tags')->nullable();
             $table->string('job_type')->comment('intern, fulltime, part-time');
             $table->double('salary');
             $table->string('location');

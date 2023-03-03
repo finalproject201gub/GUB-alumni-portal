@@ -1,6 +1,6 @@
 @extends('skeleton.admin.app')
 
-@section('title', 'Job Board | Create')
+@section('title', 'Job Board | Edit')
 
 @section('body')
 
@@ -8,18 +8,18 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card my-3">
-                    <h3 class="card-header">Job Board Create</h3>
+                    <h3 class="card-header">Job Board Edit</h3>
                     <div class="card-body">
-                        <form action="{{ route('job-board.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('job-board.update', $jobBoard->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('POST')
+                            @method('PUT')
                             <div class="form-group">
                                 <label for="">Title</label>
-                                <input class="form-control" type="text" name="title" id="">
+                                <input class="form-control" value="{{ $jobBoard->title }}" type="text" name="title" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Description</label>
-                                <textarea class="form-control" rows="3" name="description" id=""> </textarea>
+                                <textarea class="form-control" rows="3" name="description" id="">{{ trim($jobBoard->description) }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Attachment(Image only)</label>
@@ -29,22 +29,22 @@
                                 <label for="">Job Type</label>
                                 <select class="form-control" name="job_type">
                                     <option value="">---Select---</option>
-                                    <option value="intern">Intern</option>
-                                    <option value="part-time">Part Time</option>
-                                    <option value="fulltime">Full Time</option>
+                                    <option {{ $jobBoard->job_type == 'intern' ? 'selected' : '' }} value="intern">Intern</option>
+                                    <option {{ $jobBoard->job_type == 'part-time' ? 'selected' : '' }} value="part-time">Part Time</option>
+                                    <option {{ $jobBoard->job_type == 'fulltime' ? 'selected' : '' }} value="fulltime">Full Time</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="">Salary</label>
-                                <input class="form-control" type="text" name="salary" id="">
+                                <input value="{{ $jobBoard->salary }}" class="form-control" type="text" name="salary" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Location</label>
-                                <input class="form-control" type="text" name="location" id="">
+                                <input value="{{ $jobBoard->location }}" class="form-control" type="text" name="location" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Application Deadline</label>
-                                <input class="form-control" type="date" name="application_deadline" id="">
+                                <input value="{{ $jobBoard->application_deadline }}" class="form-control" type="date" name="application_deadline" id="">
                             </div>
 
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -60,7 +60,7 @@
 @section('script')
     <script>
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             toastr.options.timeOut = 3000;
             toastr.options.progressBar = true;
             @if (Session::has('error'))

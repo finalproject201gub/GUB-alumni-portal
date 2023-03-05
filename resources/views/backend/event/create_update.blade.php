@@ -1,5 +1,9 @@
 @extends('skeleton.admin.app')
-@section('title', 'Create Event')
+@if ($event == null)
+    @section('title', 'Create Event')
+@else
+    @section('title', 'Update Event')
+@endif
 @section('body')
     <!-- Content Header (Page header) -->
     <section class="content-header">

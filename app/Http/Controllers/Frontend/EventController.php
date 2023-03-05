@@ -23,6 +23,7 @@ class EventController extends Controller
             $event->time = $startDate . ' To ' . $endDate . ' (' . $totalDuration . ')';
             return $event;
         });
+        
         return view('public.event.index', compact('events'));
     }
 }

@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="title">Title <span class="text-danger">*</span></label>
-                                    <input type="text" value="{{ $event->title ?? old('title') }}" name="title"
+                                    <input type="text" value="{{ $event ? $event->title : old('title') }}" name="title"
                                         class="form-control @error('title') is-invalid @enderror" id="title"
                                         placeholder="Enter Title">
                                     @error('title')
@@ -49,14 +49,14 @@
                                 <div class="form-group">
                                     <label for="description">Description</label>
                                     <textarea name="description" class="form-control @error('description') is-invalid @enderror" id="description"
-                                        rows="3" placeholder="Enter Description">{{ $event->description ?? old('description') }}</textarea>
+                                        rows="3" placeholder="Enter Description">{{ $event ? $event->description : old('description') }}</textarea>
                                     @error('description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="start_at">Start Date <span class="text-danger">*</span></label>
-                                    <input name="start_at" value="{{ $event->start_at ?? old('start_at') }}"
+                                    <input name="start_at" value="{{ $event ? $event->start_at : old('start_at') }}"
                                         autocomplete="off" type="date-time"
                                         class="form-control @error('start_at') is-invalid @enderror" id="start_at"
                                         placeholder="Enter Start Date">
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="end_at">End Date <span class="text-danger">*</span></label>
-                                    <input name="end_at" value="{{ $event->end_at ?? old('end_at') }}" type="date-time"
+                                    <input name="end_at" value="{{ $event ? $event->end_at : old('end_at') }}" type="date-time"
                                         autocomplete="off" class="form-control @error('end_at') is-invalid @enderror"
                                         id="end_at" placeholder="Enter End Date">
                                     @error('end_at')
@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="form-group" id="locationField">
                                     <label for="location">Location <span class="text-danger">*</span></label>
-                                    <input name="location" value="{{ $event->location ?? old('location') }}" type="text"
+                                    <input name="location" value="{{ $event ? $event->location : old('location') }}" type="text"
                                         class="form-control @error('location') is-invalid @enderror" id="autocomplete"
                                         placeholder="Enter Location">
                                     @error('location')
@@ -90,7 +90,7 @@
                                         <option value="">Select Event Type</option>
                                         @foreach ($types as $key => $type)
                                             <option value="{{ $key }}"
-                                                @if ($key == $event->event_type_id ?? old('event_type_id')) selected @endif>{{ $type }}
+                                                @if ($event ? $key ==  $event->event_type_id : $key == old('event_type_id')) selected @endif>{{ $type }}
                                             </option>
                                         @endforeach
                                     </select>

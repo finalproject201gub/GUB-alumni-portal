@@ -18,39 +18,28 @@
                 <!-- /.col -->
                 <div class="col-md-12 mt-1">
                     <!-- Box Event -->
-                    @forelse ($events as $event)
-                        <div class="card card-widget">
-                            <div class="card-header">
-                                <div class="user-block">
-                                    <img class="img-circle" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
-                                    <span class="username"><a href="#">{{ $event->created_by }}</a></span>
-                                    <span class="description">Shared publicly - {{ $event->create_time }}</span>
-                                    </span>
-                                    <span class="description">Time - {{ $event->time }}</span>
-                                </div>
-                                <!-- /.user-block -->
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool" title="Mark as read">
-                                        <i class="far fa-circle"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                                        <i class="fas fa-times"></i>
-                                    </button>
-                                </div>
-                                <!-- /.card-tools -->
+                    <div class="card card-widget">
+                        <div class="card-header">
+                            <div class="user-block">
+                                <img class="img-circle" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
+                                <span class="username"><a href="#">{{ $event->created_by }}</a></span>
+                                <span class="description">Shared publicly - {{ $event->create_time }}</span>
+                                </span>
+                                <span class="description">Time - {{ $event->time }}</span>
+                                @if ($event->location)
+                                    <span class="description"><i class="fa fa-location-dot"></i> {{ $event->location }}</span>
+                                @endif
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <!-- post text -->
-                                <strong>{{ $event->title }}</strong>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <!-- post text -->
+                            <strong>{{ $event->title }}</strong>
 
-                                <p>{{ $event->description }} <a href="{{ route('public.events.show', $event->id) }}">Read More</a></p>
+                            <p>{{ $event->description }}</p>
 
-                                <!-- Attachment -->
-                                {{-- <div class="attachment-block clearfix">
+                            <!-- Attachment -->
+                            {{-- <div class="attachment-block clearfix">
                                     <img class="attachment-img" src="{{ asset('img/photo2.png') }}" alt="Attachment Image">
 
                                     <div class="attachment-pushed">
@@ -66,17 +55,32 @@
                                     </div>
                                     <!-- /.attachment-pushed -->
                                 </div> --}}
-                                <!-- /.attachment-block -->
+                            <!-- /.attachment-block -->
 
-                                <!-- Social sharing buttons -->
-                                {{-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share text-primary"></i>
+                            <!-- Social sharing buttons -->
+                            {{-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share text-primary"></i>
                                 </button>
                                 <button type="button" class="btn btn-default btn-sm"><i class="far fas fa-heart text-danger"></i>
                                 </button>
                                 <span class="float-right text-muted">45 likes - 2 comments</span> --}}
+                        </div>
+                        <div class="card-footer">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-default btn-sm"><i
+                                            class="fas fa-share text-primary"></i></button>
+
+                                    <button type="button" class="btn btn-default btn-sm"><i
+                                            class="far fas fa-heart text-danger"></i></button>
+
+                                </div>
+                                <div class="col-md-4">
+                                    Event Type: {{ $event->type }}
+                                </div>
                             </div>
-                            <!-- /.card-body -->
-                            {{-- <div class="card-footer card-comments">
+                        </div>
+                        <!-- /.card-body -->
+                        {{-- <div class="card-footer card-comments">
                                 <div class="card-comment">
                                     <!-- User image -->
                                     <img class="img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
@@ -111,8 +115,8 @@
                                 </div>
                                 <!-- /.card-comment -->
                             </div> --}}
-                            <!-- /.card-footer -->
-                            {{-- <div class="card-footer">
+                        <!-- /.card-footer -->
+                        {{-- <div class="card-footer">
                                 <form action="#" method="post">
                                     <img class="img-fluid img-circle img-sm" src="{{ asset('img/user1-128x128.jpg') }}"
                                         alt="Alt Text">
@@ -123,11 +127,8 @@
                                     </div>
                                 </form>
                             </div> --}}
-                            <!-- /.card-footer -->
-                        </div>
-                    @empty
-                        <p>No Events</p>
-                    @endforelse
+                        <!-- /.card-footer -->
+                    </div>
                     <!-- /.card -->
                 </div>
                 <!-- /.col -->

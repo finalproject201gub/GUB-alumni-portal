@@ -36,7 +36,7 @@ class EventController extends Controller
     public function create()
     {
         return view('backend.event.create_update', [
-            'event' => new Event(),
+            'event' => null,
             'types' => Event::EVENT_TYPES,
         ]);
     }

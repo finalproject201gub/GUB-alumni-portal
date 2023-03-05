@@ -16,14 +16,24 @@ class EventController extends Controller
             $startDate = Carbon::parse($event->start_at)->format('d M Y') ?? '';
             $endDate = Carbon::parse($event->end_at)->format('d M Y') ?? '';
             $totalDuration = Carbon::parse($event->start_at)->diffForHumans($event->end_at, true) ?? '';
-
-
+            $event->description = substr($event->description, 0, 200). '...' ?? '';
             $event->created_by = $event->createdBy->name ?? 'No Name Specified';
             $event->create_time = $event->created_at->diffForHumans() ?? '';
             $event->time = $startDate . ' To ' . $endDate . ' (' . $totalDuration . ')';
             return $event;
         });
-        
+
         return view('public.event.index', compact('events'));
+    }
+
+    public function show(Event $event) {
+        $startDate = Carbon::parse($event->start_at)->format('d M Y') ?? '';
+        $endDate = Carbon::parse($event->end_at)->format('d M Y') ?? '';
+        $totalDuration = Carbon::parse($event->start_at)->diffForHumans($event->end_at, true) ?? '';
+        $event->created_by = $event->createdBy->name ?? 'No Name Specified';
+        $event->create_time = $event->created_at->diffForHumans() ?? '';
+        $event->time = $startDate . ' To ' . $endDate . ' (' . $totalDuration . ')';
+        $event->type = Event::EVENT_TYPES[$event->event_type_id] ?? 'No Type Specified';
+        return view('public.event.show', compact('event'));
     }
 }

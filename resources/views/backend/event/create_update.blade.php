@@ -90,7 +90,7 @@
                                         <option value="">Select Event Type</option>
                                         @foreach ($types as $key => $type)
                                             <option value="{{ $key }}"
-                                                @if ($key == $event ? $event->event_type_id : old('event_type_id')) selected @endif>{{ $type }}
+                                                @if ($event ? $key ==  $event->event_type_id : $key == old('event_type_id')) selected @endif>{{ $type }}
                                             </option>
                                         @endforeach
                                     </select>

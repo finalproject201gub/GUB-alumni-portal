@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class JobBoardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $jobBoards = JobBoard::query()
             ->with('user')
+            ->search($request->search)
             ->latest()
             ->paginate(10);
 

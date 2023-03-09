@@ -12,19 +12,24 @@
             padding: 10px;
             transition: .4s;
         }
+
         .jobs-wrapper:hover {
             box-shadow: 5px 5px 2px #ccc;
         }
+
         .job-title h4 {
             display: inline-block;
         }
+
         .job-title h4:hover {
             text-decoration: underline;
         }
+
         .jobs-wrapper a {
             color: #000;
             text-decoration: none;
         }
+
         .jobs-wrapper a:hover {
             color: #000;
             text-decoration: none;
@@ -39,7 +44,16 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card my-3">
-                    <h3 class="card-header">Jobs</h3>
+                    <h3 class="card-header">Jobs
+                        <span>
+                        <form action="{{ route('public.jobs.index') }}" method="GET">
+                            <input style="width: 200px; margin-top: -35px;" placeholder="Search Jobs"
+                                   class="float-right form form-control" type="text"
+                                   name="search" id="">
+                        </form>
+                    </span>
+                    </h3>
+
                     <div class="card-body">
                         <div class="job-list">
                             @foreach($jobBoards as $jobBoard)
@@ -51,7 +65,8 @@
                                                     <h4 style="color: #348334; font-weight: bold; font-size: 25px;">{{ $jobBoard->title }}</h4>
                                                 </div>
                                                 <div class="company-name">
-                                                    <h5 style=" font-weight: bold; font-size: 18px;">Company: {{ $jobBoard->company_name }}</h5>
+                                                    <h5 style=" font-weight: bold; font-size: 18px;">
+                                                        Company: {{ $jobBoard->company_name }}</h5>
                                                 </div>
                                                 <div class="job-info">
                                                     <p><b>Location: </b> {{ $jobBoard->location }}</p>

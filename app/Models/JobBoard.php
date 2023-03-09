@@ -30,6 +30,12 @@ class JobBoard extends Model
         "approve_status",
     ];
 
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('title', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%');
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

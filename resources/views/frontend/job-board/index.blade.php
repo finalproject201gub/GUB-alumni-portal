@@ -87,6 +87,11 @@
                     </div>
                 </div>
             </div>
+
+
+            <div style="margin: 0 auto;">
+                {{ $jobBoards->appends(request()->except('page'))->links() }}
+            </div>
         </div>
     </div>
 

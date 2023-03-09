@@ -9,11 +9,13 @@ use Illuminate\Http\Request;
 
 class AdminJobBoardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $jobBoardList = JobBoard::query()
+            ->search($request->search)
             ->where('user_id', auth()->user()->id)
-            ->get();
+            ->latest()
+            ->paginate(10);
 
         return view('backend.job-board.index', [
             'jobBoardList' => $jobBoardList,

@@ -14,12 +14,32 @@
                             @csrf
                             @method('POST')
                             <div class="form-group">
+                                <label for="">Company Name</label>
+                                <input class="form-control" type="text" name="company_name" id="">
+                            </div>
+                            <div class="form-group">
                                 <label for="">Title</label>
                                 <input class="form-control" type="text" name="title" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Description</label>
                                 <textarea class="form-control" rows="3" name="description" id=""> </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Vacancy</label>
+                                <input class="form-control" rows="3" name="vacancy" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Experience Requirements</label>
+                                <input class="form-control" rows="3" name="experience_requirements" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Education Requirements</label>
+                                <input class="form-control" rows="3" name="education_requirements" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Company Information</label>
+                                <textarea class="form-control" rows="3" name="company_information" id=""> </textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Attachment(Image only)</label>

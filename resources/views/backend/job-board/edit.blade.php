@@ -14,12 +14,32 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
+                                <label for="">Company Name</label>
+                                <input class="form-control" type="text" value="{{ $jobBoard->company_name }}" name="company_name" id="">
+                            </div>
+                            <div class="form-group">
                                 <label for="">Title</label>
                                 <input class="form-control" value="{{ $jobBoard->title }}" type="text" name="title" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Description</label>
                                 <textarea class="form-control" rows="3" name="description" id="">{{ trim($jobBoard->description) }}</textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Vacancy</label>
+                                <input class="form-control" value="{{ $jobBoard->vacancy }}" rows="3" name="vacancy" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Experience Requirements</label>
+                                <input class="form-control" value="{{ $jobBoard->experience_requirements }}" rows="3" name="experience_requirements" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Education Requirements</label>
+                                <input class="form-control" value="{{ $jobBoard->education_requirements }}" rows="3" name="education_requirements" id=""> </input>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Company Information</label>
+                                <textarea class="form-control" rows="3" name="company_information" id="">{{ $jobBoard->company_information }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Attachment(Image only)</label>

@@ -15,6 +15,12 @@
         .jobs-wrapper:hover {
             box-shadow: 5px 5px 2px #ccc;
         }
+        .job-title h4 {
+            display: inline-block;
+        }
+        .job-title h4:hover {
+            text-decoration: underline;
+        }
         .jobs-wrapper a {
             color: #000;
             text-decoration: none;
@@ -39,7 +45,7 @@
                             @foreach($jobBoards as $jobBoard)
                                 <div class="row">
                                     <div class="jobs-wrapper">
-                                        <a href="{{ url("jobs?listing_id=$jobBoard->id") }}">
+                                        <a href="{{ url("jobs/post?listing_id=$jobBoard->id") }}">
                                             <div class="col-md-12">
                                                 <div class="job-title">
                                                     <h4 style="color: #348334; font-weight: bold; font-size: 25px;">{{ $jobBoard->title }}</h4>

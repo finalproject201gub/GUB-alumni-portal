@@ -14,8 +14,13 @@ class JobBoard extends Model
 
     protected $fillable = [
         "user_id",
+        "company_name",
         "title",
         "description",
+        "vacancy",
+        "experience_requirements",
+        "education_requirements",
+        "company_information",
         "image",
         "tags",
         "job_type",

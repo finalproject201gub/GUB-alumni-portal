@@ -20,11 +20,9 @@ class JobBoardController extends Controller
         ]);
     }
 
-    public function show(Request $request)
+    public function show(Request $request, $id)
     {
-        $listingId = $request->query('listing_id') ?? null;
-
-        $jobBoard = JobBoard::query()->find($listingId);
+        $jobBoard = JobBoard::query()->findOrFail($id);
 
         return view('frontend.job-board.single-view', [
             'jobBoard' => $jobBoard,

@@ -45,14 +45,13 @@
                             @foreach($jobBoards as $jobBoard)
                                 <div class="row">
                                     <div class="jobs-wrapper">
-                                        <a href="{{ url("jobs/post?listing_id=$jobBoard->id") }}">
+                                        <a href="{{ url("/jobs/{$jobBoard->id}") }}">
                                             <div class="col-md-12">
                                                 <div class="job-title">
                                                     <h4 style="color: #348334; font-weight: bold; font-size: 25px;">{{ $jobBoard->title }}</h4>
                                                 </div>
                                                 <div class="company-name">
-                                                    <h5 style=" font-weight: bold; font-size: 18px;">Company: Apple
-                                                        Inc.</h5>
+                                                    <h5 style=" font-weight: bold; font-size: 18px;">Company: {{ $jobBoard->company_name }}</h5>
                                                 </div>
                                                 <div class="job-info">
                                                     <p><b>Location: </b> {{ $jobBoard->location }}</p>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobBoardController;
@@ -38,4 +39,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+Route::get('/custom-authenticate-redirect', [CustomAuthenticateRedirectController::class, 'showMessageAndRedirect']);
 

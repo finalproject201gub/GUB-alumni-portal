@@ -22,3 +22,51 @@ if (!function_exists('routeNameMatched')) {
         return '';
     }
 }
+
+function generateBatchNumbers(): array
+{
+    $batchNumbers = [];
+
+    $counter = 1;
+    for ($i = 100; $i <= 230; $i++) {
+        $batchNameDay = $i . " Day";
+        $batchNameEve = $i . " Evening";
+
+        $batchNumbers[$counter++] = $batchNameDay;
+        $batchNumbers[$counter++] = $batchNameEve;
+
+    }
+
+    return (collect($batchNumbers)->toArray());
+}
+
+function generatePassingYears(): array
+{
+    $passingYears = [];
+
+    $counter = 1;
+    for ($i = 2003; $i <= now()->format('Y'); $i++) {
+        $spring = $i . " Spring";
+        $summer = $i . " Summer";
+        $fall = $i . " Fall";
+
+        $passingYears[$counter++] = $spring;
+        $passingYears[$counter++] = $summer;
+        $passingYears[$counter++] = $fall;
+
+    }
+
+    return (collect($passingYears)->toArray());
+}
+
+function getDepartments(): array
+{
+    return [
+        1 => 'CSE',
+        2 => 'EEE',
+        3 => 'CIV',
+        4 => 'BBA',
+        5 => 'ENG',
+        6 => 'LLB',
+    ];
+}

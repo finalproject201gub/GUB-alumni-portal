@@ -14,15 +14,15 @@ class AlterAddSomeColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('batch_number')->after('email')->nullable();
-            $table->date('passing_year')->after('batch_number')->nullable();
-            $table->string('department')->after('passing_year')->nullable();
-            $table->string('student_id_number')->after('department')->nullable();
+            $table->unsignedInteger('batch_number')->after('email')->nullable();
+            $table->unsignedInteger('passing_year')->after('batch_number')->nullable();
+            $table->unsignedInteger('department_id')->after('passing_year')->nullable();
+            $table->string('student_id_number')->after('department_id')->nullable();
             $table->string('phone')->after('student_id_number')->nullable();
             $table->text('address')->after('phone')->nullable();
             $table->unsignedInteger('role_id')->after('address')->nullable();
             $table->string('type')->after('role_id')->nullable()->comment('alumni, student, faculty');
-            $table->unsignedInteger('status')->after('type')->default(1)->comment('1 = Active, 0 = Inactive');
+            $table->unsignedInteger('status')->after('type')->default(0)->comment('1 = Active, 0 = Inactive');
         });
     }
 
@@ -35,7 +35,7 @@ class AlterAddSomeColumnsToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
-                'batch_number', 'passing_year', 'department',
+                'batch_number', 'passing_year', 'department_id',
                 'student_id_number','phone', 'address',
                 'role_id','type', 'status',
             ]);

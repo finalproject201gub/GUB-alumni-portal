@@ -21,6 +21,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'batch_number',
+        'passing_year',
+        'department_id',
+        'student_id_number',
+        'phone',
+        'address',
+        'role_id',
+        'type',
+        'status',
     ];
 
     /**
@@ -41,4 +50,51 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function generateBatchNumbers(): array
+    {
+        $batchNumbers = [];
+
+        $counter = 1;
+        for ($i = 100; $i <= 230; $i++) {
+            $batchNameDay = $i . " Day";
+            $batchNameEve = $i . " Evening";
+
+            $batchNumbers[$counter++] = $batchNameDay;
+            $batchNumbers[$counter++] = $batchNameEve;
+
+        }
+        return (collect($batchNumbers)->toArray());
+    }
+
+    public function generatePassingYears(): array
+    {
+        $passingYears = [];
+
+        $counter = 1;
+        for ($i = 2003; $i <= now()->format('Y'); $i++) {
+            $spring = $i . " Spring";
+            $summer = $i . " Summer";
+            $fall = $i . " Fall";
+
+            $passingYears[$counter++] = $spring;
+            $passingYears[$counter++] = $summer;
+            $passingYears[$counter++] = $fall;
+
+        }
+        return (collect($passingYears)->toArray());
+
+    }
+
+    public function getDepartments(): array
+    {
+        return [
+            1 => 'CSE',
+            2 => 'EEE',
+            3 => 'CIV',
+            4 => 'BBA',
+            5 => 'ENG',
+            6 => 'LLB',
+        ];
+    }
 }

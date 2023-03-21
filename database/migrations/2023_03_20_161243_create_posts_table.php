@@ -13,11 +13,14 @@ class CreatePostsTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('home', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->text('content');
-            $table->tinyInteger('status')->default(1)->comment('1 = Active, 0 = Inactive');
+            $table
+                ->tinyInteger('status')
+                ->default(1)
+                ->comment('1 = Active, 0 = Inactive');
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();
@@ -32,6 +35,6 @@ class CreatePostsTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('home');
+        Schema::dropIfExists('posts');
     }
 }

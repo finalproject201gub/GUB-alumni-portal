@@ -1,5 +1,14 @@
 <template>
     <div>
+        <div class="row m-3">
+            <div class="user-block col-md-1 col-2">
+                <img class="img-circle" style="height:  60px; width: 60px; z-index: 2"
+                    src="img/user1-128x128.jpg" alt="User Image">
+            </div>
+            <div class="col-md-11 col-10">
+                <input type="text" class="form-control status-box" name="" id="" placeholder="What's on your mind?" @click="showAddPostModal">
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <!-- Box Comment -->
@@ -206,20 +215,36 @@
             <!-- /.col -->
         </div>
         <!-- /.row -->
+
+        <modal name="addPostModal" :width="800"
+        :height="450">
+            <add-post-modal @postCreated="updateTimelinePost" />
+        </modal>
     </div>
 </template>
 
 <script>
+import AddPostModal from './AddPostModal.vue';
 export default {
+  components: { AddPostModal },
     name: "Home",
     data() {
         return {
-            //
+            posts: [],
         }
     },
     methods: {
         helloWorld: function () {
             console.log("hello world");
+        },
+        showAddPostModal: function () {
+
+            this.$modal.show('addPostModal')
+        },
+        updateTimelinePost: function (data) {
+            this.posts.unshift(data);
+            // console.log(data);
+            this.$modal.hide('addPostModal');
         }
     },
     mounted() {

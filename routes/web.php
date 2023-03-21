@@ -13,7 +13,7 @@ require __DIR__ . '/auth.php';
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['as' => 'public.'], function () {
-        Route::get('/{any}', [HomeController::class, 'index'])
+        Route::get('/', [HomeController::class, 'index'])
             ->where('any', '.*');
         // ->name('index');
 

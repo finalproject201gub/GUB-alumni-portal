@@ -24,7 +24,11 @@ class RedirectIfAuthenticated
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
 //                return redirect(RouteServiceProvider::HOME);
-                return redirect('/custom-authenticate-redirect')->with('success', 'We have received your information, After verified your information we will activate your account soon!');
+                if (Auth::user()->role->id == null) {
+                    return redirect('/custom-authenticate-redirect')->with('success', 'We have received your information, After verified your information we will activate your account soon!');
+                }
+                return redirect('/redirectAuthenticatedUsers');
+//                return redirect('/custom-authenticate-redirect')->with('success', 'We have received your information, After verified your information we will activate your account soon!');
             }
         }
 

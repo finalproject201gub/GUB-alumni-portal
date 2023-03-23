@@ -147,6 +147,7 @@
                :pivot-y="0.5"
                :pivot-x="0.5"
                 @before-open="beforePostCreateUpdateModalOpen"
+               @closed="editData = {}"
                :width="800"
                :height="450"
         >

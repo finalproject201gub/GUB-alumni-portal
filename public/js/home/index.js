@@ -2461,7 +2461,10 @@ var render = function render() {
       height: 450
     },
     on: {
-      "before-open": _vm.beforePostCreateUpdateModalOpen
+      "before-open": _vm.beforePostCreateUpdateModalOpen,
+      closed: function closed($event) {
+        _vm.editData = {};
+      }
     }
   }, [_c("post-create-update-modal", {
     attrs: {

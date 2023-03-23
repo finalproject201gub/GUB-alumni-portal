@@ -21,6 +21,7 @@ class CreatePostsTable extends Migration
                 ->tinyInteger('status')
                 ->default(1)
                 ->comment('1 = Active, 0 = Inactive');
+            $table->unsignedBigInteger('view_count')->default(0);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->unsignedBigInteger('deleted_by')->nullable();

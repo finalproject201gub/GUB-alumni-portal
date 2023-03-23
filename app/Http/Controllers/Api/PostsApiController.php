@@ -3,33 +3,29 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Response;
 
-class CreatePostApiController extends Controller
+class PostsApiController extends Controller
 {
-    public function __invoke(PostRequest $request, Post $post)
+    public function __invoke(): \Illuminate\Http\JsonResponse
     {
         try {
-            $post->fill([
-                'user_id' => auth()->user()->id,
-                'content' => $request->content,
-            ])->save();
+            $posts = Post::query()->get();
 
             return response()->json(
                 [
-                    'data' => $post,
+                    'data' => $posts,
                     'status' => 'success',
-                    'message' => 'Post created successfully',
+                    'message' => 'Posts retrieved successfully',
                 ],
                 Response::HTTP_OK,
             );
-        } catch (\Exception $e) {
+        } catch (\Exception $exception) {
             return response()->json(
                 [
                     'status' => 'error',
-                    'message' => $e->getMessage(),
+                    'message' => $exception->getMessage(),
                 ],
                 Response::HTTP_INTERNAL_SERVER_ERROR,
             );

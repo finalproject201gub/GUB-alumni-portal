@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Backend\AdminJobBoardController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\EventController;
+use App\Http\Controllers\Api\CreatePostApiController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\CustomAuthenticateRedirectController;
-use App\Http\Controllers\Frontend\EventController;
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobBoardController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\AdminJobBoardController;
+use App\Http\Controllers\CustomAuthenticateRedirectController;
 
 require __DIR__ . '/auth.php';
 
@@ -46,7 +47,11 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-
+    Route::prefix('api/v1')->group(function () {
+        Route::group(['prefix'=> 'posts'], function () {
+            Route::post('store', CreatePostApiController::class);
+        });
+    });
 });
 
 Route::get('/custom-authenticate-redirect', [CustomAuthenticateRedirectController::class, 'showMessageAndRedirect']);

@@ -7,10 +7,11 @@ use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Api\CreatePostApiController;
 use App\Http\Controllers\Api\DeletePostApiController;
 use App\Http\Controllers\Api\UpdatePostApiController;
+use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\JobBoardController;
-use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
 
@@ -35,7 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
-    Route::group(['prefix' => 'admin'], function () {
+    Route::group(['prefix' => 'admin', 'middleware' => 'checkRole:Admin'], function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
         //Events
         Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
@@ -51,6 +52,14 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
+    Route::group(['prefix' => 'backend/alumni', 'middleware' => 'checkRole:Alumni'], function () {
+
+    });
+
+    Route::group(['prefix' => 'backend/student', 'middleware' => 'checkRole:Student'], function () {
+
+    });
+
     Route::prefix('api/v1')->group(function () {
         Route::group(['prefix' => 'posts'], function () {
             Route::get('/', PostsApiController::class);
@@ -62,6 +71,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/static-data-for-home-page', StaticDataForHomePageApiController::class);
     });
 });
+
+Route::get("/redirectAuthenticatedUsers", [RedirectAuthenticatedUsersController::class, "home"]);
+
 
 Route::get('/custom-authenticate-redirect', [CustomAuthenticateRedirectController::class, 'showMessageAndRedirect']);
 

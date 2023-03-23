@@ -31,6 +31,7 @@
                                 <th>Location</th>
                                 <th>Application Deadline</th>
                                 <th>Approve Status</th>
+                                <th>Job Posted By</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -49,18 +50,19 @@
                                     @if($jobBoard->approve_status == 'no')
                                         <td>
                                             <span
-                                                style="color: white;font-weight: bold;background: red;padding: 1px 3px;border-radius: 5px;">
+                                                style="color: white;font-weight: bold;background: red;padding: 1px 1px;font-size: 12px;">
                                                 Pending
                                             </span>
                                         </td>
                                     @else
                                         <td>
                                             <span
-                                                style="color: white;font-weight: bold;background: green;padding: 1px 3px;border-radius: 5px;;">
+                                                style="color: white;font-weight: bold;background: green;padding: 1px 1px;font-size: 12px;">
                                                 Published
                                             </span>
                                         </td>
                                     @endif
+                                    <td>{{ $jobBoard->user->name }}</td>
                                     <td>
                                         <a class="btn btn-sm btn-info"
                                            href="{{ route('job-board.edit', $jobBoard->id) }}">Edit</a>

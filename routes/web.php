@@ -15,7 +15,9 @@ require __DIR__ . '/auth.php';
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['as' => 'public.'], function () {
-        Route::get('/', [HomeController::class, 'index'])->name('index');
+        Route::get('/', [HomeController::class, 'index'])
+            ->where('any', '.*');
+        // ->name('index');
 
         Route::get('/profile', function () {
             return view('public.profile.index');

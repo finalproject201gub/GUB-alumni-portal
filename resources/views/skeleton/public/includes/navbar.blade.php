@@ -15,7 +15,7 @@
             <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="{{ route('public.index') }}" class="nav-link {{ routeNameMatched('public.index') }}">Home</a>
+                    <a href="{{ url('/') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('public.events.index') }}" class="nav-link {{ routeNameMatched('public.events.index') }}">Events</a>

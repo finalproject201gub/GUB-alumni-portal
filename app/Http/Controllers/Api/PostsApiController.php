@@ -11,11 +11,30 @@ class PostsApiController extends Controller
     public function __invoke(): \Illuminate\Http\JsonResponse
     {
         try {
-            $posts = Post::query()->get();
+            $posts = Post::query()
+                ->with('user')
+                ->active()
+                ->latest()
+                ->get();
+
+            $data = $posts->map(function ($post) {
+                return [
+                    'id' => $post->id,
+                    'title' => $post->title,
+                    'body' => $post->body,
+                    'author_id' => $post->user->id,
+                    'author_name' => $post->user->name,
+                    'privacy_id' => 1,
+                    'privacy_name' => 'public',
+                    'content' => $post->content,
+                    'created_at' => $post->created_at->diffForHumans(),
+                    'updated_at' => $post->updated_at,
+                ];
+            });
 
             return response()->json(
                 [
-                    'data' => $posts,
+                    'data' => $data,
                     'status' => 'success',
                     'message' => 'Posts retrieved successfully',
                 ],

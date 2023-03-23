@@ -9,8 +9,7 @@
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    {{-- <link rel="stylesheet" href="{{ asset('css/fontawesome/all.min.css') }}"> --}}
-    <script src="https://kit.fontawesome.com/f16b98bd47.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/all.min.css') }}">
 
     {{--    Toaster --}}
     <link rel="stylesheet" href="{{ asset('css/toaster.min.css') }}">

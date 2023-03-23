@@ -16,25 +16,25 @@ window.axios = require('axios');
 Vue.use(Toast);
 
 Vue.component('Select2', Select2);
-Vue.use(VModal)
+
+// Vue.use(VModal);
+// Vue.use(VModal, {
+//     componentName: "dialog", dialog: true
+// });
+
+Vue.use(VModal, { dialog: true })
+
 Vue.use(VueRouter);
 
-const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: Home,
-    },
-];
+const routes = [{
+    path: '/', name: 'Home', component: Home,
+},];
 
 const router = new VueRouter({
-    mode: 'history',
-    routes,
+    mode: 'history', routes,
 });
 
 
 new Vue({
-    el: '#home-main-content',
-    router,
-    render: h => h(RouterView),
+    el: '#home-main-content', router, render: h => h(RouterView),
 });

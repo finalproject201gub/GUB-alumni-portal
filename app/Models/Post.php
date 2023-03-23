@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    // use CommonGlobal;    
+    // use CommonGlobal;
 
     protected $fillable = [
         'user_id',
@@ -25,6 +25,12 @@ class Post extends Model
         'INACTIVE' => 0,
     ];
 
+    const PRIVACY = [
+        1 => 'Public',
+//        2 => 'Friends',
+        3 => 'Only Me',
+    ];
+
     public function scopeActive($query)
     {
         return $query->where('status', self::STATUS['ACTIVE']);
@@ -35,8 +41,8 @@ class Post extends Model
         return $query->where('status', self::STATUS['INACTIVE']);
     }
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsTo(User::class, 'user_id')->withDefault();
     }
 }

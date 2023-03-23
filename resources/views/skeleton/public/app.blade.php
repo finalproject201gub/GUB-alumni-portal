@@ -9,47 +9,46 @@
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
-
-    <script src="https://kit.fontawesome.com/f16b98bd47.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ asset('css/fontawesome/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte/adminlte.min.css') }}">
     @stack('style')
 </head>
 
 <body class="hold-transition layout-top-nav">
-    <div class="wrapper">
+<div class="wrapper">
 
-        <!-- Navbar -->
-        @include('skeleton.public.includes.navbar')
-        <!-- /.navbar -->
+    <!-- Navbar -->
+    @include('skeleton.public.includes.navbar')
+    <!-- /.navbar -->
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Main content -->
-            @yield('body')
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Main Footer -->
-        @include('skeleton.common.footer')
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        @yield('body')
+        <!-- /.content -->
     </div>
-    <!-- ./wrapper -->
+    <!-- /.content-wrapper -->
 
-    <a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
-        <i class="fas fa-chevron-up"></i>
-    </a>
+    <!-- Main Footer -->
+    @include('skeleton.common.footer')
+</div>
+<!-- ./wrapper -->
 
-    <!-- REQUIRED SCRIPTS -->
+<a id="back-to-top" href="#" class="btn btn-primary back-to-top" role="button" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+</a>
 
-    <!-- jQuery -->
-    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
-    <script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('js/adminlte/adminlte.min.js') }}"></script>
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
+<!-- Bootstrap 4 -->
+<script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('js/adminlte/adminlte.min.js') }}"></script>
 </body>
 
 </html>

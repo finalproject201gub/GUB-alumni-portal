@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\AdminJobBoardController;
+use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Frontend\EventController;
@@ -34,6 +35,13 @@ Route::group(['middleware' => 'auth'], function () {
 
         // Job Board
         Route::resource('/job-board', AdminJobBoardController::class);
+
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/', [AdminUserController::class, 'index']);
+            Route::get('/view/{id}', [AdminUserController::class, 'view']);
+            Route::get('/edit/{id}', [AdminUserController::class, 'edit']);
+            Route::put('/{id}', [AdminUserController::class, 'update']);
+        });
     });
 
 

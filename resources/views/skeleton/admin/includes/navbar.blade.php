@@ -110,7 +110,7 @@
                     <img src="{{ asset('img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
 
                     <p>
-                        {{ userFullName() }} <small>Member since Nov. 2012</small>
+                        {{ userFullName() }}
                     </p>
                 </li>
                 <!-- Menu Body -->

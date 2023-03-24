@@ -41,7 +41,7 @@ class AdminJobBoardController extends Controller
         JobBoard::query()
             ->create($request->all() + ['user_id' => auth()->user()->id]);
 
-        return redirect('/admin/job-board/create')->with('success', 'Job Post Created Successfully!');
+        return redirect()->back()->with('success', 'Job Post Created Successfully!');
     }
 
     public function edit($id)
@@ -79,7 +79,7 @@ class AdminJobBoardController extends Controller
 
         $jobBoard->update($request->all() + ['user_id' => auth()->user()->id]);
 
-        return redirect('/admin/job-board')->with('success', 'Job Post Updated Successfully!');
+        return redirect()->back()->with('success', 'Job Post Updated Successfully!');
     }
 
     public function destroy($id): RedirectResponse

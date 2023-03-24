@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('dashboard') }}" class="brand-link">
+    <a href="#" class="brand-link">
         <img src="{{ asset('img/logo.jpeg') }}" alt="image here" class="brand-image img-circle elevation-3"
              style="opacity: .8">
         <span class="brand-text font-weight-light">Alumni Portal</span>
@@ -134,15 +134,15 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/backend/alumni/events/') }}"
-                           class="nav-link {{ routeNameMatched('events.*') }}">
-                            <i class="nav-icon fa fa-calendar-alt"></i>
-                            <p>
-                                Events
-                            </p>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ url('/backend/alumni/events/') }}"--}}
+{{--                           class="nav-link {{ routeNameMatched('events.*') }}">--}}
+{{--                            <i class="nav-icon fa fa-calendar-alt"></i>--}}
+{{--                            <p>--}}
+{{--                                Events--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                 @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
                     <li class="nav-item">

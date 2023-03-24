@@ -188,7 +188,7 @@
                              alt="User Image">
                         <p>
                             {{ userFullName() }}
-                            <small>Member since Nov. 2012</small>
+
                         </p>
                     </li>
                     <!-- Menu Body -->

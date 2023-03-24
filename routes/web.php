@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/events', EventController::class);
 
         Route::resource('/jobs', JobBoardController::class);
+        Route::get('/jobs/{id}/apply', [JobBoardController::class, 'applyJobView']);
+        Route::post('/job/apply', [JobBoardController::class, 'applyJob']);
 
     });
 
@@ -65,7 +67,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'checkRole:Alumni'], function () {
         Route::group(['prefix' => 'backend/alumni'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-            Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
             Route::resource('/job-board', AdminJobBoardController::class);
         });
     });

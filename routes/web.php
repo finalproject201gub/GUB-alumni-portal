@@ -56,7 +56,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'checkRole:Alumni'], function () {
         Route::group(['prefix' => 'backend/alumni'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-            Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
             Route::resource('/job-board', AdminJobBoardController::class);
         });
     });

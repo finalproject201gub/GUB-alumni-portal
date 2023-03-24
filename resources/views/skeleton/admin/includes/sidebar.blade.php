@@ -92,6 +92,14 @@
                         </ul>
                     </li>
                     <li class="nav-item">
+                        <a href="{{ url('/admin/posts/') }}" class="nav-link">
+                            <i class="nav-icon fas fa-sticky-note"></i>
+                            <p>
+                                Posts
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{ url('/admin/events/') }}" class="nav-link {{ routeNameMatched('events.*') }}">
                             <i class="nav-icon fa fa-calendar-alt"></i>
                             <p>
@@ -150,7 +158,7 @@
                 @if (auth()->user()->role->id == \App\Models\Role::ROLE_ADMIN)
                     <li class="nav-item">
                         <a href="{{ url('/admin/users/') }}" class="nav-link ">
-                            <i class="nav-icon fa fa-calendar-alt"></i>
+                            <i class="nav-icon fa fa-users"></i>
                             <p>
                                 Users
                             </p>

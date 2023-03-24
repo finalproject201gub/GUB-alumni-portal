@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\JobBoardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Frontend\ProfileController;
 
 require __DIR__ . '/auth.php';
@@ -41,6 +42,13 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             //Events
             Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
+
+            Route::get('/posts', [PostController::class, 'index']);
+            Route::get('/posts/{id}', [PostController::class, 'edit']);
+            Route::put('/posts/{id}', [PostController::class, 'update']);
+            Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+
+
 
             // Job Board
             Route::resource('/job-board', AdminJobBoardController::class);

@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 require __DIR__ . '/auth.php';
 
 
-
 Route::group(['middleware' => 'auth'], function () {
 
 
@@ -50,11 +49,18 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['prefix' => 'backend/alumni', 'middleware' => 'checkRole:Alumni'], function () {
-
+    Route::group(['middleware' => 'checkRole:Alumni'], function () {
+        Route::group(['prefix' => 'backend/alumni'], function () {
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
+            Route::resource('/job-board', AdminJobBoardController::class);
+        });
     });
 
-    Route::group(['prefix' => 'backend/student', 'middleware' => 'checkRole:Student'], function () {
+    Route::group(['middleware' => 'checkRole:Student'], function () {
+        Route::group(['prefix' => 'backend/student'], function () {
+            Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        });
 
     });
 

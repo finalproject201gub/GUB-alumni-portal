@@ -24,10 +24,10 @@ class CheckRole
         if ($roleName == 'Admin' && $request->user()->role->name != 'Admin') {
             return abort(403);
         } // check if user role is not Alumni show 404 page
-        else if ($roleName == 'Alumni' && $request->user()->role != 'Alumni') {
+        else if ($roleName == 'Alumni' && $request->user()->role->name != 'Alumni') {
             return abort(403);
         } // check if user role is not Student show 404 page
-        else if ($roleName == 'Student' && $request->user()->role != 'Student') {
+        else if ($roleName == 'Student' && $request->user()->role->name != 'Student') {
             return abort(403);
         }
 

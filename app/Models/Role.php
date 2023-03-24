@@ -12,4 +12,10 @@ class Role extends Model
     protected $table = 'roles';
 
     protected $fillable = ["name"];
+
+    const ROLE_ADMIN = 1;
+    const ROLE_ALUMNI = 2;
+    const ROLE_STUDENT = 3;
+    const ROLE_FACULTY = 4;
+
 }

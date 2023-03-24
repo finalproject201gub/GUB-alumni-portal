@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
 
-    Route::group(['middleware' => 'checkRole:Admin'], function () {
+    Route::group(['middleware' => 'checkRole:Admin', 'as' => 'admin.'], function () {
         Route::group(['prefix' => 'admin'], function () {
             Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
             //Events
@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['middleware' => 'checkRole:Alumni'], function () {
+    Route::group(['middleware' => 'checkRole:Alumni', 'as' => 'alumni.'], function () {
         Route::group(['prefix' => 'backend/alumni'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
             Route::resource('/events', \App\Http\Controllers\Backend\EventController::class);
@@ -61,7 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
-    Route::group(['middleware' => 'checkRole:Student'], function () {
+    Route::group(['middleware' => 'checkRole:Student', 'as' => 'student.'], function () {
         Route::group(['prefix' => 'backend/student'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         });

@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/events', EventController::class);
 
         Route::resource('/jobs', JobBoardController::class);
+        Route::get('/jobs/{id}/apply', [JobBoardController::class, 'applyJobView']);
+        Route::post('/job/apply', [JobBoardController::class, 'applyJob']);
 
     });
 

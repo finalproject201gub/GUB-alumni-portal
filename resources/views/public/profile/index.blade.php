@@ -12,10 +12,10 @@
                     <div class="widget-user-header text-white"
                         style="background: url('{{ asset('img/photo2.png') }}') center center;">
                         <h3 class="widget-user-username text-right bg mb-2">
-                            <span class="bg-gradient-danger px-1">Mohammad Shah Alam</span>
+                            <span class="bg-gradient-danger px-1">{{ auth()->user()->name }}</span>
                         </h3>
                         <h5 class="widget-user-desc text-right">
-                            <span class="bg-gradient-success px-1">Junior Software Engineer</span>
+                            <span class="bg-gradient-success px-1">{{ ucfirst(auth()->user()->type) }}</span>
                         </h5>
                     </div>
                     <div class="widget-user-image">

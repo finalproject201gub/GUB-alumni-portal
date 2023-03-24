@@ -14,4 +14,24 @@ class ProfileController extends Controller
 
         return view('public.profile.index', compact('userData'));
     }
+
+    public function update(Request $request, $id)
+    {
+
+        $request->validate([
+            'batch_number' => 'nullable',
+            'passing_year' => 'nullable',
+            'department_id' => 'nullable',
+            'student_id_number' => 'nullable',
+            'phone' => 'nullable',
+            'address' => 'nullable',
+        ]);
+
+
+        $user = User::find($id)->update($request->all());
+
+        return redirect()
+            ->back()
+            ->with('success', 'Profile Updated Successfully');
+    }
 }

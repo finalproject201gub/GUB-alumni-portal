@@ -27,6 +27,7 @@ Route::group(['middleware' => 'auth'], function () {
         // ->name('index');
 
         Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+        Route::put('/profile/{user_id}/', [ProfileController::class, 'update']);
 
         Route::resource('/events', EventController::class);
 

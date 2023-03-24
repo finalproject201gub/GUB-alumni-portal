@@ -126,15 +126,15 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ url('/backend/alumni/events/') }}"
-                           class="nav-link {{ routeNameMatched('events.*') }}">
-                            <i class="nav-icon fa fa-calendar-alt"></i>
-                            <p>
-                                Events
-                            </p>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ url('/backend/alumni/events/') }}"--}}
+{{--                           class="nav-link {{ routeNameMatched('events.*') }}">--}}
+{{--                            <i class="nav-icon fa fa-calendar-alt"></i>--}}
+{{--                            <p>--}}
+{{--                                Events--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
                 @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
                     <li class="nav-item">

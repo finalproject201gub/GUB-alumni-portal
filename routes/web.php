@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\JobBoardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
+use App\Http\Controllers\Frontend\ProfileController;
 
 require __DIR__ . '/auth.php';
 
@@ -25,9 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
             ->where('any', '.*');
         // ->name('index');
 
-        Route::get('/profile', function () {
-            return view('public.profile.index');
-        })->name('profile');
+        Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 
         Route::resource('/events', EventController::class);
 

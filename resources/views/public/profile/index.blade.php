@@ -22,7 +22,7 @@
                         <img class="img-circle" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Avatar">
                     </div>
                     <div class="card-footer">
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-sm-4 border-right">
                                 <div class="description-block">
                                     <h5 class="description-header">3,200</h5>
@@ -46,14 +46,14 @@
                                 </div>
                                 <!-- /.description-block -->
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <!-- Profile Image -->
                         <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
+                            {{-- <div class="card-body box-profile"> --}}
                                 {{-- <div class="text-center">
                                     <img class="profile-user-img img-fluid img-circle"
                                         src="{{ asset('img/user1-128x128.jpg') }}" alt="User profile picture">
@@ -75,8 +75,8 @@
                                     </li>
                                 </ul> --}}
 
-                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
-                            </div>
+                                {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
+                            {{-- </div> --}}
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
@@ -91,7 +91,15 @@
                                 <strong><i class="fas fa-book mr-1"></i> Education</strong>
 
                                 <p class="text-muted">
-                                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                                    Green University of Bangladesh
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fa-solid fa-graduation-cap"></i> Department</strong>
+
+                                <p class="text-muted">
+                                    Green University of Bangladesh
                                 </p>
 
                                 <hr>

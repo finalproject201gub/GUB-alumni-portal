@@ -13,6 +13,10 @@
                         <form action="{{ url('/job/apply') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
+
+                            <input type="hidden" name="job_board_id" value="{{ $jobPostId }}">
+                            <input type="hidden" name="applied_by" value="{{ $userId }}">
+
                             <div class="form-group">
                                 <label for="">Resume (*)</label>
                                 <input class="form-control" type="file"

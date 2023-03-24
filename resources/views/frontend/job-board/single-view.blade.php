@@ -92,11 +92,11 @@
                                 </div>
 
                                 <div class="job-apply" style="margin: 0 auto;">
-                                    <form action="" method="POST">
-                                        @csrf
-                                        @method('POST')
-                                        <button class="btn btn-success">Apply Online</button>
-                                    </form>
+{{--                                    <form action="" method="POST">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('POST')--}}
+                                        <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.$jobBoard->user->id) }}" class="btn btn-success">Apply Online</a>
+{{--                                    </form>--}}
                                 </div>
                             </div>
 

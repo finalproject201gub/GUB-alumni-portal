@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobApplicationDetail;
 use App\Models\JobBoard;
 use Illuminate\Http\Request;
 
@@ -28,5 +29,24 @@ class JobBoardController extends Controller
         return view('frontend.job-board.single-view', [
             'jobBoard' => $jobBoard,
         ]);
+    }
+
+    public function applyJobView(Request $request, $id)
+    {
+        $jobPostId = $id ?? null;
+        $userId = $request->get('user_id') ?? null;
+
+        return view('frontend.job-board.apply-job', [
+            'jobPostId' => $jobPostId,
+            'userId' => $userId,
+        ]);
+    }
+
+    public function applyJob(Request $request)
+    {
+        $resumePath = $request->get("resume_path") ?? null;
+        $linkedinUrl = $request->get("linkedin_url") ?? null;
+        $githubUrl = $request->get("github_url") ?? null;
+        $portfolioUrl = $request->get("portfolio_url") ?? null;
     }
 }

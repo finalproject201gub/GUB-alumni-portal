@@ -35,27 +35,37 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard') }}" class="nav-link">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
-
-                @if (auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
+                @if (auth()->user()->role->id == \App\Models\Role::ROLE_ADMIN)
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ url('/admin/dashboard') }}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Your Application
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+                @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_ALUMNI)
+                    <li class="nav-item">
+                        <a href="{{ url('/backend/alumni') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                            </p>
+                        </a>
+                    </li>
+                @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
+                    <li class="nav-item">
+                        <a href="{{ url('/backend/student') }}" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
                             </p>
                         </a>
                     </li>
                 @endif
 
-                @if (auth()->user()->role->id == \App\Models\Role::ROLE_ADMIN || auth()->user()->role->id == \App\Models\Role::ROLE_ALUMNI)
+
+                @if (auth()->user()->role->id == \App\Models\Role::ROLE_ADMIN)
                     <li class="nav-item {{ routeNameMatched('job-board.*', 'menu-open') }}">
                         <a href="#" class="nav-link {{ routeNameMatched('job-board.*') }}">
                             <i class="nav-icon fas fa-copy"></i>
@@ -66,14 +76,14 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="{{ route('job-board.create') }}"
+                                <a href="{{ url('/admin/job-board/create') }}"
                                    class="nav-link {{ routeNameMatched('job-board.create') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Create Jobs</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('job-board.index') }}"
+                                <a href="{{ url('/admin/job-board/') }}"
                                    class="nav-link {{ routeNameMatched('job-board.index') }}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>All Jobs</p>
@@ -82,10 +92,56 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('events.index') }}" class="nav-link {{ routeNameMatched('events.*') }}">
+                        <a href="{{ url('/admin/events/') }}" class="nav-link {{ routeNameMatched('events.*') }}">
                             <i class="nav-icon fa fa-calendar-alt"></i>
                             <p>
                                 Events
+                            </p>
+                        </a>
+                    </li>
+
+                @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_ALUMNI)
+                    <li class="nav-item {{ routeNameMatched('job-board.*', 'menu-open') }}">
+                        <a href="#" class="nav-link {{ routeNameMatched('job-board.*') }}">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Job Board
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ url('/backend/alumni/job-board/create') }}"
+                                   class="nav-link {{ routeNameMatched('job-board.create') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Create Jobs</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/backend/alumni/job-board/') }}"
+                                   class="nav-link {{ routeNameMatched('job-board.index') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>All Jobs</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url('/backend/alumni/events/') }}"
+                           class="nav-link {{ routeNameMatched('events.*') }}">
+                            <i class="nav-icon fa fa-calendar-alt"></i>
+                            <p>
+                                Events
+                            </p>
+                        </a>
+                    </li>
+
+                @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Your Application
                             </p>
                         </a>
                     </li>

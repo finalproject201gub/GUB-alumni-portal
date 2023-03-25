@@ -11,7 +11,7 @@
             </div>
         </div>
         <div class="row">
-            <Posts>
+            <Posts v-if="posts.length">
                 <SinglePost
                     v-for="post in posts"
                     :key="post.id"
@@ -21,6 +21,13 @@
                     @deleteButtonClick="deletePost"
                 />
             </Posts>
+            <div v-else class="col-md-12">
+                <div class="card card-widget">
+                    <div class="card-body">
+                        <p class="text-center">No posts to show</p>
+                    </div>
+                </div>
+            </div>
             <!-- /.col -->
             <!--            <div class="col-md-12">-->
             <!--                &lt;!&ndash; Box Comment &ndash;&gt;-->

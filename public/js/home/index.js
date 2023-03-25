@@ -2439,7 +2439,7 @@ var render = function render() {
     }
   })])]), _vm._v(" "), _c("div", {
     staticClass: "row"
-  }, [_c("Posts", _vm._l(_vm.posts, function (post) {
+  }, [_vm.posts.length ? _c("Posts", _vm._l(_vm.posts, function (post) {
     return _c("SinglePost", {
       key: post.id,
       attrs: {
@@ -2451,7 +2451,15 @@ var render = function render() {
         deleteButtonClick: _vm.deletePost
       }
     });
-  }), 1)], 1), _vm._v(" "), _c("modal", {
+  }), 1) : _c("div", {
+    staticClass: "col-md-12"
+  }, [_c("div", {
+    staticClass: "card card-widget"
+  }, [_c("div", {
+    staticClass: "card-body"
+  }, [_c("p", {
+    staticClass: "text-center"
+  }, [_vm._v("No posts to show")])])])])], 1), _vm._v(" "), _c("modal", {
     attrs: {
       name: "create-update-post-modal",
       adaptive: true,

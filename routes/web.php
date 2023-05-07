@@ -16,6 +16,7 @@ use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\LikeController;
 
 require __DIR__ . '/auth.php';
 
@@ -84,6 +85,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{id}', UpdatePostApiController::class);
             Route::delete('/{id}', DeletePostApiController::class);
             Route::post('store', CreatePostApiController::class);
+            Route::post('/{post}/like-insert-delete', [LikeController::class, 'likeInsertDelete']);
         });
 
         Route::get('/static-data-for-home-page', StaticDataForHomePageApiController::class);

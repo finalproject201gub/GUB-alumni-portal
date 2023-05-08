@@ -2983,7 +2983,10 @@ var render = function render() {
       href: "#"
     },
     on: {
-      click: _vm.handleCommentBtnClick
+      click: function click($event) {
+        $event.preventDefault();
+        return _vm.handleCommentBtnClick.apply(null, arguments);
+      }
     }
   }, [_c("i", {
     staticClass: "fa fa-paper-plane"

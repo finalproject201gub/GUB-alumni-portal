@@ -50,7 +50,7 @@
                     <div class="img-push d-flex">
                         <input type="text" v-model="comment_body" class="form-control form-control-sm mr-1"
                                placeholder="Press enter to post comment">
-                        <a href="#" @click="handleCommentBtnClick"><i class="fa fa-paper-plane"></i></a>
+                        <a href="#" @click.prevent="handleCommentBtnClick"><i class="fa fa-paper-plane"></i></a>
                     </div>
                 </form>
             </div>

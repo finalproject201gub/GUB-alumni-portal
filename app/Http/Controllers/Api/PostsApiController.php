@@ -29,6 +29,8 @@ class PostsApiController extends Controller
                     'content' => $post->content,
                     'is_liked' => $post->likes()->where('user_id', auth()->id())->exists(),
                     'like_count' => $post->likes()->count(),
+                    'comment_count' => $post->comments()->count(),
+                    'comments' => $post->comments()->with('user')->latest()->get(),
                     'created_at' => $post->created_at->diffForHumans(),
                     'updated_at' => $post->updated_at,
                 ];

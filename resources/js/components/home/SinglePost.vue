@@ -28,13 +28,17 @@
                 <!--                <img class="img-fluid pad" src="/img/photo2.png" alt="Photo">-->
 
                 <p>{{ post.content }}</p>
-                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
+                <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
                     Share
-                </button>
-                <button type="button" class="btn btn-default btn-sm"><i class="far fas fa-heart"></i>
+                </button> -->
+                <button type="button" @click="handleLikeButtonClick" class="btn btn-default btn-sm">
+                    <i :style="post.is_liked ? 'color: red' : ''" class="far fas fa-heart"></i>
+                    <!-- red heart -->
                     Like
                 </button>
-                <!--                <span class="float-right text-muted">127 likes - 3 comments</span>-->
+                <span class="float-right text-muted">{{ post.like_count }} likes
+                    <!-- - 3 comments -->
+                </span>
             </div>
             <!-- /.card-body -->
             <!--            <div class="card-footer card-comments">-->
@@ -110,6 +114,16 @@ export default {
                     }
                 ]
             });
+        },
+        handleLikeButtonClick: async function () {
+          try {
+            const { data } = await axios.post(`/api/v1/posts/${this.post.id}/like-insert-delete`);
+            this.post.is_liked = data.is_liked;
+            this.post.like_count = data.like_count;
+          } catch (e) {
+            console.error(e);
+          }
+
         }
     }
 }

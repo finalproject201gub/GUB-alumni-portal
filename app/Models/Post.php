@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Traits\CommonGlobal;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Like;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
@@ -44,5 +44,9 @@ class Post extends Model
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id')->withDefault();
+    }
+
+    public function likes() {
+        return $this->morphMany(Like::class, 'likeable');
     }
 }

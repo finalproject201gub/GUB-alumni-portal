@@ -12,7 +12,7 @@ class PostsApiController extends Controller
     {
         try {
             $posts = Post::query()
-                ->with('user', 'likes')
+                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at')
                 ->active()
                 ->latest()
                 ->get();
@@ -30,7 +30,7 @@ class PostsApiController extends Controller
                     'is_liked' => $post->likes()->where('user_id', auth()->id())->exists(),
                     'like_count' => $post->likes()->count(),
                     'comment_count' => $post->comments()->count(),
-                    'comments' => $post->comments()->with('user')->get(),
+                    'comments' => $post->comments()->with('user:id,name','replies')->latest()->take(1)->get(),
                     'created_at' => $post->created_at->diffForHumans(),
                     'updated_at' => $post->updated_at,
                 ];

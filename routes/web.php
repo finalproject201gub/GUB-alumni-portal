@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\UpdatePostApiController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\JobBoardController;
+use App\Http\Controllers\Api\PostCommentApiController;
 use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
@@ -90,7 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             //comment routes
             Route::prefix('comments')->group(function () {
-                Route::get('/{postId}', [PostCommentController::class, 'index']);
+                Route::get('/{postId}', PostCommentApiController::class);
                 Route::post('/{postId}', [PostCommentController::class, 'store']);
                 Route::put('/{id}', [PostCommentController::class, 'update']);
                 Route::delete('/{id}', [PostCommentController::class, 'destroy']);

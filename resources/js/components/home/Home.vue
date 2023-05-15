@@ -47,8 +47,8 @@
 
 <script>
 import PostCreateUpdateModal from './PostCreateUpdateModal.vue';
-import Posts from "./Posts";
-import SinglePost from "./SinglePost";
+import Posts from "./Posts.vue";
+import SinglePost from "./SinglePost.vue";
 
 export default {
     components: {

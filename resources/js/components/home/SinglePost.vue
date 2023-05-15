@@ -40,7 +40,7 @@
                 </span>
             </div>
             <!-- /.card-body -->
-                <Comments :comments="post.comments"/>
+                <Comments :postId="post.id" :comments="post.comments" :commentCount="post.comment_count"/>
             <!--             /.card-footer -->
             <div class="card-footer">
                 <form action="#" method="post">

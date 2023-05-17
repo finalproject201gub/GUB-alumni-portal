@@ -120,10 +120,9 @@ export default {
         },
         pushComments: function (comments, postId) {
             if(comments.length == 0) return;
-            
+
             this.posts = this.posts.map(post => {
                 if (post.id === postId) {
-                    post.comments = [];
                     post.comments.push(...comments);
                 }
                 return post;

@@ -2243,7 +2243,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.posts = this.posts.map(function (post) {
         if (post.id === postId) {
           var _post$comments;
-          post.comments = [];
           (_post$comments = post.comments).push.apply(_post$comments, _toConsumableArray(comments));
         }
         return post;
@@ -2655,9 +2654,9 @@ var render = function render() {
     _c = _vm._self._c;
   return !!_vm.comments.length ? _c("div", {
     staticClass: "card-footer card-comments"
-  }, [_vm._l(_vm.comments, function (comment) {
+  }, [_vm._l(_vm.comments, function (comment, index) {
     return _c("SingleComment", {
-      key: comment.id,
+      key: index,
       attrs: {
         comment: comment
       }

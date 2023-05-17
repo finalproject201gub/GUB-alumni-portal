@@ -1,6 +1,6 @@
 <template>
     <div class="card-footer card-comments" v-if="!!comments.length">
-        <SingleComment v-for="comment in comments" :key="comment.id" :comment="comment"></SingleComment>
+        <SingleComment v-for="(comment, index) in comments" :key="index" :comment="comment"></SingleComment>
         <a href="#" @click.prevent="handleLoadMoreComment" class="text-primary load-more-comment-btn">Load more comments</a>
     </div>
 </template>

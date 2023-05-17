@@ -2663,9 +2663,6 @@ var render = function render() {
     });
   }), _vm._v(" "), _c("a", {
     staticClass: "text-primary load-more-comment-btn",
-    attrs: {
-      href: "#"
-    },
     on: {
       click: function click($event) {
         $event.preventDefault();

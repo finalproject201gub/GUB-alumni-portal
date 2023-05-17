@@ -36,45 +36,37 @@
                     <!-- red heart -->
                     Like
                 </button>
-                <span class="float-right text-muted">{{ post.like_count }} likes
-                    <!-- - 3 comments -->
+                <span class="float-right text-muted">{{ post.like_count }} likes - {{ post.comment_count }} comments
                 </span>
             </div>
             <!-- /.card-body -->
-            <!--            <div class="card-footer card-comments">-->
-            <!--                <div class="card-comment">-->
-            <!--                    &lt;!&ndash; User image &ndash;&gt;-->
-            <!--                    <img class="img-circle img-sm" src="/img/user1-128x128.jpg" alt="User Image">-->
-
-            <!--                    <div class="comment-text">-->
-            <!--                                <span class="username">-->
-            <!--                                    Maria Gonzales-->
-            <!--                                    <span class="text-muted float-right">8:03 PM Today</span>-->
-            <!--                                </span>&lt;!&ndash; /.username &ndash;&gt;-->
-            <!--                        It is a long established fact that a reader will be distracted-->
-            <!--                        by the readable content of a page when looking at its layout.-->
-            <!--                    </div>-->
-            <!--                    &lt;!&ndash; /.comment-text &ndash;&gt;-->
-            <!--                </div>-->
-            <!--            </div>-->
-            <!-- /.card-footer -->
-            <!--            <div class="card-footer">-->
-            <!--                <form action="#" method="post">-->
-            <!--                    <img class="img-fluid img-circle img-sm" src="/img/user1-128x128.jpg"-->
-            <!--                         alt="Alt Text">-->
-            <!--                    &lt;!&ndash; .img-push is used to add margin to elements next to floating images &ndash;&gt;-->
-            <!--                    <div class="img-push">-->
-            <!--                        <input type="text" class="form-control form-control-sm"-->
-            <!--                               placeholder="Press enter to post comment">-->
-            <!--                    </div>-->
-            <!--                </form>-->
-            <!--            </div>-->
+                <Comments
+                :postId="post.id"
+                :comments="post.comments"
+                :commentCount="post.comment_count"
+                @load-more-comment="handleLoadMoreComment"
+                />
+            <!--             /.card-footer -->
+            <div class="card-footer">
+                <form action="#" method="post">
+                    <img class="img-fluid img-circle img-sm" src="/img/user1-128x128.jpg"
+                         alt="Alt Text">
+                    <!-- .img-push is used to add margin to elements next to floating images -->
+                    <div class="img-push d-flex">
+                        <input type="text" v-model="comment_body" @keypress.enter.prevent="handleEnterKeyPress" class="form-control form-control-sm mr-1"
+                               placeholder="Press enter to post comment">
+                        <a href="#" @click.prevent="handleCommentBtnClick"><i class="fa fa-paper-plane"></i></a>
+                    </div>
+                </form>
+            </div>
             <!-- /.card-footer -->
         </div>
     </div>
 </template>
 
 <script>
+import Comments from "./Comments";
+import SingleComment from './SingleComment';
 export default {
     name: "SinglePost",
     props: {
@@ -87,6 +79,16 @@ export default {
             type: Object,
             default: () => {
             }
+        }
+    },
+    components: {
+        Comments,
+        SingleComment
+    },
+    data() {
+        return {
+            comment_body: '',
+            currentOffset: 1,
         }
     },
     methods: {
@@ -116,14 +118,43 @@ export default {
             });
         },
         handleLikeButtonClick: async function () {
-          try {
-            const { data } = await axios.post(`/api/v1/posts/${this.post.id}/like-insert-delete`);
-            this.post.is_liked = data.is_liked;
-            this.post.like_count = data.like_count;
-          } catch (e) {
-            console.error(e);
-          }
-
+            try {
+                const {data} = await axios.post(`/api/v1/posts/${this.post.id}/like-insert-delete`);
+                this.post.is_liked = data.is_liked;
+                this.post.like_count = data.like_count;
+            } catch (e) {
+                console.error(e);
+            }
+        },
+        handleCommentBtnClick: async function () {
+            this.postAComment();
+        },
+        handleEnterKeyPress: function (event) {
+            if (event.keyCode === 13) {
+                this.postAComment();
+            }
+        },
+        postAComment: async function () {
+            try {
+                const {data: { data }} = await axios.post(`/api/v1/posts/comments/${this.post.id}`, {
+                    body: this.comment_body
+                });
+                this.post.comments.push(data);
+                this.post.comment_count++;
+                this.comment_body = '';
+            } catch (e) {
+                console.error(e);
+            }
+        },
+        handleLoadMoreComment: async function (postId) {
+            try {
+                const {data: {data}} = await axios.get(`/api/v1/posts/comments/${this.post.id}/?offset=${this.currentOffset}`);
+                // this.comments.push(...this.comments, ...data);
+                this.currentOffset += 5;
+                this.$emit('pushComments', data, this.post.id);
+            } catch (error) {
+                console.log(error);
+            }
         }
     }
 }

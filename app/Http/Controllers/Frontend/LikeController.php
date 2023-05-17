@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Post;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
-    public function likeInsertDelete(Post $post)
+    public function likeInsertDeleteToPost(Post $post)
     {
         try {
             $like = $post->likes()->where('user_id', auth()->id())->first();
@@ -20,12 +21,35 @@ class LikeController extends Controller
                 $data['is_liked'] = true;
             }
             $data['like_count'] = $post->likes()->count();
-            
+
             return response()->json($data, 200);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => 'Error'
+            ]);
+        }
+    }
+
+    public function likeInsertDeleteToComment($commentId)
+    {
+        try {
+            $comment = Comment::findOrFail($commentId);
+            $like = $comment->likes()->where('user_id', auth()->id())->first();
+            if ($like) {
+                $like->delete();
+                $data['is_liked'] = false;
+            } else {
+                $this->like($comment, Comment::class);
+                $data['is_liked'] = true;
+            }
+            $data['like_count'] = $comment->likes()->count();
+
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Error'.$e->getMessage(),
             ]);
         }
     }

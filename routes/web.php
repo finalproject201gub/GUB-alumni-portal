@@ -2,21 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PostsApiController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\LikeController;
 use App\Http\Controllers\Frontend\EventController;
+use App\Http\Controllers\Api\PostCommentController;
+use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Api\CreatePostApiController;
 use App\Http\Controllers\Api\DeletePostApiController;
 use App\Http\Controllers\Api\UpdatePostApiController;
-use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
-use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\JobBoardController;
+use App\Http\Controllers\Api\PostCommentApiController;
+use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
 use App\Http\Controllers\Api\StaticDataForHomePageApiController;
-use App\Http\Controllers\Backend\PostController;
-use App\Http\Controllers\Frontend\ProfileController;
-use App\Http\Controllers\Frontend\LikeController;
+use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
 
 require __DIR__ . '/auth.php';
 
@@ -85,7 +87,17 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{id}', UpdatePostApiController::class);
             Route::delete('/{id}', DeletePostApiController::class);
             Route::post('store', CreatePostApiController::class);
-            Route::post('/{post}/like-insert-delete', [LikeController::class, 'likeInsertDelete']);
+            Route::post('/{post}/like-insert-delete', [LikeController::class, 'likeInsertDeleteToPost']);
+
+            //comment routes
+            Route::prefix('comments')->group(function () {
+                Route::get('/{postId}', PostCommentApiController::class);
+                Route::post('/{postId}', [PostCommentController::class, 'store']);
+                Route::put('/{id}', [PostCommentController::class, 'update']);
+                Route::delete('/{id}', [PostCommentController::class, 'destroy']);
+
+                Route::post('/{commentId}/like-insert-delete', [LikeController::class, 'likeInsertDeleteToComment']);
+            });
         });
 
         Route::get('/static-data-for-home-page', StaticDataForHomePageApiController::class);

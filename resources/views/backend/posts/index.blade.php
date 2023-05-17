@@ -47,19 +47,17 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width: 5%">#</th>
-                                        <th style="width: 20%">Author</th>
-                                        <th style="width: 40%">Content</th>
-                                        <th style="width: 15%">Create Date</th>
-                                        <th style="width: 10%">Approve Status</th>
-                                        <th style="width: 10%">Actions</th>
+                                        <th style="width: 10px">#</th>
+                                        <th>Content</th>
+                                        <th style="width: 180px">Create Date</th>
+                                        <th style="width: 150px">Approve Status</th>
+                                        <th style="width: 91px">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @forelse ($posts as $post)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $post->user->name }}</td>
                                             <td>{{ $post->content }}</td>
                                             <td>{{ $post->created_at->diffForHumans() }}</td>
                                             <td>

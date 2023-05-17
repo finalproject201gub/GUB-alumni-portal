@@ -6,7 +6,7 @@
         <div class="comment-text">
             <span class="username">
                 {{ comment.user.name }}
-                <span class="text-muted float-right">{{ comment.created_at }} PM Today</span>
+                <span class="text-muted float-right">{{ formatDateTimeForHuman(comment.created_at) }}</span>
             </span>
             <!-- /.username -->
             {{ comment.body }}
@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import moment from 'moment';
 export default {
     name: "SingleComment",
     props: {
@@ -26,6 +27,9 @@ export default {
         }
     },
     methods: {
+        formatDateTimeForHuman: function (dateTime) {
+            return moment(dateTime).fromNow();
+        }
     }
 }
 </script>

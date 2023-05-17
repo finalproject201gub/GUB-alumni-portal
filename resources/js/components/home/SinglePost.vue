@@ -40,7 +40,12 @@
                 </span>
             </div>
             <!-- /.card-body -->
-                <Comments :postId="post.id" :comments="post.comments" :commentCount="post.comment_count"/>
+                <Comments
+                :postId="post.id"
+                :comments="post.comments"
+                :commentCount="post.comment_count"
+                @load-more-comment="handleLoadMoreComment"
+                />
             <!--             /.card-footer -->
             <div class="card-footer">
                 <form action="#" method="post">
@@ -48,7 +53,7 @@
                          alt="Alt Text">
                     <!-- .img-push is used to add margin to elements next to floating images -->
                     <div class="img-push d-flex">
-                        <input type="text" v-model="comment_body" class="form-control form-control-sm mr-1"
+                        <input type="text" v-model="comment_body" @keypress.enter.prevent="handleEnterKeyPress" class="form-control form-control-sm mr-1"
                                placeholder="Press enter to post comment">
                         <a href="#" @click.prevent="handleCommentBtnClick"><i class="fa fa-paper-plane"></i></a>
                     </div>
@@ -83,6 +88,7 @@ export default {
     data() {
         return {
             comment_body: '',
+            currentOffset: 0,
         }
     },
     methods: {
@@ -121,6 +127,14 @@ export default {
             }
         },
         handleCommentBtnClick: async function () {
+            this.postAComment();
+        },
+        handleEnterKeyPress: function (event) {
+            if (event.keyCode === 13) {
+                this.postAComment();
+            }
+        },
+        postAComment: async function () {
             try {
                 const {data: { data }} = await axios.post(`/api/v1/posts/comments/${this.post.id}`, {
                     body: this.comment_body
@@ -130,6 +144,16 @@ export default {
                 this.comment_body = '';
             } catch (e) {
                 console.error(e);
+            }
+        },
+        handleLoadMoreComment: async function (postId) {
+            try {
+                const {data: {data}} = await axios.get(`/api/v1/posts/comments/${this.post.id}/?offset=${this.currentOffset}`);
+                // this.comments.push(...this.comments, ...data);
+                this.currentOffset += 5;
+                this.$emit('pushComments', data, this.post.id);
+            } catch (error) {
+                console.log(error);
             }
         }
     }

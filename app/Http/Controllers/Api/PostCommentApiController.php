@@ -13,7 +13,7 @@ class PostCommentApiController extends Controller
     {
         try {
             $offset = request()->get('offset', 0);
-            $limit = request()->get('limit', 10);
+            $limit = request()->get('limit', 5);
 
             $data = Comment::query()
                 ->where(['commentable_type' => Post::class, 'commentable_id' => $postId])

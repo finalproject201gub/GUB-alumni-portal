@@ -88,7 +88,7 @@ export default {
     data() {
         return {
             comment_body: '',
-            currentOffset: 0,
+            currentOffset: 1,
         }
     },
     methods: {

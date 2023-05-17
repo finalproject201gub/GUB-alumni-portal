@@ -13,6 +13,13 @@ class Comment extends Model
         'body',
     ];
 
+    protected $appends = ['like_count'];
+
+    public function getLikeCountAttribute()
+    {
+        return $this->likes()->count();
+    }
+
     public function commentable(): \Illuminate\Database\Eloquent\Relations\MorphTo
     {
         return $this->morphTo();
@@ -28,5 +35,10 @@ class Comment extends Model
         return $this
                 ->hasMany(Comment::class, 'commentable_id')
                 ->where('commentable_type', self::class);
+    }
+
+    public function likes(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Like::class, 'likeable');
     }
 }

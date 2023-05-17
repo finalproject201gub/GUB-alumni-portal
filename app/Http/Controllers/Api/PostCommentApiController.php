@@ -17,10 +17,20 @@ class PostCommentApiController extends Controller
 
             $data = Comment::query()
                 ->where(['commentable_type' => Post::class, 'commentable_id' => $postId])
-                ->with('user')
+                ->with('user:id,name')
                 ->offset($offset)
                 ->limit($limit)
-                ->get();
+                ->get()
+                ->map(function ($comment) {
+                    return [
+                        'id' => $comment->id,
+                        'body' => $comment->body,
+                        'commented_by' => $comment->user->name,
+                        'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
+                        'like_count' => $comment->likes()->count(),
+                        'created_at' => $comment->created_at,
+                    ];
+                });
 
             return response()->json(
                 [

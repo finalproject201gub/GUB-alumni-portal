@@ -30,7 +30,22 @@ class PostsApiController extends Controller
                     'is_liked' => $post->likes()->where('user_id', auth()->id())->exists(),
                     'like_count' => $post->likes()->count(),
                     'comment_count' => $post->comments()->count(),
-                    'comments' => $post->comments()->with('user:id,name','replies')->latest()->take(1)->get(),
+                    'comments' => $post
+                    ->comments()
+                    ->with('user:id,name','replies')
+                    ->latest()
+                    ->take(1)
+                    ->get()
+                    ->map(function ($comment) {
+                        return [
+                            'id' => $comment->id,
+                            'body' => $comment->body,
+                            'commented_by' => $comment->user->name,
+                            'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
+                            'like_count' => $comment->likes()->count(),
+                            'created_at' => $comment->created_at,
+                        ];
+                    }),
                     'created_at' => $post->created_at->diffForHumans(),
                     'updated_at' => $post->updated_at,
                 ];

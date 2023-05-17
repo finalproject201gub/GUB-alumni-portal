@@ -87,7 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/{id}', UpdatePostApiController::class);
             Route::delete('/{id}', DeletePostApiController::class);
             Route::post('store', CreatePostApiController::class);
-            Route::post('/{post}/like-insert-delete', [LikeController::class, 'likeInsertDelete']);
+            Route::post('/{post}/like-insert-delete', [LikeController::class, 'likeInsertDeleteToPost']);
 
             //comment routes
             Route::prefix('comments')->group(function () {
@@ -95,6 +95,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/{postId}', [PostCommentController::class, 'store']);
                 Route::put('/{id}', [PostCommentController::class, 'update']);
                 Route::delete('/{id}', [PostCommentController::class, 'destroy']);
+
+                Route::post('/{commentId}/like-insert-delete', [LikeController::class, 'likeInsertDeleteToComment']);
             });
         });
 

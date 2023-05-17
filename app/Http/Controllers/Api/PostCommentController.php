@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Notifications\NewComment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Notifications\NewCommentNotification;
 
 class PostCommentController extends Controller
 {
@@ -37,10 +39,22 @@ class PostCommentController extends Controller
                 'user_id' => auth()->user()->id,
                 'body' => $request->body,
             ]);
-            $comment = $comment->load('user');
+
+            //send notification
+            $post->user->notify(new NewComment($comment));
+
+            $commentData = [
+                'id' => $comment->id,
+                'body' => $comment->body,
+                'commented_by' => $comment->user->name,
+                'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
+                'like_count' => $comment->likes()->count(),
+                'created_at' => $comment->created_at,
+            ];
+
             return response()->json([
                 'status' => 'success',
-                'data' => $comment,
+                'data' => $commentData  ,
             ]);
         } catch (\Exception $e) {
             return response()->json([

@@ -1,24 +1,24 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PostsApiController;
-use App\Http\Controllers\Backend\PostController;
-use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\LikeController;
-use App\Http\Controllers\Frontend\EventController;
-use App\Http\Controllers\Api\PostCommentController;
-use App\Http\Controllers\Frontend\ProfileController;
 use App\Http\Controllers\Api\CreatePostApiController;
 use App\Http\Controllers\Api\DeletePostApiController;
+use App\Http\Controllers\Api\PostCommentApiController;
+use App\Http\Controllers\Api\PostCommentController;
+use App\Http\Controllers\Api\PostsApiController;
+use App\Http\Controllers\Api\StaticDataForHomePageApiController;
 use App\Http\Controllers\Api\UpdatePostApiController;
+use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\Backend\AdminJobBoardController;
 use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Frontend\JobBoardController;
-use App\Http\Controllers\Api\PostCommentApiController;
-use App\Http\Controllers\Backend\AdminJobBoardController;
+use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
-use App\Http\Controllers\Api\StaticDataForHomePageApiController;
-use App\Http\Controllers\Auth\RedirectAuthenticatedUsersController;
+use App\Http\Controllers\Frontend\EventController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\JobBoardController;
+use App\Http\Controllers\Frontend\LikeController;
+use App\Http\Controllers\Frontend\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
@@ -54,7 +54,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
 
-
             // Job Board
             Route::resource('/job-board', AdminJobBoardController::class);
 
@@ -70,7 +69,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'checkRole:Alumni'], function () {
         Route::group(['prefix' => 'backend/alumni'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/job-board/applicants', [AdminJobBoardController::class, 'applicantsIndex']);
             Route::resource('/job-board', AdminJobBoardController::class);
+            Route::get('/download-applicants-cv/', [AdminJobBoardController::class, 'downloadCV']);
         });
     });
 

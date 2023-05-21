@@ -132,6 +132,13 @@
                                     <p>All Jobs</p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ url('/backend/alumni/job-board/applicants') }}"
+                                   class="nav-link {{ routeNameMatched('job-board.applicants') }}">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Applicants</p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
 {{--                    <li class="nav-item">--}}

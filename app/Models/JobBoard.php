@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JobBoard extends Model
 {
@@ -39,5 +40,10 @@ class JobBoard extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function jobApplicationDetails(): HasMany
+    {
+        return $this->hasMany(JobApplicationDetail::class, 'job_board_id', 'id');
     }
 }

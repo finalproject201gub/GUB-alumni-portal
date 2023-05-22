@@ -102,10 +102,10 @@
                                     <label for="">Company Information</label>
                                     <textarea class="form-control" rows="3" name="company_information" id="">{{ $jobBoard->company_information }}</textarea>
                                 </div>
-                                <div class="form-group">
-                                    <label for="">Attachment(Image only)</label>
-                                    <input class="form-control" type="file" name="image" id="">
-                                </div>
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="">Attachment(Image only)</label>--}}
+{{--                                    <input class="form-control" type="file" name="image" id="">--}}
+{{--                                </div>--}}
                                 <div class="form-group">
                                     <label for="">Job Type</label>
                                     <select class="form-control" name="job_type">

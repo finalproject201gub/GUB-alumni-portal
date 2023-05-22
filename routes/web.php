@@ -53,6 +53,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/posts/{id}', [PostController::class, 'update']);
             Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
+            Route::get('/users-posts', [PostController::class, 'usersPosts']);
+
 
             // Job Board
             Route::resource('/job-board', AdminJobBoardController::class);

@@ -91,11 +91,19 @@
                             </li>
                         </ul>
                     </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ url('/admin/posts/') }}" class="nav-link">--}}
+{{--                            <i class="nav-icon fas fa-sticky-note"></i>--}}
+{{--                            <p>--}}
+{{--                                Posts--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
                     <li class="nav-item">
-                        <a href="{{ url('/admin/posts/') }}" class="nav-link">
+                        <a href="{{ url('/admin/users-posts/') }}" class="nav-link">
                             <i class="nav-icon fas fa-sticky-note"></i>
                             <p>
-                                Posts
+                                All Users Posts
                             </p>
                         </a>
                     </li>

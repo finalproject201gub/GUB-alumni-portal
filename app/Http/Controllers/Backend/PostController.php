@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -44,5 +44,15 @@ class PostController extends Controller
 
         return redirect('admin/posts')
             ->with('success', 'Post Deleted Successfully');
+    }
+
+    public function usersPosts()
+    {
+        $posts = Post::query()
+            ->with('user')
+            ->latest()
+            ->paginate(15);
+
+        return view('backend.posts.users-posts', compact('posts'));
     }
 }

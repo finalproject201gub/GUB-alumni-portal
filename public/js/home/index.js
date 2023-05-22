@@ -2302,12 +2302,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       formData: {
         content: '',
-        privacy_id: 1
+        privacy_id: 1,
+        images: []
       },
       isSubmitting: false
     };
   },
   methods: {
+    handleFileUpload: function handleFileUpload() {
+      var _this = this;
+      var file = this.$refs.imageUploader.files[0];
+      if (!file.type.includes('image')) {
+        this.$toast.error("Only Image is allowed");
+        this.$refs.imageUploader.value = '';
+        return;
+      }
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        _this.formData.images.push({
+          image_url: reader.result,
+          file: file
+        });
+      };
+      this.$refs.imageUploader.value = '';
+    },
+    removeImage: function removeImage(index) {
+      this.formData.images.splice(index, 1);
+    },
     addPost: function () {
       var _addPost = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
         return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -2766,7 +2788,7 @@ var render = function render() {
       "pivot-y": 0.5,
       "pivot-x": 0.5,
       width: 800,
-      height: 450
+      height: "auto"
     },
     on: {
       "before-open": _vm.beforePostCreateUpdateModalOpen,
@@ -2894,6 +2916,49 @@ var render = function render() {
         if ($event.target.composing) return;
         _vm.$set(_vm.formData, "content", $event.target.value);
       }
+    }
+  }), _vm._v(" "), _vm.formData.images.length ? _c("div", {
+    staticClass: "image-preview-container d-flex"
+  }, _vm._l(_vm.formData.images, function (image, index) {
+    return _c("div", {
+      key: index,
+      staticStyle: {
+        position: "relative"
+      }
+    }, [_c("button", {
+      staticClass: "btn btn-xs btn-danger",
+      staticStyle: {
+        position: "absolute",
+        top: "5px",
+        left: "0"
+      },
+      attrs: {
+        type: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.removeImage(index);
+        }
+      }
+    }, [_c("i", {
+      staticClass: "fas fa-times"
+    })]), _vm._v(" "), image.image_url ? _c("img", {
+      staticClass: "image-preview",
+      attrs: {
+        height: "100",
+        width: "100",
+        src: image.image_url,
+        alt: ""
+      }
+    }) : _vm._e()]);
+  }), 0) : _vm._e(), _vm._v(" "), _c("input", {
+    ref: "imageUploader",
+    staticClass: "form-control",
+    attrs: {
+      type: "file"
+    },
+    on: {
+      change: _vm.handleFileUpload
     }
   })]), _vm._v(" "), _c("div", {
     staticClass: "card-footer"
@@ -3083,7 +3148,16 @@ var render = function render() {
     staticClass: "fas fa-trash"
   })])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _c("button", {
+  }, [_vm._l(_vm.post.images, function (image, index) {
+    return _c("img", {
+      key: index,
+      staticClass: "img-fluid pad",
+      attrs: {
+        src: "storage/" + image.path,
+        alt: "Photo"
+      }
+    });
+  }), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _c("button", {
     staticClass: "btn btn-default btn-sm",
     attrs: {
       type: "button"
@@ -3096,7 +3170,7 @@ var render = function render() {
     style: _vm.post.is_liked ? "color: red" : ""
   }), _vm._v(" "), _vm._v("\n                Like\n            ")]), _vm._v(" "), _c("span", {
     staticClass: "float-right text-muted"
-  }, [_vm._v(_vm._s(_vm.post.like_count) + " likes - " + _vm._s(_vm.post.comment_count) + " comments\n            ")])]), _vm._v(" "), _c("Comments", {
+  }, [_vm._v(_vm._s(_vm.post.like_count) + " likes - " + _vm._s(_vm.post.comment_count) + " comments\n            ")])], 2), _vm._v(" "), _c("Comments", {
     attrs: {
       postId: _vm.post.id,
       comments: _vm.post.comments,

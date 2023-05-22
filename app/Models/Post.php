@@ -53,4 +53,8 @@ class Post extends Model
     public function comments() {
         return $this->morphMany(Comment::class, 'commentable');
     }
+
+    public function images() {
+        return $this->morphMany(Image::class, 'parent_table');
+    }
 }

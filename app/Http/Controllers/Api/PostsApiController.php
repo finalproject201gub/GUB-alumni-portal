@@ -12,7 +12,7 @@ class PostsApiController extends Controller
     {
         try {
             $posts = Post::query()
-                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at')
+                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,parent_table_id,path')
                 ->active()
                 ->latest()
                 ->get();
@@ -44,6 +44,12 @@ class PostsApiController extends Controller
                             'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
                             'like_count' => $comment->likes()->count(),
                             'created_at' => $comment->created_at,
+                        ];
+                    }),
+                    'images' => $post->images->map(function ($image) {
+                        return [
+                            'id' => $image->id,
+                            'path' => $image->path,
                         ];
                     }),
                     'created_at' => $post->created_at->diffForHumans(),

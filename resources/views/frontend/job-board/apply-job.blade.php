@@ -19,12 +19,12 @@
 
                             <div class="form-group">
                                 <label for="">Resume (*)</label>
-                                <input class="form-control" type="file"
+                                <input required class="form-control" type="file"
                                        name="resume_path" id="">
                             </div>
                             <div class="form-group">
                                 <label for="">Linkedin Url</label>
-                                <input class="form-control"  type="text" name="linkedin_url"
+                                <input required class="form-control"  type="text" name="linkedin_url"
                                        id="">
                             </div>
                             <div class="form-group">

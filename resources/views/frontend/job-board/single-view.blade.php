@@ -91,13 +91,23 @@
                                     </div>
                                 </div>
 
+                                @if ($isAppliedOnThisJob)
+                                    <div class="job-apply" style="margin: 0 auto;">
+                                        <a class="btn btn-success">You already applied to this job!</a>
+                                    </div>
+                                @elseif($isDeadlineOver)
+                                    <div class="job-apply" style="margin: 0 auto;">
+                                        <a class="btn btn-danger">Deadline is over!</a>
+                                    </div>
+                                @else
                                 <div class="job-apply" style="margin: 0 auto;">
 {{--                                    <form action="" method="POST">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('POST')--}}
-                                        <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.$jobBoard->user->id) }}" class="btn btn-success">Apply Online</a>
+                                    <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.$jobBoard->user->id) }}" class="btn btn-success">Apply Online</a>
 {{--                                    </form>--}}
                                 </div>
+                                @endif
                             </div>
 
                         </div>

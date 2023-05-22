@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\JobApplicationDetail;
 use App\Models\JobBoard;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JobBoardController extends Controller
 {
@@ -27,9 +29,35 @@ class JobBoardController extends Controller
     {
         $jobBoard = JobBoard::query()->findOrFail($id);
 
+        $isAppliedOnThisJob = $this->isAppliedOnThisJob($id);
+
+        $isDeadlineOver = $this->isDeadlineOver($jobBoard);
+
+
         return view('frontend.job-board.single-view', [
             'jobBoard' => $jobBoard,
+            'isAppliedOnThisJob' => $isAppliedOnThisJob,
+            'isDeadlineOver' => $isDeadlineOver,
         ]);
+    }
+
+    public function isAppliedOnThisJob($id): bool
+    {
+        $userId = Auth::user()->id;
+        return JobApplicationDetail::query()
+            ->where('job_board_id', $id)
+            ->where('applied_by', $userId)
+            ->exists();
+    }
+
+    public function isDeadlineOver($jobBoard): bool
+    {
+        $applicationDeadline = Carbon::parse($jobBoard->application_deadline);
+
+        if (now()->gt($applicationDeadline)) {
+            return true;
+        }
+        return false;
     }
 
     public function applyJobView(Request $request, $id)

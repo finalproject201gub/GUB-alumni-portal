@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobBoardController;
 use App\Http\Controllers\Frontend\LikeController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
@@ -102,6 +103,10 @@ Route::group(['middleware' => 'auth'], function () {
         });
 
         Route::get('/static-data-for-home-page', StaticDataForHomePageApiController::class);
+
+        Route::get('/notifications/unread', [NotificationController::class, 'getUnreadNotifications']);
+
+        Route::get('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
     });
 });
 

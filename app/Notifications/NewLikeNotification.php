@@ -7,21 +7,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewComment extends Notification implements ShouldQueue
+class NewLikeNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-    public $comment;
+    public $like, $likeableType;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($comment)
+    public function __construct($like, $likeableType)
     {
-        // $this->comment = $comment;
-        $this->comment = $comment->load(['commentable.user', 'user']);
+        $this->like = $like->load(['likeable.user', 'user']);
+        $this->likeableType = $likeableType;
     }
 
     /**
@@ -43,12 +43,11 @@ class NewComment extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        return (new MailMessage)
-                    ->subject($this->comment->user->name.' commented on your post')
-                    ->line('Hi! '.$this->comment->commentable->user->name)
-                    ->line($this->comment->user->name.' commented on your post')
-                    ->line($this->comment->body)
-                    ->action('View Post', url('/posts/'.    $this->comment->commentable->id))
+       return (new MailMessage)
+                    ->subject($this->like->user->name.' liked your post')
+                    ->line('Hi! '.$this->like->likeable->user->name)
+                    ->line($this->like->user->name.' liked your post')
+                    ->action('View Post', url('/posts/'.    $this->like->likeable->id))
                     ->line('Thank you for using our application!');
     }
 
@@ -61,12 +60,12 @@ class NewComment extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-            'post_id' => $this->comment->commentable->id,
-            'user_id' => $this->comment->user->id,
-            'user_name' => $this->comment->user->name,
-            'comment_id' => $this->comment->id,
-            'comment_body' => $this->comment->body,
-            'created_at' => $this->comment->created_at,
-        ];
+                'id' => $this->like->id,
+                'likeable_id' => $this->like->likeable->id,
+                'likeable_type' => $this->likeableType,
+                'liker' => $this->like->user->name,
+                'liker_id' => $this->like->user->id,
+                'created_at' => $this->like->created_at,
+            ];
     }
 }

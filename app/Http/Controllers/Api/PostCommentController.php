@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
-use App\Notifications\NewComment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
 use App\Notifications\NewCommentNotification;
@@ -41,7 +40,7 @@ class PostCommentController extends Controller
             ]);
 
             //send notification
-            $post->user->notify(new NewComment($comment));
+            $post->user->notify(new NewCommentNotification($comment));
 
             $commentData = [
                 'id' => $comment->id,

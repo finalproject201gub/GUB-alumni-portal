@@ -6,12 +6,13 @@ use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Notifications\NewLikeNotification;
 
 class LikeController extends Controller
 {
     public function likeInsertDeleteToPost(Post $post)
     {
-        try {
+        // try {
             $like = $post->likes()->where('user_id', auth()->id())->first();
             if ($like) {
                 $like->delete();
@@ -23,12 +24,12 @@ class LikeController extends Controller
             $data['like_count'] = $post->likes()->count();
 
             return response()->json($data, 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Error'
-            ]);
-        }
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Error'
+        //     ]);
+        // }
     }
 
     public function likeInsertDeleteToComment($commentId)
@@ -56,12 +57,14 @@ class LikeController extends Controller
 
     public function like($model, $likableType)
     {
-        $model->likes()->create([
+        $like = $model->likes()->create([
             'user_id' => auth()->id(),
             'likeable_id' => $model->id,
             'likeable_type' => $likableType,
             'like' => 1
         ]);
+
+        $model->user->notify(new NewLikeNotification($like, $likableType));
     }
 
     // public function dislike($id)

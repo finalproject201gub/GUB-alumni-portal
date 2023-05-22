@@ -64,19 +64,33 @@
                                     @endif
                                     <td>{{ $jobBoard->user->name }}</td>
                                     <td>
+                                        @if (auth()->user()->role->name == "Admin")
                                         <a class="btn btn-sm btn-info"
-                                           href="{{ route('job-board.edit', $jobBoard->id) }}">Edit</a>
+                                           href="{{ url('/admin/job-board/' .$jobBoard->id. '/edit' ) }}">Edit</a>
+                                            @else
+                                            <a class="btn btn-sm btn-info"
+                                               href="{{ route('job-board.edit', $jobBoard->id) }}">Edit</a>
+                                        @endif
                                         |
                                         <button id="delete" onclick="document.getElementById({{ $jobBoard->id }}).submit();"
                                                 class="btn btn-sm btn-danger"
                                         >
                                             Delete
                                         </button>
-                                        <form id="{{$jobBoard->id}}" method="POST"
-                                              action="{{ route('job-board.destroy', $jobBoard->id) }}">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
+
+                                        @if (auth()->user()->role->name == "Admin")
+                                            <form id="{{$jobBoard->id}}" method="POST"
+                                                  action="{{ url('/admin/job-board', $jobBoard->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @else
+                                            <form id="{{$jobBoard->id}}" method="POST"
+                                                  action="{{ route('job-board.destroy', $jobBoard->id) }}">
+                                                @csrf
+                                                @method('DELETE')
+                                            </form>
+                                        @endif
 
                                     </td>
                                 </tr>

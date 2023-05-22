@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ ucfirst($user->name) }}</td>
-                                    <td>{{ ucfirst($user->email) }}</td>
+                                    <td>{{ $user->email }}</td>
                                     <td>{{ collect(generateBatchNumbers())->get($user->batch_number) }}</td>
                                     <td>{{ $user->student_id_number }}</td>
                                     <td>{{ collect(generatePassingYears())->get($user->passing_year) }}</td>

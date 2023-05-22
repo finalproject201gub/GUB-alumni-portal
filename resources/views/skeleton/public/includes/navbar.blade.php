@@ -24,7 +24,7 @@
                     <a href="{{ route('public.jobs.index') }}" class="nav-link">Jobs</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a href="{{ url('/chatify') }}" class="nav-link">Chat</a>
                 </li>
 {{--                <li class="nav-item dropdown">--}}
 {{--                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"--}}

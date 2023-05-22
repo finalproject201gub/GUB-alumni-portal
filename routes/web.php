@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'checkRole:Student'], function () {
         Route::group(['prefix' => 'backend/student'], function () {
             Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+            Route::get('/job-applications-list', [DashboardController::class, 'jobApplicationList']);
         });
 
     });

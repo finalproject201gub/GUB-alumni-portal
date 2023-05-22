@@ -161,7 +161,7 @@
 
                 @elseif(auth()->user()->role->id == \App\Models\Role::ROLE_STUDENT)
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{{ url('/backend/student/job-applications-list') }}" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
                                 Your Application

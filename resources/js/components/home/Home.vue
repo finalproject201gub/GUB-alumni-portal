@@ -32,7 +32,7 @@
                @before-open="beforePostCreateUpdateModalOpen"
                @closed="editData = {}"
                :width="800"
-               :height="450"
+               height="auto"
         >
             <post-create-update-modal
                 :sessionData="sessionData"

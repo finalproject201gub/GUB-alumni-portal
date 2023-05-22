@@ -49,6 +49,85 @@
 <script src="{{ asset('js/bootstrap/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte/adminlte.min.js') }}"></script>
+<script>
+    //get user notifications
+    $(document).ready(function () {
+        fetchUnreadNotifications();
+
+        //fetch notifications after every 10 seconds
+        setInterval(fetchUnreadNotifications, 10000);
+
+        function fetchUnreadNotifications() {
+            $.ajax({
+                url: "{{ url('/api/v1/notifications/unread') }}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.length) {
+                        // console.log(data.length);
+                        $('#notification-count').text(data.length);
+                        $('#notification-list').html('');
+
+
+                        // <span class="float-right text-muted text-sm">12 hours</span>
+
+                        data.forEach(function (notification) {
+                            const commentNotification = notification.type == "App\\Notifications\\NewCommentNotification";
+                            const likeNotification = notification.type == "App\\Notifications\\NewLikeNotification";
+
+                            if (commentNotification) {
+                                $('#notification-list').append(
+                                    `<a href="#" class="dropdown-item">
+                                        <i class="fas fa-comment mr-2"></i> ${notification.data.commenter} commented on your post
+                                    </a>
+                                    <div class="dropdown-divider"></div>`);
+                            }
+
+                            if (likeNotification) {
+                                const commentLikNotification = notification.data.commenter;
+                                const postLikeNotification = notification.data.liker;
+
+                                if (commentLikNotification) {
+                                    $('#notification-list').append(
+                                        `<a href="#" class="dropdown-item">
+                                            <i class="fas fa-thumbs-up mr-2"></i> ${notification.data.liker} liked your comment
+                                        </a>
+                                        <div class="dropdown-divider"></div>`);
+                                }
+                                if (postLikeNotification) {
+                                    $('#notification-list').append(
+                                        `<a href="#" class="dropdown-item">
+                                            <i class="fas fa-thumbs-up mr-2"></i> ${notification.data.liker} liked your post
+                                        </a>
+                                        <div class="dropdown-divider"></div>`);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        // mark all notifications as read
+        $('#markAllNotificationAsRead').click(function (event) {
+            event.preventDefault();
+
+            $.ajax({
+                url: "{{ url('/api/v1/notifications/mark-all-as-read') }}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.message) {
+                        $('#notification-count').text(0);
+                        $('#notification-list').html('');
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
 </body>
 
 </html>

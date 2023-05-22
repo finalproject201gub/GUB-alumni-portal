@@ -27,6 +27,17 @@
                 <textarea placeholder="Whats Your mind?" class="form-control" v-model="formData.content" cols="30"
                           rows="10"></textarea>
 
+            <div class="image-preview-container d-flex" v-if="formData.images.length">
+                <div v-for="(image, index) in formData.images" :key="index" style="position: relative;">
+                    <button style="position: absolute;top: 5px;left: 0;" type="button" class="btn btn-xs btn-danger" @click="removeImage(index)">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    <img height="100" width="100" :src="image.image_url" alt="" class="image-preview" v-if="image.image_url">
+                </div>
+            </div>
+
+            <input type="file" class="form-control" ref="imageUploader" @change="handleFileUpload">
+
             </div>
             <!-- /.card-body -->
             <!-- /.card-footer -->
@@ -79,12 +90,35 @@ export default {
             ],
             formData: {
                 content: '',
-                privacy_id: 1
+                privacy_id: 1,
+                images: [],
             },
             isSubmitting: false,
         }
     },
     methods: {
+        handleFileUpload: function () {
+            const file = this.$refs.imageUploader.files[0];
+
+            if (!file.type.includes('image')) {
+                this.$toast.error("Only Image is allowed");
+                this.$refs.imageUploader.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+                this.formData.images.push({
+                    image_url: reader.result,
+                    file: file
+                });
+            }
+            this.$refs.imageUploader.value = '';
+        },
+        removeImage: function (index) {
+            this.formData.images.splice(index, 1);
+        },
         addPost: async function () {
             this.isSubmitting = true;
             try {

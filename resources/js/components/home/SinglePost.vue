@@ -25,7 +25,7 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <!--                <img class="img-fluid pad" src="/img/photo2.png" alt="Photo">-->
+                <img class="img-fluid pad" v-for="(image, index) in post.images" :key="index" :src="'storage/'+image.path" alt="Photo">
 
                 <p>{{ post.content }}</p>
                 <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>

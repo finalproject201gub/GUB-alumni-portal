@@ -18,6 +18,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobBoardController;
 use App\Http\Controllers\Frontend\LikeController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\ImageDeleteApiController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,8 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::post('/{commentId}/like-insert-delete', [LikeController::class, 'likeInsertDeleteToComment']);
             });
         });
+
+        Route::delete('/images/{imageId}', ImageDeleteApiController::class);
 
         Route::get('/static-data-for-home-page', StaticDataForHomePageApiController::class);
 

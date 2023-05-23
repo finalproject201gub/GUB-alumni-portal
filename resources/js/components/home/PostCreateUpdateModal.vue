@@ -117,6 +117,18 @@ export default {
             this.$refs.imageUploader.value = '';
         },
         removeImage: function (index) {
+
+            //remove image when edit data
+            if (this.editData && this.editData.id) {
+                axios.delete(`/api/v1/images/${this.formData.images?.[index]?.id}`)
+                    .then(response => {
+                        this.$toast.success("Image Removed Successfully");
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+            }
+
             this.formData.images.splice(index, 1);
         },
         addPost: async function () {

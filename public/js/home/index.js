@@ -2328,6 +2328,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$refs.imageUploader.value = '';
     },
     removeImage: function removeImage(index) {
+      var _this2 = this;
+      //remove image when edit data
+      if (this.editData && this.editData.id) {
+        var _this$formData$images, _this$formData$images2;
+        axios["delete"]("/api/v1/images/".concat((_this$formData$images = this.formData.images) === null || _this$formData$images === void 0 ? void 0 : (_this$formData$images2 = _this$formData$images[index]) === null || _this$formData$images2 === void 0 ? void 0 : _this$formData$images2.id)).then(function (response) {
+          _this2.$toast.success("Image Removed Successfully");
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
       this.formData.images.splice(index, 1);
     },
     addPost: function () {

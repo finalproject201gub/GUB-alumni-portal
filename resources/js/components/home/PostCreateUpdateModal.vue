@@ -168,6 +168,7 @@ export default {
         if (this.editData && this.editData.id) {
             this.formData = this.editData;
         }
+        console.log(this.editData);
     }
 }
 </script>

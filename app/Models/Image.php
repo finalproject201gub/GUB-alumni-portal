@@ -12,8 +12,8 @@ class Image extends Model
     protected $fillable = [
         'path',
         'image_type',
-        'parent_table_id',
-        'parent_table_type',
+        'attachable_id',
+        'attachable_type',
         'uploaded_by',
         'updated_by',
         'deleted_by',

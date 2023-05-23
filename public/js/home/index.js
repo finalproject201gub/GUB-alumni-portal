@@ -2417,6 +2417,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     if (this.editData && this.editData.id) {
       this.formData = this.editData;
     }
+    console.log(this.editData);
   }
 });
 
@@ -3153,7 +3154,7 @@ var render = function render() {
       key: index,
       staticClass: "img-fluid pad",
       attrs: {
-        src: "storage/" + image.path,
+        src: image.image_url,
         alt: "Photo"
       }
     });

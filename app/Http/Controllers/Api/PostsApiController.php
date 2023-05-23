@@ -12,7 +12,7 @@ class PostsApiController extends Controller
     {
         try {
             $posts = Post::query()
-                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,parent_table_id,path')
+                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,attachable_id,path')
                 ->active()
                 ->latest()
                 ->get();
@@ -49,7 +49,7 @@ class PostsApiController extends Controller
                     'images' => $post->images->map(function ($image) {
                         return [
                             'id' => $image->id,
-                            'path' => $image->path,
+                            'image_url' => asset($image->path),
                         ];
                     }),
                     'created_at' => $post->created_at->diffForHumans(),

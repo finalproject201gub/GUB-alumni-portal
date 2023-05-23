@@ -140,10 +140,6 @@ class AdminJobBoardController extends Controller
      */
     public function downloadCV(Request $request)
     {
-
-        $file = "/job-application/pdf/".$request->get('file');
-
-        $contents = Storage::disk('public')->get($file);
-        return Storage::download($contents);
+        return Response::download(public_path("/job-application/pdf/".$request->get('file')));
     }
 }

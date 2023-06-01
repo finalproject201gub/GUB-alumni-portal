@@ -43,7 +43,7 @@
                                         <span> Department: {{ collect($user->getDepartments())->get($data->department_id) }}</span><br>
                                         <span> Passing Year: {{ collect($user->generatePassingYears())->get($data->passing_year) }}</span><br>
                                         <span> Address: {{ $data->address }}</span><br>
-                                        <span> Registered: {{ \Carbon\Carbon::parse($data->created_at)->format('d-m-Y H-i-s a') }}</span><br>
+                                        <span> Registered: {{ \Carbon\Carbon::parse($data->created_at)->format('d-m-Y H:i:s a') }}</span><br>
                                     </div>
                                 </div>
                             </div>

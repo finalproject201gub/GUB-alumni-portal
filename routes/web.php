@@ -13,11 +13,13 @@ use App\Http\Controllers\Backend\AdminUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PostController;
 use App\Http\Controllers\CustomAuthenticateRedirectController;
+use App\Http\Controllers\Frontend\AlumniListController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\JobBoardController;
 use App\Http\Controllers\Frontend\LikeController;
 use App\Http\Controllers\Frontend\ProfileController;
+use App\Http\Controllers\Frontend\StudentListController;
 use App\Http\Controllers\ImageDeleteApiController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/profile/{user_id}/', [ProfileController::class, 'update']);
 
         Route::resource('/events', EventController::class);
+        Route::get('/alumni-list', [AlumniListController::class, 'index'])->name('alumni-list.index');
+        Route::get('/student-list', [StudentListController::class, 'index'])->name('student-list.index');
 
         Route::resource('/jobs', JobBoardController::class);
         Route::get('/jobs/{id}/apply', [JobBoardController::class, 'applyJobView']);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\JobApplicationDetail;
 use App\Models\JobBoard;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Http\RedirectResponse;
@@ -105,6 +106,7 @@ class AdminJobBoardController extends Controller
 
     public function applicantsIndex(Request $request)
     {
+        $users = User::all();
         $jobApplicantsList = JobApplicationDetail::query()
             ->with([
                 'user',
@@ -115,14 +117,16 @@ class AdminJobBoardController extends Controller
             })
 //
             ->get()
-            ->map(function ($jobApplication) {
+            ->map(function ($jobApplication) use ($users) {
+
+                $applicantsName = collect($users)->where('id', $jobApplication->applied_by)->first();
 
                 return [
                     'id' => $jobApplication->id,
                     'company_name' => $jobApplication->jobBoard->company_name,
                     'job_title' => $jobApplication->jobBoard->title,
                     'application_deadline' => Carbon::parse($jobApplication->jobBoard->application_deadline)->format('d-m-Y'),
-                    'applicants_name' => $jobApplication->user->name,
+                    'applicants_name' => $applicantsName->name,
                     'applied_date' => Carbon::parse($jobApplication->applied_date)->format('d-m-Y g:i:s a'),
                     'resume_path' => $jobApplication->resume_path,
                 ];

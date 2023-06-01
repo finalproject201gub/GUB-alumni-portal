@@ -102,7 +102,7 @@ if (! function_exists('isFaculty')) {
 if (! function_exists('greeting')) {
     function greeting(): string
     {
-        date_default_timezone_set('Asia/Dhaka');
+        date_default_timezone_set(env('TIME_ZONE', 'Asia/Dhaka'));
 
         $hour = date('H');
         if ($hour >= 5 && $hour <= 11) {

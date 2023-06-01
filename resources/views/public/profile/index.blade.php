@@ -364,7 +364,10 @@
 
                                     <div class="active tab-pane" id="settings">
                                         @includeIf('skeleton.admin.partials.alerts')
-                                        <form class="form-horizontal" method="POST" action="{{ url('profile/'.auth()->user()->id) }}">
+                                        <form class="form-horizontal" method="POST"
+                                        action="{{ url('profile/'.auth()->user()->id) }}"
+                                        enctype="multipart/form-data"
+                                        >
                                             @csrf
                                             @method('PUT')
                                             <div class="row">
@@ -453,6 +456,13 @@
                                                             name="address" id="address"
                                                             value="{{  auth()->user()->address ?? '' }}"
                                                             placeholder="Eg. Shewrapara, Mirpur, Dhaka">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="profile_pic">Profile Picture</label>
+                                                        <input style="width: 100%;" class="form-control" type="file" name="profile_pic" id="profile_pic">
                                                     </div>
                                                 </div>
                                             </div>

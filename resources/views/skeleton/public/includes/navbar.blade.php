@@ -109,7 +109,7 @@
             <!-- Profile Dropdown Menu -->
             <li class="nav-item dropdown user-menu">
                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset('img/user2-160x160.jpg') }}" class="user-image img-circle elevation-2"
+                    <img src="{{ getProfilePicture() }}" class="user-image img-circle elevation-2"
                          alt="User Image">
                     <span class="d-none d-md-inline">{{ userFullName() }}</span>
                 </a>

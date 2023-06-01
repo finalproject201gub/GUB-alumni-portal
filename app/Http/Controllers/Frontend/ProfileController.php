@@ -28,10 +28,22 @@ class ProfileController extends Controller
         ]);
 
 
-        $user = User::find($id)->update($request->all());
+        $user = User::find($id);
+
+        if ($request->hasFile('profile_pic')) {
+            if ($user->avatar && $user->avatar != 'avatar.png' && file_exists(public_path('img/profile/' . $user->avatar))) {
+                unlink(public_path('img/profile'. $user->avatar));
+            }
+
+            $fileName = time() . '.' . $request->profile_pic->extension();
+            $request->profile_pic->move(public_path('img/profile'), $fileName);
+
+
+        $user->update($request->all());
 
         return redirect()
             ->back()
             ->with('success', 'Profile Updated Successfully');
     }
+}
 }

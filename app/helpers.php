@@ -70,3 +70,49 @@ function getDepartments(): array
         6 => 'LLB',
     ];
 }
+
+if (! function_exists('isAdmin')) {
+    function isAdmin(): bool
+    {
+        return Auth::user()->role_id === 1;
+    }
+}
+
+if (! function_exists('isStudent')) {
+    function isStudent(): bool
+    {
+        return Auth::user()->role_id === 3;
+    }
+}
+
+if (! function_exists('isAlumni')) {
+    function isAlumni(): bool
+    {
+        return Auth::user()->role_id === 2;
+    }
+}
+
+if (! function_exists('isFaculty')) {
+    function isFaculty(): bool
+    {
+        return Auth::user()->role_id === 4;
+    }
+}
+
+if (! function_exists('greeting')) {
+    function greeting(): string
+    {
+        date_default_timezone_set('Asia/Dhaka');
+
+        $hour = date('H');
+        if ($hour >= 5 && $hour <= 11) {
+            return 'Good Morning';
+        } elseif ($hour >= 12 && $hour <= 16) {
+            return 'Good Afternoon';
+        } elseif ($hour >= 17 && $hour <= 20) {
+            return 'Good Evening';
+        } else {
+            return 'Good Night';
+        }
+    }
+}

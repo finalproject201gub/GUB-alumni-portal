@@ -66,14 +66,14 @@
                         </div>
                         <div class="card-footer">
                             <div class="row">
-                                <div class="col-md-1">
-                                    <button type="button" class="btn btn-default btn-sm"><i
-                                            class="fas fa-share text-primary"></i></button>
+{{--                                <div class="col-md-1">--}}
+{{--                                    <button type="button" class="btn btn-default btn-sm"><i--}}
+{{--                                            class="fas fa-share text-primary"></i></button>--}}
 
-                                    <button type="button" class="btn btn-default btn-sm"><i
-                                            class="far fas fa-heart text-danger"></i></button>
+{{--                                    <button type="button" class="btn btn-default btn-sm"><i--}}
+{{--                                            class="far fas fa-heart text-danger"></i></button>--}}
 
-                                </div>
+{{--                                </div>--}}
                                 <div class="col-md-4">
                                     Event Type: {{ $event->type }}
                                 </div>

@@ -104,7 +104,7 @@
 {{--                                    <form action="" method="POST">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('POST')--}}
-                                    <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.$jobBoard->user->id) }}" class="btn btn-success">Apply Online</a>
+                                    <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.auth()->user()->id) }}" class="btn btn-success">Apply Online</a>
 {{--                                    </form>--}}
                                 </div>
                                 @endif

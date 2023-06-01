@@ -18,6 +18,12 @@
                     <a href="{{ url('/') }}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{ route('public.alumni-list.index') }}" class="nav-link {{ routeNameMatched('public.alumni-list.index') }}">Alumni</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('public.student-list.index') }}" class="nav-link {{ routeNameMatched('public.student-list.index') }}">Students</a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('public.events.index') }}" class="nav-link {{ routeNameMatched('public.events.index') }}">Events</a>
                 </li>
                 <li class="nav-item">

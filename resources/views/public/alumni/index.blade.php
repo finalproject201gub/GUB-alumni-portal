@@ -24,9 +24,15 @@
                         @foreach($alumni as $data)
                             <div class="col-md-4">
                                 <div class="card" style="padding-top: 10px">
+                                    @if($data->avatar)
+                                        <img class="card-img-top"
+                                             style="border: 1px solid #000; width: 300px; height: 250px; margin: 0 auto;"
+                                             src="{{ asset("img/profile/".$data->avatar) }}" alt="Card image cap">
+                                    @else
                                     <img class="card-img-top"
                                          style="border: 1px solid #000; width: 300px; height: 250px; margin: 0 auto;"
                                          src="http://127.0.0.1:8000/img/user2-160x160.jpg" alt="Card image cap">
+                                    @endif
                                     <div class="card-body">
                                         <h5 class="card-title">
                                             Name: {{ $data->name }}

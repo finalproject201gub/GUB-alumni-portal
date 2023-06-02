@@ -17,7 +17,6 @@ class ProfileController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $request->validate([
             'batch_number' => 'nullable',
             'passing_year' => 'nullable',
@@ -27,23 +26,22 @@ class ProfileController extends Controller
             'address' => 'nullable',
         ]);
 
+        $user = User::findOrFail($id);
 
-        $user = User::find($id);
+        $user->fill($request->except('_token'));
 
         if ($request->hasFile('profile_pic')) {
             if ($user->avatar && $user->avatar != 'avatar.png' && file_exists(public_path('img/profile/' . $user->avatar))) {
-                unlink(public_path('img/profile'. $user->avatar));
+                unlink(public_path('img/profile/' . $user->avatar));
             }
 
             $fileName = time() . '.' . $request->profile_pic->extension();
             $request->profile_pic->move(public_path('img/profile'), $fileName);
-
-
-        $user->update($request->all());
-
+            $user->avatar = $fileName;
+        }
+        $user->save();
         return redirect()
             ->back()
             ->with('success', 'Profile Updated Successfully');
     }
-}
 }

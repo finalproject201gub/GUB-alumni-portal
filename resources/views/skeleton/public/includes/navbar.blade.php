@@ -30,7 +30,7 @@
                     <a href="{{ route('public.jobs.index') }}" class="nav-link">Jobs</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/chatify') }}" class="nav-link">Chat</a>
+                    <a href="{{ url('/chat') }}" class="nav-link">Chat <span style="color: green; font-weight: bold;" id="chat-notification"></span></a>
                 </li>
 {{--                <li class="nav-item dropdown">--}}
 {{--                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"--}}
@@ -73,17 +73,17 @@
             </ul>
 
             <!-- SEARCH FORM -->
-            <form class="form-inline ml-0 ml-md-3">
-                <div class="input-group input-group-sm">
-                    <input class="form-control form-control-navbar" type="search" placeholder="Search"
-                           aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-navbar" type="submit">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
+{{--            <form class="form-inline ml-0 ml-md-3">--}}
+{{--                <div class="input-group input-group-sm">--}}
+{{--                    <input class="form-control form-control-navbar" type="search" placeholder="Search"--}}
+{{--                           aria-label="Search">--}}
+{{--                    <div class="input-group-append">--}}
+{{--                        <button class="btn btn-navbar" type="submit">--}}
+{{--                            <i class="fas fa-search"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </form>--}}
         </div>
 
         <!-- Right navbar links -->

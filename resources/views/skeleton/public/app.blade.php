@@ -124,6 +124,26 @@
                 }
             });
         });
+
+        setInterval(fetchMessageNotification, 2000);
+
+        function fetchMessageNotification() {
+            $.ajax({
+                url: "{{ url('/api/v1/chat/message-count') }}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data) {
+                        let messageCount = data.data;
+                        $('#chat-notification').text("("+messageCount+")");
+
+                    }
+                }
+            });
+        }
+
+
+        fetchMessageNotification();
     });
 </script>
 

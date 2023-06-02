@@ -1,7 +1,7 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
         <a href="{{ url('/') }}" class="navbar-brand">
-            <img src="{{ asset('img/logo.jpeg') }}" alt="Alumni Portal Logo" class="brand-image img-circle elevation-3"
+            <img src="{{ getDefaultLogo() }}" alt="Alumni Portal Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">{{ config('app.name', 'GUB Alumni Portal') }}</span>
         </a>

@@ -1,8 +1,9 @@
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <a href="/" style="width:100%; display: flex; flex-direction: column; justify-content: center; align-items: center; justify-content: space-between;">
+                <img src="{{ getDefaultLogo() }}" alt="Alumni Portal Logo" style="opacity: .8; border-radius: 50%; height: 100px;">
+                <span class="text-gray-700" style="font-size: 2rem;font-weight: bold;">{{ config('app.name', 'GUB Alumni Portal') }}</span>
             </a>
         </x-slot>
 
@@ -19,7 +20,7 @@
             <div>
                 <x-label for="email" :value="__('Email')"/>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
                          autofocus/>
             </div>
 
@@ -30,7 +31,7 @@
                 <x-input id="password" class="block mt-1 w-full"
                          type="password"
                          name="password"
-                         required autocomplete="current-password"/>
+                         autocomplete="current-password"/>
             </div>
 
             <!-- Remember Me -->

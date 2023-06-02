@@ -123,3 +123,10 @@ if (! function_exists('getProfilePicture')) {
         return Auth::user()->avatar ? asset('img/profile/' . Auth::user()->avatar) : asset('img/avatar.jpg');
     }
 }
+
+if (! function_exists('getDefaultLogo')) {
+    function getDefaultLogo(): string
+    {
+        return asset('img/logo.jpeg');
+    }
+}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,17 +16,8 @@ class ProfileController extends Controller
         return view('public.profile.index', compact('userData'));
     }
 
-    public function update(Request $request, $id)
+    public function update(ProfileUpdateRequest $request, $id)
     {
-        $request->validate([
-            'batch_number' => 'nullable',
-            'passing_year' => 'nullable',
-            'department_id' => 'nullable',
-            'student_id_number' => 'nullable',
-            'phone' => 'nullable',
-            'address' => 'nullable',
-        ]);
-
         $user = User::findOrFail($id);
 
         $user->fill($request->except('_token'));

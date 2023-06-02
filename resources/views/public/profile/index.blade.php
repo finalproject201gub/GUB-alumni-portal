@@ -464,6 +464,11 @@
                                                         <label for="profile_pic">Profile Picture</label>
                                                         <input style="width: 100%;" class="form-control" type="file" name="profile_pic" id="profile_pic">
                                                     </div>
+
+                                                    @error('profile_pic')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+
                                                 </div>
                                             </div>
 

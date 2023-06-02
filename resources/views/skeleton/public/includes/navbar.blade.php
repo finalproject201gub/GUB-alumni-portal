@@ -30,7 +30,7 @@
                     <a href="{{ route('public.jobs.index') }}" class="nav-link">Jobs</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ url('/chatify') }}" class="nav-link">Chat</a>
+                    <a href="{{ url('/chat') }}" class="nav-link">Chat</a>
                 </li>
 {{--                <li class="nav-item dropdown">--}}
 {{--                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"--}}

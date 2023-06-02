@@ -72,7 +72,7 @@
                                                     <p><b>Location: </b> {{ $jobBoard->location }}</p>
                                                     <p><b>Job Type: </b> {{ $jobBoard->job_type }}</p>
                                                     <p>
-                                                        <span><b>Salary: </b>  {{ $jobBoard->salary }}</span>
+                                                        <span><b>Salary: </b>  {{ $jobBoard->salary ?? 0 }} BDT Per Month.</span>
                                                         <span style="float: right; overflow: hidden"><b
                                                                 style="color: red; ">Deadline: </b>  {{ \Carbon\Carbon::parse($jobBoard->application_deadline)->format('d-M-Y') }}</span>
                                                     </p>

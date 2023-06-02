@@ -13,6 +13,8 @@ class EventController extends Controller
     {
         $events = Event::with('createdBy')->paginate(10);
         $events->getCollection()->transform(function ($event) {
+            $avatar = $event->createdBy->avatar ? asset('img/profile/' . $event->createdBy->avatar) : asset('img/avatar.jpg');
+
             $startDate = Carbon::parse($event->start_at)->format('d M Y') ?? '';
             $endDate = Carbon::parse($event->end_at)->format('d M Y') ?? '';
             $totalDuration = Carbon::parse($event->start_at)->diffForHumans($event->end_at, true) ?? '';
@@ -20,6 +22,7 @@ class EventController extends Controller
             $event->created_by = $event->createdBy->name ?? 'No Name Specified';
             $event->create_time = $event->created_at->diffForHumans() ?? '';
             $event->time = $startDate . ' To ' . $endDate . ' (' . $totalDuration . ')';
+            $event->created_by_avatar = $avatar;
             return $event;
         });
 

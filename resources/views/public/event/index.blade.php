@@ -22,7 +22,7 @@
                         <div class="card card-widget">
                             <div class="card-header">
                                 <div class="user-block">
-                                    <img class="img-circle" src="{{ asset('img/user1-128x128.jpg') }}" alt="User Image">
+                                    <img class="img-circle" src="{{ $event->created_by_avatar }}" alt="User Image">
                                     <span class="username"><a href="#">{{ $event->created_by }}</a></span>
                                     <span class="description">Shared publicly - {{ $event->create_time }}</span>
                                     </span>

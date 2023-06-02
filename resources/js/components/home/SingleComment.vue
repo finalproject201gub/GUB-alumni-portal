@@ -1,7 +1,7 @@
 <template>
     <div class="card-comment">
         <!-- User image -->
-        <img class="img-circle img-sm" src="/img/user1-128x128.jpg" alt="User Image">
+        <img class="img-circle img-sm" :src="comment.commented_by_avatar" alt="User Image">
 
         <div class="comment-text">
             <span class="username">

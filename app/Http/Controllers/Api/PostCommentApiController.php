@@ -17,15 +17,17 @@ class PostCommentApiController extends Controller
 
             $data = Comment::query()
                 ->where(['commentable_type' => Post::class, 'commentable_id' => $postId])
-                ->with('user:id,name')
+                ->with('user:id,name,avatar')
                 ->offset($offset)
                 ->limit($limit)
                 ->get()
                 ->map(function ($comment) {
+                    $avatar = $comment->user->avatar ? asset('img/profile/' . $comment->user->avatar) : asset('img/avatar.jpg');
                     return [
                         'id' => $comment->id,
                         'body' => $comment->body,
                         'commented_by' => $comment->user->name,
+                        'commented_by_avatar' => $avatar,
                         'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
                         'like_count' => $comment->likes()->count(),
                         'created_at' => $comment->created_at,

@@ -12,40 +12,52 @@ class PostsApiController extends Controller
     {
         try {
             $posts = Post::query()
-                ->with('user:id,name', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,attachable_id,path')
+                ->with('user:id,name,avatar', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,attachable_id,path')
                 ->active()
                 ->latest()
                 ->get();
 
             $data = $posts->map(function ($post) {
+                $avatar = $post->user->avatar ? asset('img/profile/' . $post->user->avatar) : asset('img/avatar.jpg');
+
                 return [
                     'id' => $post->id,
                     'title' => $post->title,
                     'body' => $post->body,
                     'author_id' => $post->user->id,
                     'author_name' => $post->user->name,
+                    'author_avatar' => $avatar,
                     'privacy_id' => 1,
                     'privacy_name' => 'public',
                     'content' => $post->content,
-                    'is_liked' => $post->likes()->where('user_id', auth()->id())->exists(),
+                    'is_liked' => $post
+                        ->likes()
+                        ->where('user_id', auth()->id())
+                        ->exists(),
                     'like_count' => $post->likes()->count(),
                     'comment_count' => $post->comments()->count(),
                     'comments' => $post
-                    ->comments()
-                    ->with('user:id,name','replies')
-                    ->latest()
-                    ->take(1)
-                    ->get()
-                    ->map(function ($comment) {
-                        return [
-                            'id' => $comment->id,
-                            'body' => $comment->body,
-                            'commented_by' => $comment->user->name,
-                            'is_liked' => $comment->likes()->where('user_id', auth()->id())->exists(),
-                            'like_count' => $comment->likes()->count(),
-                            'created_at' => $comment->created_at,
-                        ];
-                    }),
+                        ->comments()
+                        ->with('user:id,name,avatar', 'replies')
+                        ->latest()
+                        ->take(1)
+                        ->get()
+                        ->map(function ($comment) {
+                            $avatar = $comment->user->avatar ? asset('img/profile/' . $comment->user->avatar) : asset('img/avatar.jpg');
+
+                            return [
+                                'id' => $comment->id,
+                                'body' => $comment->body,
+                                'commented_by' => $comment->user->name,
+                                'commented_by_avatar' => $avatar,
+                                'is_liked' => $comment
+                                    ->likes()
+                                    ->where('user_id', auth()->id())
+                                    ->exists(),
+                                'like_count' => $comment->likes()->count(),
+                                'created_at' => $comment->created_at,
+                            ];
+                        }),
                     'images' => $post->images->map(function ($image) {
                         return [
                             'id' => $image->id,

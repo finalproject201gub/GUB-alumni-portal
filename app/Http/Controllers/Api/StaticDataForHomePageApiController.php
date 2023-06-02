@@ -15,6 +15,8 @@ class StaticDataForHomePageApiController extends Controller
                 'id' => auth()->user()->id ?? null,
                 'name' => auth()->user()->name ?? null,
                 'email' => auth()->user()->email ?? null,
+                'role_id' => auth()->user()->role_id ?? null,
+                'avatar' => getProfilePicture() ?? null,
             ];
 
             return response()->json(

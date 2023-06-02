@@ -2760,11 +2760,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
 /* harmony export */ });
 var render = function render() {
+  var _vm$sessionData, _vm$sessionData$user;
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", [_c("div", {
     staticClass: "row m-3"
-  }, [_vm._m(0), _vm._v(" "), _c("div", {
+  }, [_c("div", {
+    staticClass: "user-block col-md-1 col-2"
+  }, [_c("img", {
+    staticClass: "img-circle",
+    staticStyle: {
+      height: "60px",
+      width: "60px",
+      "z-index": "2"
+    },
+    attrs: {
+      src: (_vm$sessionData = _vm.sessionData) === null || _vm$sessionData === void 0 ? void 0 : (_vm$sessionData$user = _vm$sessionData.user) === null || _vm$sessionData$user === void 0 ? void 0 : _vm$sessionData$user.avatar,
+      alt: "User Image"
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "col-md-11 col-10"
   }, [_c("input", {
     staticClass: "form-control status-box",
@@ -2819,24 +2833,7 @@ var render = function render() {
     }
   })], 1), _vm._v(" "), _c("v-dialog")], 1);
 };
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "user-block col-md-1 col-2"
-  }, [_c("img", {
-    staticClass: "img-circle",
-    staticStyle: {
-      height: "60px",
-      width: "60px",
-      "z-index": "2"
-    },
-    attrs: {
-      src: "img/user1-128x128.jpg",
-      alt: "User Image"
-    }
-  })]);
-}];
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -3063,7 +3060,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-circle img-sm",
     attrs: {
-      src: "/img/user1-128x128.jpg",
+      src: _vm.comment.commented_by_avatar,
       alt: "User Image"
     }
   }), _vm._v(" "), _c("div", {
@@ -3122,7 +3119,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-circle",
     attrs: {
-      src: "/img/user1-128x128.jpg",
+      src: _vm.post.author_avatar,
       alt: "User Image"
     }
   }), _vm._v(" "), _c("span", {
@@ -3200,7 +3197,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "img-fluid img-circle img-sm",
     attrs: {
-      src: "/img/user1-128x128.jpg",
+      src: _vm.sessionData.user.avatar,
       alt: "Alt Text"
     }
   }), _vm._v(" "), _c("div", {

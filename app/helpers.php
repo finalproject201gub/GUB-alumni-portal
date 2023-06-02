@@ -120,7 +120,6 @@ if (! function_exists('greeting')) {
 if (! function_exists('getProfilePicture')) {
     function getProfilePicture(): string
     {
-        return asset('img/profile/' . Auth::user()->avatar) ??
-        null;
+        return Auth::user()->avatar ? asset('img/profile/' . Auth::user()->avatar) : asset('img/avatar.jpg');
     }
 }

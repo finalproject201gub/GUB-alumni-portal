@@ -3,7 +3,7 @@
         <div class="card card-widget">
             <div class="card-header">
                 <div class="user-block">
-                    <img class="img-circle" src="/img/user1-128x128.jpg" alt="User Image">
+                    <img class="img-circle" :src="post.author_avatar" alt="User Image">
                     <span class="username"><a href="#">{{ post.author_name }}</a></span>
                     <span class="description">Privacy {{ post.privacy_name }} - {{ post.created_at }}</span>
                 </div>
@@ -49,7 +49,8 @@
             <!--             /.card-footer -->
             <div class="card-footer">
                 <form action="#" method="post">
-                    <img class="img-fluid img-circle img-sm" src="/img/user1-128x128.jpg"
+                    <img class="img-fluid img-circle img-sm"
+                        :src="sessionData.user.avatar"
                          alt="Alt Text">
                     <!-- .img-push is used to add margin to elements next to floating images -->
                     <div class="img-push d-flex">

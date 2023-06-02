@@ -14,7 +14,7 @@ class PostsApiController extends Controller
             $posts = Post::query()
                 ->with('user:id,name,avatar', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,attachable_id,path')
                 ->active()
-                ->latest()
+                ->inRandomOrder()
                 ->get();
 
             $data = $posts->map(function ($post) {

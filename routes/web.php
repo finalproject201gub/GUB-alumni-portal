@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ChatMessageApiController;
 use App\Http\Controllers\Api\CreatePostApiController;
 use App\Http\Controllers\Api\DeletePostApiController;
 use App\Http\Controllers\Api\PostCommentApiController;
@@ -117,6 +118,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/notifications/unread', [NotificationController::class, 'getUnreadNotifications']);
 
         Route::get('/notifications/mark-all-as-read', [NotificationController::class, 'markAllAsRead']);
+
+        Route::get('/chat/message-count', ChatMessageApiController::class);
     });
 });
 

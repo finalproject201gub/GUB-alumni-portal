@@ -36,6 +36,7 @@ class AdminJobBoardController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            "company_name" => 'required',
             "title" => 'required',
             "description" => 'required',
             "job_type" => 'required',

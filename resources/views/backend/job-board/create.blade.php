@@ -16,30 +16,30 @@
                                 @csrf
                                 @method('POST')
                                 <div class="form-group">
-                                    <label for="">Company Name</label>
-                                    <input class="form-control" type="text" value="{{ old('company_name') }}" name="company_name" id="">
+                                    <label for="">Company Name</label><span class="text-danger">*</span>
+                                    <input class="form-control" type="text" placeholder="Write company name" value="{{ old('company_name') }}" name="company_name" id="">
                                     @error('company_name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Title</label> <span class="text-danger">*</span>
-                                    <input class="form-control" type="text" value="{{ old('title') }}" name="title" id="">
+                                    <input class="form-control" placeholder="Write Job title" type="text" value="{{ old('title') }}" name="title" id="">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Description</label><span class="text-danger">*</span>
+                                    <label for="">Description/Responsibility</label><span class="text-danger">*</span>
                                     <textarea class="form-control" rows="3" name="description" value="{{ old('description') }}"
-                                              id=""> </textarea>
+                                              id="">Write job Description/Responsibility</textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Vacancy</label>
-                                    <input class="form-control" rows="3" name="vacancy" id="" value="{{ old('vacancy') }}"
+                                    <input class="form-control" placeholder="Example: 200" rows="3" name="vacancy" id="" value="{{ old('vacancy') }}"
                                     > </input>
                                     @error('vacancy')
                                         <div class="text-danger">{{ $message }}</div>
@@ -47,7 +47,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Experience Requirements</label>
-                                    <input class="form-control" rows="3" name="experience_requirements" value="{{ old('experience_requirements') }}"
+                                    <input class="form-control" rows="3" placeholder="Example: 2 years" name="experience_requirements" value="{{ old('experience_requirements') }}"
                                            id=""> </input>
                                     @error('experience_requirements')
                                         <div class="text-danger">{{ $message }}</div>
@@ -55,16 +55,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Education Requirements</label>
-                                    <input class="form-control" rows="3" name="education_requirements" value="{{ old('education_requirements') }}"
+                                    <input class="form-control" rows="3" placeholder="Example: Bsc in CSE" name="education_requirements" value="{{ old('education_requirements') }}"
                                            id=""> </input>
                                     @error('education_requirements')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Company Information</label>
+                                    <label for="">Company Information </label>
                                     <textarea class="form-control" rows="3" name="company_information" value="{{ old('company_information') }}"
-                                              id=""> </textarea>
+                                              id=""> Write company information</textarea>
                                     @error('company_information')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -87,14 +87,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Salary</label><span class="text-danger">*</span>
-                                    <input class="form-control" type="text" name="salary" id="" value="{{ old('salary') }}">
+                                    <input class="form-control" placeholder="Example: 50000" type="text" name="salary" id="" value="{{ old('salary') }}">
                                     @error('salary')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Location</label><span class="text-danger">*</span>
-                                    <input class="form-control" type="text" name="location" id="" value="{{ old('location') }}">
+                                    <input class="form-control" placeholder="House: 12, Road: 5, Mirpur 12, Dhaka" type="text" name="location" id="" value="{{ old('location') }}">
                                     @error('location')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -117,37 +117,37 @@
                                 @csrf
                                 @method('POST')
                                 <div class="form-group">
-                                    <label for="">Company Name</label>
-                                    <input class="form-control" type="text" value="{{ old('company_name') }}" name="company_name" id="">
+                                    <label for="">Company Name</label><span class="text-danger">*</span>
+                                    <input class="form-control" placeholder="Write company name" type="text" value="{{ old('company_name') }}" name="company_name" id="">
                                     @error('company_name')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Title</label><span class="text-danger">*</span>
-                                    <input class="form-control" type="text" value="{{ old('title') }}" name="title" id="">
+                                    <input class="form-control" placeholder="Write Job title" type="text" value="{{ old('title') }}" name="title" id="">
                                     @error('title')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Description</label><span class="text-danger">*</span>
+                                    <label for="">Description/Responsibility</label><span class="text-danger">*</span>
                                     <textarea class="form-control" rows="3" name="description" value="{{ old('description') }}"
-                                              id=""> </textarea>
+                                              id="">Write job Description/Responsibility</textarea>
                                     @error('description')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Vacancy</label>
-                                    <input class="form-control" rows="3" name="vacancy" id="" value="{{ old('vacancy') }}" > </input>
+                                    <input class="form-control" placeholder="Example: 200" rows="3" name="vacancy" id="" value="{{ old('vacancy') }}" > </input>
                                     @error('vacancy')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Experience Requirements</label>
-                                    <input class="form-control" rows="3" name="experience_requirements" value="{{ old('experience_requirements') }}"
+                                    <input class="form-control" placeholder="Example: 2 years" rows="3" name="experience_requirements" value="{{ old('experience_requirements') }}"
                                            id=""> </input>
                                     @error('experience_requirements')
                                         <div class="text-danger">{{ $message }}</div>
@@ -155,7 +155,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Education Requirements</label>
-                                    <input class="form-control" rows="3" name="education_requirements" value="{{ old('education_requirements') }}"
+                                    <input class="form-control" placeholder="Example: Bsc in CSE" rows="3" name="education_requirements" value="{{ old('education_requirements') }}"
                                            id=""> </input>
                                     @error('education_requirements')
                                         <div class="text-danger">{{ $message }}</div>
@@ -164,7 +164,7 @@
                                 <div class="form-group">
                                     <label for="">Company Information</label>
                                     <textarea class="form-control" rows="3" name="company_information" value="{{ old('company_information') }}"
-                                              id=""> </textarea>
+                                              id="">Write company information</textarea>
                                     @error('company_information')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
@@ -187,14 +187,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="">Salary</label><span class="text-danger">*</span>
-                                    <input class="form-control" type="text" name="salary" id="" value="{{ old('salary') }}">
+                                    <input class="form-control" placeholder="Example: 50000" type="text" name="salary" id="" value="{{ old('salary') }}">
                                     @error('salary')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
                                 <div class="form-group">
                                     <label for="">Location</label>
-                                    <input class="form-control" type="text" name="location" id="" value="{{ old('location') }}">
+                                    <input class="form-control" placeholder="House: 12, Road: 5, Mirpur 12, Dhaka" type="text" name="location" id="" value="{{ old('location') }}">
                                     @error('location')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror

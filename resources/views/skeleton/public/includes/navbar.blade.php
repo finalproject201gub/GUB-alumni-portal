@@ -1,6 +1,6 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
     <div class="container">
-        <a href="#" class="navbar-brand">
+        <a href="{{ url('/') }}" class="navbar-brand">
             <img src="{{ asset('img/logo.jpeg') }}" alt="Alumni Portal Logo" class="brand-image img-circle elevation-3"
                  style="opacity: .8">
             <span class="brand-text font-weight-light">{{ config('app.name', 'GUB Alumni Portal') }}</span>
@@ -140,9 +140,17 @@
 {{--                    </li>--}}
                     <!-- Menu Footer-->
                     <li class="user-footer">
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="d-flex">
                             @csrf
-                            <a href="{{ route('public.profile') }}" class="btn btn-default btn-flat">Profile</a>
+                            @php
+                                $dashboardLink = isAdmin()
+                                                    ? 'admin/dashboard'
+                                                    : (isAlumni()
+                                                        ? 'backend/alumni'
+                                                        : 'backend/student');
+                            @endphp
+                            <a href="{{ route('public.profile') }}" class="btn btn-default btn-flat mr-1">Profile</a>
+                            <a href="{{ url($dashboardLink) }}" class="btn btn-default btn-flat mr-1">Dashboard</a>
                             <a :href="route('logout')"
                                              class="btn btn-default btn-flat float-right"
                                              onclick="event.preventDefault();

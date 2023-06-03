@@ -16,7 +16,21 @@ class DeletePostApiController extends Controller
                 ->where('user_id', auth()->user()->id)
                 ->findOrFail($id);
 
+            foreach($post->comments as $comment) {
+                $comment->likes()->delete();
+                $comment->delete();
+            }
+            $post->comments()->delete();
+            $post->likes()->delete();
+            foreach($post->images as $image)
+            {
+                if (file_exists(public_path($image->path))) {
+                    unlink(public_path($image->path));
+                }
+                $image->delete();
+            }
             $post->delete();
+
 
             return response()->json(
                 [

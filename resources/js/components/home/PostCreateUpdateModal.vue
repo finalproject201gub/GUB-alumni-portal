@@ -134,9 +134,9 @@ export default {
         addPost: async function () {
             this.isSubmitting = true;
             try {
-                await axios.post('/api/v1/posts/store', this.formData);
+                const {data: {data}} = await axios.post('/api/v1/posts/store', this.formData);
                 this.$toast.success("Post Created Successfully");
-                this.$emit('postCreated');
+                this.$emit('postCreated', data);
 
             } catch (error) {
                 console.log(error);
@@ -146,9 +146,9 @@ export default {
         updatePost: async function () {
             this.isSubmitting = true;
             try {
-                await axios.put(`/api/v1/posts/${this.formData.id}`, this.formData);
+                const {data: {data}} = await axios.put(`/api/v1/posts/${this.formData.id}`, this.formData);
                 this.$toast.success("Post Updated Successfully");
-                this.$emit('postUpdated');
+                this.$emit('postUpdated', data);
 
             } catch (error) {
                 console.log(error);

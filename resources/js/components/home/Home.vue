@@ -81,8 +81,20 @@ export default {
             this.$modal.hide('create-update-post-modal');
         },
         updateTimelinePost: function (data) {
-            this.fetchPosts();
+            this.updatePostInPostsArray(this.posts, data);
+            // this.fetchPosts();
             this.closeModal();
+        },
+        updatePostInPostsArray: function (posts, data) {
+            if (!data) {
+                return;
+            }
+            const index = posts.findIndex(post => post.id === data.id);
+            if (index !== -1) {
+                posts[index] = data;
+                return;
+            }
+            this.posts.unshift(data);
         },
         editPost: function (post) {
             this.$modal.show('create-update-post-modal', {

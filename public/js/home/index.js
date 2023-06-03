@@ -2157,8 +2157,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$modal.hide('create-update-post-modal');
     },
     updateTimelinePost: function updateTimelinePost(data) {
-      this.fetchPosts();
+      this.updatePostInPostsArray(this.posts, data);
+      // this.fetchPosts();
       this.closeModal();
+    },
+    updatePostInPostsArray: function updatePostInPostsArray(posts, data) {
+      if (!data) {
+        return;
+      }
+      var index = posts.findIndex(function (post) {
+        return post.id === data.id;
+      });
+      if (index !== -1) {
+        posts[index] = data;
+        return;
+      }
+      this.posts.unshift(data);
     },
     editPost: function editPost(post) {
       this.$modal.show('create-update-post-modal', {
@@ -2342,6 +2356,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     addPost: function () {
       var _addPost = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _yield$axios$post, data;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -2350,21 +2365,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context.next = 4;
               return axios.post('/api/v1/posts/store', this.formData);
             case 4:
+              _yield$axios$post = _context.sent;
+              data = _yield$axios$post.data.data;
               this.$toast.success("Post Created Successfully");
-              this.$emit('postCreated');
-              _context.next = 11;
+              this.$emit('postCreated', data);
+              _context.next = 13;
               break;
-            case 8:
-              _context.prev = 8;
+            case 10:
+              _context.prev = 10;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
-            case 11:
+            case 13:
               this.isSubmitting = false;
-            case 12:
+            case 14:
             case "end":
               return _context.stop();
           }
-        }, _callee, this, [[1, 8]]);
+        }, _callee, this, [[1, 10]]);
       }));
       function addPost() {
         return _addPost.apply(this, arguments);
@@ -2373,6 +2390,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     updatePost: function () {
       var _updatePost = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var _yield$axios$put, data;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
@@ -2381,21 +2399,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               _context2.next = 4;
               return axios.put("/api/v1/posts/".concat(this.formData.id), this.formData);
             case 4:
+              _yield$axios$put = _context2.sent;
+              data = _yield$axios$put.data.data;
               this.$toast.success("Post Updated Successfully");
-              this.$emit('postUpdated');
-              _context2.next = 11;
+              this.$emit('postUpdated', data);
+              _context2.next = 13;
               break;
-            case 8:
-              _context2.prev = 8;
+            case 10:
+              _context2.prev = 10;
               _context2.t0 = _context2["catch"](1);
               console.log(_context2.t0);
-            case 11:
+            case 13:
               this.isSubmitting = false;
-            case 12:
+            case 14:
             case "end":
               return _context2.stop();
           }
-        }, _callee2, this, [[1, 8]]);
+        }, _callee2, this, [[1, 10]]);
       }));
       function updatePost() {
         return _updatePost.apply(this, arguments);

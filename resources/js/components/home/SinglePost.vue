@@ -25,7 +25,11 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-                <img class="img-fluid pad" v-for="(image, index) in post.images" :key="index" :src="image.image_url" alt="Photo">
+                <div class="post-img-container">
+                    <img class="img-fluid pad"
+                     :style="post.images.length != 1 ? 'width: 340px' : ''"
+                      v-for="(image, index) in post.images" :key="index" :src="image.image_url" alt="Photo">
+                </div>
 
                 <p>{{ post.content }}</p>
                 <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
@@ -162,5 +166,18 @@ export default {
 </script>
 
 <style scoped>
-
+* {
+    box-sizing: border-box;
+}
+div.post-img-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px;
+}
+.post-img-container img {
+    margin: 5px;
+}
 </style>

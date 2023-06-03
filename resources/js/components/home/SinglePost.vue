@@ -25,13 +25,12 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
+                <p>{{ post.content }}</p>
                 <div class="post-img-container">
                     <img class="img-fluid pad"
                      :style="post.images.length != 1 ? 'width: 340px' : ''"
                       v-for="(image, index) in post.images" :key="index" :src="image.image_url" alt="Photo">
                 </div>
-
-                <p>{{ post.content }}</p>
                 <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>
                     Share
                 </button> -->
@@ -174,7 +173,6 @@ div.post-img-container {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px;
     padding: 5px;
 }
 .post-img-container img {

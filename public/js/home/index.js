@@ -3176,7 +3176,7 @@ var render = function render() {
     staticClass: "fas fa-trash"
   })])]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "card-body"
-  }, [_c("div", {
+  }, [_c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _c("div", {
     staticClass: "post-img-container"
   }, _vm._l(_vm.post.images, function (image, index) {
     return _c("img", {
@@ -3188,7 +3188,7 @@ var render = function render() {
         alt: "Photo"
       }
     });
-  }), 0), _vm._v(" "), _c("p", [_vm._v(_vm._s(_vm.post.content))]), _vm._v(" "), _c("button", {
+  }), 0), _vm._v(" "), _c("button", {
     staticClass: "btn btn-default btn-sm",
     attrs: {
       type: "button"
@@ -14099,7 +14099,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n*[data-v-0755ccdd] {\n    box-sizing: border-box;\n}\ndiv.post-img-container[data-v-0755ccdd] {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    margin-bottom: 10px;\n    padding: 5px;\n}\n.post-img-container img[data-v-0755ccdd] {\n    margin: 5px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n*[data-v-0755ccdd] {\n    box-sizing: border-box;\n}\ndiv.post-img-container[data-v-0755ccdd] {\n    display: flex;\n    flex-wrap: wrap;\n    justify-content: center;\n    align-items: center;\n    padding: 5px;\n}\n.post-img-container img[data-v-0755ccdd] {\n    margin: 5px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

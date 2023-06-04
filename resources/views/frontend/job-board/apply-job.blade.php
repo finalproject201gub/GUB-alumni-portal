@@ -18,13 +18,16 @@
                             <input type="hidden" name="applied_by" value="{{ $userId }}">
 
                             <div class="form-group">
-                                <label for="">Resume (*)</label>
-                                <input required class="form-control" type="file"
+                                <label for="">Resume <span style="color: red;">*</span></label>
+                                <input  class="form-control" type="file"
                                        name="resume_path" id="">
+                                @error('resume_path')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
                             </div>
                             <div class="form-group">
                                 <label for="">Linkedin Url</label>
-                                <input required class="form-control"  type="text" name="linkedin_url"
+                                <input  class="form-control"  type="text" name="linkedin_url"
                                        id="">
                             </div>
                             <div class="form-group">

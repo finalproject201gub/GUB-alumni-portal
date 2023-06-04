@@ -73,6 +73,13 @@ class JobBoardController extends Controller
 
     public function applyJob(Request $request): RedirectResponse
     {
+        $request->validate([
+            'resume_path' => 'required',
+        ],
+        [
+            'resume_path.required' => 'Resume/Cv must be required'
+        ]);
+
         $resumePath = $request->file("resume_path") ?? null;
         $linkedinUrl = $request->get("linkedin_url") ?? null;
         $githubUrl = $request->get("github_url") ?? null;

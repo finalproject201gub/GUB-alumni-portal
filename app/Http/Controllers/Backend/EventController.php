@@ -15,6 +15,11 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'sometimes|required|string',
+        ]);
+
+
         $events = Event::query()
             ->search($request->search)
             ->latest()

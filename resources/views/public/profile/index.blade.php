@@ -373,16 +373,24 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="name" class="col-form-label">Name</label>
+                                                        <label for="name" class="col-form-label">Name</label> <span class="text-danger">*</span>
                                                         <input type="text" class="form-control"
+                                                        name="name"
                                                             value="{{ auth()->user()->name ?? '' }}" placeholder="Name">
+                                                            @error('name')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="email" class="col-form-label">Email</label>
+                                                        <label for="email" class="col-form-label">Email</label><span class="text-danger">*</span>
                                                         <input type="email" class="form-control"
+                                                        name="email"
                                                             value="{{ auth()->user()->email ?? '' }}" placeholder="Email">
+                                                            @error('email')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -397,6 +405,9 @@
                                                                     value="{{ $key }}">{{ $batchNumber }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('batch_number')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">

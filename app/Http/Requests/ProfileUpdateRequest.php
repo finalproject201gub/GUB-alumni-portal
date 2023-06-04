@@ -33,6 +33,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required',
+            'email' => 'required',
             'batch_number' => 'nullable',
             'passing_year' => 'nullable',
             'department_id' => 'nullable',

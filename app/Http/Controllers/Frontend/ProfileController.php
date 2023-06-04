@@ -23,7 +23,8 @@ class ProfileController extends Controller
         $user->fill($request->except('_token'));
 
         if ($request->hasFile('profile_pic')) {
-            if ($user->avatar && $user->avatar != 'avatar.png' && file_exists(public_path('img/profile/' . $user->avatar))) {
+
+            if ($user->avatar && file_exists(public_path('img/profile/' . $user->avatar))) {
                 unlink(public_path('img/profile/' . $user->avatar));
             }
 

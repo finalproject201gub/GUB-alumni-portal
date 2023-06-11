@@ -482,6 +482,42 @@
 
                                                 </div>
                                             </div>
+                                            <p>
+                                                <a class="btn btn-sm btn-secondary" data-toggle="collapse" href="#collapsePasswordChange" role="button" aria-expanded="false" aria-controls="collapsePasswordChange">
+                                                    Change Password
+                                                </a>
+                                            </p>
+                                            <div class="collapse @error('password') show @enderror" id="collapsePasswordChange">
+                                              <div class="card card-body">
+                                                <p class="text-muted">Leave blank if you don't want to change password</p>
+                                                 <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="password">Password</label>
+                                                            <input style="width: 100%;" class="form-control" type="password" name="password" id="password"
+                                                            autocomplete="off"
+                                                            readonly
+                                                            onfocus="this.removeAttribute('readonly');"
+                                                            placeholder="Password">
+                                                            @error('password')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-md-6">
+                                                        <label for="password_confirmation">Confirm Password</label>
+                                                        <input style="width: 100%;" class="form-control" type="password" name="password_confirmation" id="password_confirmation"
+                                                        autocomplete="off"
+                                                        readonly
+                                                        onfocus="this.removeAttribute('readonly');"
+                                                        placeholder="Confirm Password">
+                                                        @error('password_confirmation')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                     </div>
+                                                 </div>
+                                              </div>
+                                            </div>
 
                                             <div>
                                                 <button type="submit" class="btn btn-danger">Update</button>

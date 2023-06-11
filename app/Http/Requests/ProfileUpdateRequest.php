@@ -22,6 +22,7 @@ class ProfileUpdateRequest extends FormRequest
             'profile_pic.image' => 'Profile Picture must be an image',
             'profile_pic.mimes' => 'Profile Picture must be a file of type: jpeg, png, jpg.',
             'profile_pic.max' => 'Profile Picture size must be less than 2048 kilobytes.',
+            'password.confirmed' => 'Password and Confirm Password does not match.',
         ];
     }
 
@@ -42,6 +43,7 @@ class ProfileUpdateRequest extends FormRequest
             'phone' => 'nullable',
             'address' => 'nullable',
             'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'password' => 'nullable|confirmed|min:6',
         ];
     }
 }

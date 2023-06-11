@@ -71,6 +71,7 @@ class AdminJobBoardController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
+            "company_name" => 'required',
             "title" => 'required',
             "description" => 'required',
             "job_type" => 'required',

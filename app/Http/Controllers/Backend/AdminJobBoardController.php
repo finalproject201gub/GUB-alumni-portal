@@ -17,11 +17,20 @@ class AdminJobBoardController extends Controller
 {
     public function index(Request $request)
     {
-        $jobBoardList = JobBoard::query()
-            ->search($request->search)
-            ->where('user_id', auth()->user()->id)
-            ->latest()
-            ->paginate(10);
+        if (auth()->user()->role->name == 'Admin') {
+            $jobBoardList = JobBoard::query()
+                ->search($request->search)
+//            ->where('user_id', auth()->user()->id)
+                ->latest()
+                ->paginate(10);
+        } else {
+            $jobBoardList = JobBoard::query()
+                ->search($request->search)
+                ->where('user_id', auth()->user()->id)
+                ->latest()
+                ->paginate(10);
+        }
+
 
         return view('backend.job-board.index', [
             'jobBoardList' => $jobBoardList,
@@ -53,10 +62,16 @@ class AdminJobBoardController extends Controller
 
     public function edit($id)
     {
-        $jobBoard = JobBoard::query()
-            ->where('id', $id)
-            ->where('user_id', auth()->user()->id)
-            ->first();
+        if (auth()->user()->role->name == 'Admin') {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->first();
+        } else {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->where('user_id', auth()->user()->id)
+                ->first();
+        }
 
         return view('backend.job-board.edit', [
             'jobBoard' => $jobBoard,
@@ -79,10 +94,17 @@ class AdminJobBoardController extends Controller
             "application_deadline" => 'required',
         ]);
 
-        $jobBoard = JobBoard::query()
-            ->where('id', $id)
-            ->where('user_id', auth()->user()->id)
-            ->first();
+        if (auth()->user()->role->name == 'Admin') {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->first();
+        } else {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->where('user_id', auth()->user()->id)
+                ->first();
+        }
+
 
         $jobBoard->update($request->all() + ['user_id' => auth()->user()->id]);
 
@@ -91,10 +113,17 @@ class AdminJobBoardController extends Controller
 
     public function destroy($id): RedirectResponse
     {
-        $jobBoard = JobBoard::query()
-            ->where('id', $id)
-            ->where('user_id', auth()->user()->id)
-            ->first();
+        if (auth()->user()->role->name == 'Admin') {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->first();
+        } else {
+            $jobBoard = JobBoard::query()
+                ->where('id', $id)
+                ->where('user_id', auth()->user()->id)
+                ->first();
+        }
+
 
         if($jobBoard) {
             $jobBoard->delete();

@@ -373,16 +373,24 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="name" class="col-form-label">Name</label>
+                                                        <label for="name" class="col-form-label">Name</label> <span class="text-danger">*</span>
                                                         <input type="text" class="form-control"
+                                                        name="name"
                                                             value="{{ auth()->user()->name ?? '' }}" placeholder="Name">
+                                                            @error('name')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="email" class="col-form-label">Email</label>
+                                                        <label for="email" class="col-form-label">Email</label><span class="text-danger">*</span>
                                                         <input type="email" class="form-control"
+                                                        name="email"
                                                             value="{{ auth()->user()->email ?? '' }}" placeholder="Email">
+                                                            @error('email')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -397,6 +405,9 @@
                                                                     value="{{ $key }}">{{ $batchNumber }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('batch_number')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -470,6 +481,42 @@
                                                     @enderror
 
                                                 </div>
+                                            </div>
+                                            <p>
+                                                <a class="btn btn-sm btn-secondary" data-toggle="collapse" href="#collapsePasswordChange" role="button" aria-expanded="false" aria-controls="collapsePasswordChange">
+                                                    Change Password
+                                                </a>
+                                            </p>
+                                            <div class="collapse @error('password') show @enderror" id="collapsePasswordChange">
+                                              <div class="card card-body">
+                                                <p class="text-muted">Leave blank if you don't want to change password</p>
+                                                 <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label for="password">Password</label>
+                                                            <input style="width: 100%;" class="form-control" type="password" name="password" id="password"
+                                                            autocomplete="off"
+                                                            readonly
+                                                            onfocus="this.removeAttribute('readonly');"
+                                                            placeholder="Password">
+                                                            @error('password')
+                                                                <span class="text-danger">{{ $message }}</span>
+                                                            @enderror
+                                                        </div>
+                                                     </div>
+                                                     <div class="col-md-6">
+                                                        <label for="password_confirmation">Confirm Password</label>
+                                                        <input style="width: 100%;" class="form-control" type="password" name="password_confirmation" id="password_confirmation"
+                                                        autocomplete="off"
+                                                        readonly
+                                                        onfocus="this.removeAttribute('readonly');"
+                                                        placeholder="Confirm Password">
+                                                        @error('password_confirmation')
+                                                            <span class="text-danger">{{ $message }}</span>
+                                                        @enderror
+                                                     </div>
+                                                 </div>
+                                              </div>
                                             </div>
 
                                             <div>

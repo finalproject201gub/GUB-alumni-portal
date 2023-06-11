@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Backend\BackendEventRequest;
+use App\Notifications\NewEventNotification;
 
 class EventController extends Controller
 {
@@ -15,6 +17,11 @@ class EventController extends Controller
      */
     public function index(Request $request)
     {
+        $request->validate([
+            'search' => 'sometimes|required|string',
+        ]);
+
+
         $events = Event::query()
             ->search($request->search)
             ->latest()
@@ -46,7 +53,15 @@ class EventController extends Controller
      */
     public function store(BackendEventRequest $request, Event $event)
     {
-        $event->create($request->validated());
+        $event->fill($request->validated())->save();
+
+        $users = User::query()
+            ->where('role_id', 2)
+            ->get();
+
+        $users->each(function ($user) use ($event) {
+            $user->notify(new NewEventNotification($event));
+        });
 
         return redirect()
             ->route('events.index')

@@ -20,7 +20,11 @@ class ProfileController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $user->fill($request->except('_token'));
+        $user->fill($request->except('_token', 'password', 'profile_pic'));
+
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
 
         if ($request->hasFile('profile_pic')) {
 

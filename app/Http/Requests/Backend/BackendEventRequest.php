@@ -13,7 +13,7 @@ class BackendEventRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->check();
     }
 
     public function messages()
@@ -25,6 +25,7 @@ class BackendEventRequest extends FormRequest
             'end_at.required' => 'End date is required',
             'location.required' => 'Location is required',
             'event_type_id.required' => 'Event type is required',
+            'end_at.after_or_equal' => 'End date must be after or equal to start date',
         ];
     }
 
@@ -39,7 +40,7 @@ class BackendEventRequest extends FormRequest
             'title' => 'required',
             'description' => 'nullable',
             'start_at' => 'required',
-            'end_at' => 'required',
+            'end_at' => ['required','after_or_equal:start_at'],
             'location' => 'required',
             'event_type_id' => 'required',
         ];

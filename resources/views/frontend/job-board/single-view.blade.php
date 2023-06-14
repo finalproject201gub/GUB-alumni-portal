@@ -91,6 +91,12 @@
                                     </div>
                                 </div>
 
+                                @if($jobBoard->external_job_link)
+                                    <div class="job-apply" style="margin: 0 auto;">
+                                        <a target="_blank" href="{{$jobBoard->external_job_link}}" class="btn btn-warning">Direct Job Link</a>
+                                    </div>
+                                @endif
+
                                 @if ($isAppliedOnThisJob)
                                     <div class="job-apply" style="margin: 0 auto;">
                                         <a class="btn btn-success">You already applied to this job!</a>
@@ -104,7 +110,7 @@
 {{--                                    <form action="" method="POST">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('POST')--}}
-                                    <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.auth()->user()->id) }}" class="btn btn-success">Apply Online</a>
+                                    <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.auth()->user()->id) }}" class="btn btn-success">Apply</a>
 {{--                                    </form>--}}
                                 </div>
                                 @endif

@@ -29,6 +29,7 @@ class JobBoard extends Model
         "location",
         "application_deadline",
         "approve_status",
+        "external_job_link",
     ];
 
     public function scopeSearch($query, $search)

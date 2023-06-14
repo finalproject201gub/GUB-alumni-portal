@@ -11,11 +11,11 @@
                     <h3 class="card-header">Job Applicants List
 
                         <span>
-                        <form action="{{ url('/admin/job-board/') }}" method="GET">
-                            <input style="width: 200px; margin-top: -35px;" placeholder="Search Jobs"
-                                   class="float-right form form-control" type="text"
-                                   name="search" id="">
-                        </form>
+{{--                        <form action="{{ url('/admin/job-board/') }}" method="GET">--}}
+{{--                            <input style="width: 200px; margin-top: -35px;" placeholder="Search Jobs"--}}
+{{--                                   class="float-right form form-control" type="text"--}}
+{{--                                   name="search" id="">--}}
+{{--                        </form>--}}
                     </span>
                     </h3>
                     <div class="card-body">

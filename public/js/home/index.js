@@ -3182,7 +3182,7 @@ var render = function render() {
     return _c("img", {
       key: index,
       staticClass: "img-fluid pad",
-      style: _vm.post.images.length != 1 ? "width: 340px" : "",
+      style: _vm.post.images.length != 1 ? "width: 340px; max-height: 340px" : "",
       attrs: {
         src: image.image_url,
         alt: "Photo"

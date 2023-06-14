@@ -28,7 +28,7 @@
                 <p>{{ post.content }}</p>
                 <div class="post-img-container">
                     <img class="img-fluid pad"
-                     :style="post.images.length != 1 ? 'width: 340px' : ''"
+                     :style="post.images.length != 1 ? 'width: 340px; max-height: 340px' : ''"
                       v-for="(image, index) in post.images" :key="index" :src="image.image_url" alt="Photo">
                 </div>
                 <!-- <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i>

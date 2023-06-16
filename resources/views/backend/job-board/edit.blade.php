@@ -101,7 +101,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">External Job Link (If any)</label><span class="text-danger">*</span>
+                                    <label for="">External Job Link (If any)</label>
                                     <input class="form-control" placeholder="Example: https://example.com/job/12" type="text" name="external_job_link" id="" value="{{ $jobBoard->external_job_link }}">
                                     @error('external_job_link')
                                     <div class="text-danger">{{ $message }}</div>
@@ -201,7 +201,7 @@
                                     @enderror
                                 </div>
                                 <div class="form-group">
-                                    <label for="">External Job Link (If any)</label><span class="text-danger">*</span>
+                                    <label for="">External Job Link (If any)</label>
                                     <input class="form-control" placeholder="Example: https://example.com/job/12" type="text" name="external_job_link" id="" value="{{ $jobBoard->external_job_link }}">
                                     @error('external_job_link')
                                     <div class="text-danger">{{ $message }}</div>

@@ -170,10 +170,50 @@ class AdminJobBoardController extends Controller
         ]);
     }
 
+
+    public function applicantsIndexForAdmin()
+    {
+        $users = User::all();
+        $jobApplicantsList = JobApplicationDetail::query()
+            ->with([
+                'user',
+            ])
+            ->whereHas('jobBoard', function ($query) {
+                $query->where('approve_status', 'yes')
+                    ->where('user_id', auth()->user()->id);;
+            })
+//
+            ->get()
+            ->map(function ($jobApplication) use ($users) {
+
+                $applicantsName = collect($users)->where('id', $jobApplication->applied_by)->first();
+
+                return [
+                    'id' => $jobApplication->id,
+                    'company_name' => $jobApplication->jobBoard->company_name,
+                    'job_title' => $jobApplication->jobBoard->title,
+                    'application_deadline' => Carbon::parse($jobApplication->jobBoard->application_deadline)->format('d-m-Y'),
+                    'applicants_name' => $applicantsName->name,
+                    'applied_date' => Carbon::parse($jobApplication->applied_date)->format('d-m-Y g:i:s a'),
+                    'resume_path' => $jobApplication->resume_path,
+                ];
+            });
+
+        return view('backend.job-board.applicantslist-for-admin', [
+            'jobApplicantsList' => $jobApplicantsList,
+        ]);
+    }
+
+
     /**
      * @throws FileNotFoundException
      */
     public function downloadCV(Request $request)
+    {
+        return Response::download(public_path("/job-application/pdf/".$request->get('file')));
+    }
+
+    public function downloadCVForAdmin(Request $request)
     {
         return Response::download(public_path("/job-application/pdf/".$request->get('file')));
     }

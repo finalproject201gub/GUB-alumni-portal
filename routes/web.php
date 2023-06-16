@@ -61,7 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::delete('/posts/{id}', [PostController::class, 'destroy']);
 
             Route::get('/users-posts', [PostController::class, 'usersPosts']);
-
+            Route::get('/job-board/applicants-list', [AdminJobBoardController::class, 'applicantsIndexForAdmin']);
+            Route::get('/download-applicants-cv-list/', [AdminJobBoardController::class, 'downloadCVForAdmin']);
 
             // Job Board
             Route::resource('/job-board', AdminJobBoardController::class);

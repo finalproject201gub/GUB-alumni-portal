@@ -67,7 +67,7 @@
                                         <th>Duration</th>
                                         <th>Location</th>
                                         <th>Create Date</th>
-                                        <th style="width: 10px">Approve Status</th>
+                                        {{-- <th style="width: 10px">Approve Status</th> --}}
                                         <th style="width: 91px">Actions</th>
                                     </tr>
                                 </thead>
@@ -82,13 +82,13 @@
                                             <td>{{ $event->duration }}</td>
                                             <td>{{ $event->location }}</td>
                                             <td>{{ $event->create_date }}</td>
-                                            <td>
+                                            {{-- <td>
                                                 @if ($event->approve_status == 1)
                                                     <span class="badge badge-success">Approved</span>
                                                 @else
                                                     <span class="badge badge-warning">Pending</span>
                                                 @endif
-                                            </td>
+                                            </td> --}}
                                             <td>
                                                 <a href="{{ route('events.edit', $event->id) }}"
                                                     class="btn btn-primary btn-sm">

@@ -35,7 +35,7 @@ class CreatePostApiController extends Controller
 
                 $post->images()->create([
                     'path' => $file,
-                    'image_type' => 'png',
+                    'image_type' => $image_type,
                     'uploaded_by' => auth()->user()->id,
                     'updated_by' => auth()->user()->id,
                 ]);

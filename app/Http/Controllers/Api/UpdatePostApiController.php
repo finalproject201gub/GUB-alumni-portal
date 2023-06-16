@@ -16,6 +16,27 @@ class UpdatePostApiController extends Controller
             $post = Post::query()
                 ->findOrFail($postId);
 
+            foreach($request->get('images') ?? [] as $image) {
+                if (!isset($image['id']) && isset($image['image_url'])) {
+                    $image_parts = explode(";base64,", $image['image_url']);
+                    $image_type_aux = explode("image/", $image_parts[0]);
+                    $image_type = $image_type_aux[1];
+                    $image_base64 = base64_decode($image_parts[1]);
+                    $uniqid = uniqid();
+                    $folderPath = 'posts/';
+                    $file = $folderPath . $uniqid . '.'.$image_type;
+
+                    file_put_contents($file, $image_base64);
+
+                    $post->images()->create([
+                        'path' => $file,
+                        'image_type' => $image_type,
+                        'uploaded_by' => auth()->user()->id,
+                        'updated_by' => auth()->user()->id,
+                    ]);
+                }
+            }
+
             $post->update(['content' => $request->content]);
             $post->load('user:id,name,avatar', 'likes:id,user_id', 'comments:id,user_id,body,created_at', 'images:id,attachable_id,path');
             $postData = [

@@ -110,8 +110,10 @@
 {{--                                    <form action="" method="POST">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('POST')--}}
+                                    @if($jobBoard->user_id != auth()->user()->id)
                                     <a href="{{ url('/jobs/'.$jobBoard->id.'/apply?user_id='.auth()->user()->id) }}" class="btn btn-success">Apply</a>
 {{--                                    </form>--}}
+                                    @endif
                                 </div>
                                 @endif
                             </div>

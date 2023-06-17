@@ -49,7 +49,7 @@ class AdminJobBoardController extends Controller
             "title" => 'required',
             "description" => 'required',
             "job_type" => 'required',
-            "salary" => 'required',
+            "salary" => 'required|numeric',
             "location" => 'required',
             "application_deadline" => 'required',
         ]);
@@ -90,7 +90,7 @@ class AdminJobBoardController extends Controller
             "title" => 'required',
             "description" => 'required',
             "job_type" => 'required',
-            "salary" => 'required',
+            "salary" => 'required|numeric',
             "location" => 'required',
             "application_deadline" => 'required',
         ]);

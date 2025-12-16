@@ -849,7 +849,7 @@ sequenceDiagram
 
 The following steps describe a widespread service request processed by the Alumni Portal, focusing on a typical user interaction (e.g., viewing the home page flow).
 
-**Step 1: User Initiates Request**: An authenticated user (Alumni or Student) logs into the portal and navigates to the home page or dashboard. The browser sends a `GET` request to the application root `/` or specific route.
+**Step 1: User Initiates Request**: An authenticated user (Alumni, Student, or Faculty) logs into the portal and navigates to the home page or dashboard. The browser sends a `GET` request to the application root `/` or specific route.
 
 **Step 2: Server-Side Routing**: The **Laravel Router** captures the request and directs it to the appropriate controller method (e.g., `HomeController@index` or `DashboardController@index`).
 

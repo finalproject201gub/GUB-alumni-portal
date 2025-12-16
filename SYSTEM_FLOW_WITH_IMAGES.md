@@ -17,19 +17,121 @@ The GUB Alumni Portal is a Laravel-based web application with Vue.js integration
 
 ## 3. System Architecture
 
-![System Flow Diagram 1](./docs/diagrams/diagram_1.png)
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        Browser[Web Browser]
+        VueApp[Vue.js SPA<br/>Home Page]
+    end
+    
+    subgraph "Application Layer"
+        WebRoutes[Web Routes<br/>routes/web.php]
+        APIEndpoints[API Endpoints<br/>routes/web.php<br/>Prefix: api/v1]
+        AuthMiddleware[Authentication<br/>Middleware]
+        RoleMiddleware[Role-Based<br/>Middleware]
+    end
+    
+    subgraph "Controller Layer"
+        FrontendControllers[Frontend Controllers<br/>Home, Profile, Events, Jobs]
+        BackendControllers[Backend Controllers<br/>Admin Dashboard, Posts, Users]
+        APIControllers[API Controllers<br/>Posts, Comments, Likes]
+    end
+    
+    subgraph "Business Logic Layer"
+        Models[Eloquent Models<br/>User, Post, Event, JobBoard]
+        Services[Business Services]
+    end
+    
+    subgraph "Data Layer"
+        Database[(MySQL Database)]
+        Storage[File Storage<br/>Images, CVs]
+    end
+    
+    Browser --> WebRoutes
+    VueApp -->|Axios| APIEndpoints
+    WebRoutes --> AuthMiddleware
+    APIEndpoints --> AuthMiddleware
+    AuthMiddleware --> RoleMiddleware
+    RoleMiddleware --> FrontendControllers
+    RoleMiddleware --> BackendControllers
+    RoleMiddleware --> APIControllers
+    FrontendControllers --> Models
+    BackendControllers --> Models
+    APIControllers --> Models
+    Models --> Database
+    Models --> Storage
+```
 
 ---
 
 ## 4. User Authentication Flow
 
-![System Flow Diagram 2](./docs/diagrams/diagram_2.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant Laravel
+    participant Middleware
+    participant Controller
+    participant Database
+    
+    User->>Browser: Navigate to Portal
+    Browser->>Laravel: GET Request
+    Laravel->>Middleware: Check Authentication
+    
+    alt Not Authenticated
+        Middleware->>Browser: Redirect to Login
+        Browser->>User: Show Login Page
+        User->>Browser: Submit Credentials
+        Browser->>Laravel: POST /login
+        Laravel->>Database: Verify Credentials
+        Database-->>Laravel: User Data + Role
+        Laravel->>Middleware: Set Session
+        Laravel->>Controller: RedirectAuthenticatedUsersController
+        Controller->>Browser: Redirect based on Role
+    else Authenticated
+        Middleware->>Controller: Allow Access
+        Controller->>Database: Fetch User Data
+        Database-->>Controller: Return Data
+        Controller->>Browser: Render View
+    end
+```
 
 ---
 
 ## 5. Role-Based Access Control
 
-![System Flow Diagram 3](./docs/diagrams/diagram_3.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant RoleMiddleware
+    participant AdminController
+    participant AlumniController
+    participant StudentController
+    participant PublicController
+    
+    User->>Browser: Login Successful
+    Browser->>RoleMiddleware: Redirect based on Role
+    
+    alt Role is Admin (1)
+        RoleMiddleware->>AdminController: Redirect to /admin/dashboard
+        AdminController-->>Browser: Show Admin Dashboard
+        Note right of Browser: Manage Users, Post, Events
+    else Role is Alumni (2)
+        RoleMiddleware->>AlumniController: Redirect to /backend/alumni
+        AlumniController-->>Browser: Show Alumni Dashboard
+        Note right of Browser: Jobs, CVs, Public Features
+    else Role is Student (3)
+        RoleMiddleware->>StudentController: Redirect to /backend/student
+        StudentController-->>Browser: Show Student Dashboard
+        Note right of Browser: Apply Jobs, View Profile
+    else Role is Faculty (4) / Other
+        RoleMiddleware->>PublicController: Redirect to Custom/Public Page
+        PublicController-->>Browser: Show Public View
+        Note right of Browser: Home Feed, Events, Lists
+    end
+```
 
 ---
 
@@ -38,82 +140,544 @@ The GUB Alumni Portal is a Laravel-based web application with Vue.js integration
 ### Step 1: User Initiates Request
 An authenticated user navigates to the home page and interacts with the Vue.js application.
 
-![System Flow Diagram 4](./docs/diagrams/diagram_4.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant VueRouter
+    participant VueComponent
+    participant Axios
+    participant LaravelAPI
+    participant Database
+    
+    User->>Browser: Navigate to Home (/)
+    Browser->>LaravelAPI: GET / (Initial Page Load)
+    LaravelAPI->>Browser: Return Blade Template with Vue App
+    Browser->>VueRouter: Initialize Vue Router
+    VueRouter->>VueComponent: Load Home.vue Component
+    
+    Note over VueComponent: Component Mounted
+    
+    VueComponent->>Axios: GET /api/v1/static-data-for-home-page
+    Axios->>LaravelAPI: API Request
+    LaravelAPI->>Database: Fetch Posts, Users, Events
+    Database-->>LaravelAPI: Return Data
+    LaravelAPI-->>Axios: JSON Response
+    Axios-->>VueComponent: Update Component State
+    VueComponent->>Browser: Render Home Feed
+    Browser->>User: Display Home Page
+```
 
 ### Step 2: Server-Side Processing
 The Laravel backend processes the GET request to `/api/v1/static-data-for-home-page`.
 
-![System Flow Diagram 5](./docs/diagrams/diagram_5.png)
+```mermaid
+graph LR
+    A[API Request] --> B[Laravel Router<br/>routes/web.php]
+    B --> C[Auth Middleware<br/>Verify Session]
+    C --> D[StaticDataForHomePageApiController]
+    D --> E[Eloquent Models<br/>Post, User, Event]
+    E --> F[MySQL Database<br/>Query Execution]
+    F --> G[Eloquent ORM<br/>Data Mapping]
+    G --> H[Controller<br/>Format Response]
+    H --> I[JSON Response]
+    I --> J[Vue Component<br/>Data Binding]
+```
 
 ### Step 3: Authentication and Authorization
 Laravel middleware verifies the user's authentication status and ensures they have the necessary authorization to access their own profile.
 
-![System Flow Diagram 6](./docs/diagrams/diagram_6.png)
+```mermaid
+graph TD
+    Request[Incoming Request] --> AuthCheck{Auth Middleware}
+    AuthCheck -->|Not Authenticated| Redirect[Redirect to Login]
+    AuthCheck -->|Authenticated| SessionCheck[Verify Session Token]
+    SessionCheck --> RoleCheck{Check User Role}
+    RoleCheck -->|Valid Role| Controller[Allow Controller Access]
+    RoleCheck -->|Invalid Role| Forbidden[403 Forbidden]
+    Controller --> Response[Return Response]
+```
 
 ### Step 4: Data Retrieval
 The `StaticDataForHomePageApiController` method interacts with the **Eloquent ORM** to fetch the current profile data from the **MySQL Database**.
 
-![System Flow Diagram 7](./docs/diagrams/diagram_7.png)
+```mermaid
+sequenceDiagram
+    participant Controller
+    participant PostModel
+    participant UserModel
+    participant EventModel
+    participant Database
+    
+    Controller->>PostModel: Post::with('user', 'images', 'likes', 'comments')
+    PostModel->>Database: SELECT * FROM posts...
+    Database-->>PostModel: Posts Data
+    
+    Controller->>UserModel: User::all()
+    UserModel->>Database: SELECT * FROM users
+    Database-->>UserModel: Users Data
+    
+    Controller->>EventModel: Event::latest()
+    EventModel->>Database: SELECT * FROM events...
+    Database-->>EventModel: Events Data
+    
+    PostModel-->>Controller: Posts Collection
+    UserModel-->>Controller: Users Collection
+    EventModel-->>Controller: Events Collection
+    
+    Controller->>Controller: Format JSON Response
+```
 
 ---
 
 ## 7. Post Creation Flow (Vue.js to Laravel API)
 
-![System Flow Diagram 8](./docs/diagrams/diagram_8.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant VueComponent
+    participant Axios
+    participant LaravelRouter
+    participant AuthMiddleware
+    participant CreatePostApiController
+    participant PostModel
+    participant ImageModel
+    participant Database
+    participant Storage
+    
+    User->>VueComponent: Click "Create Post"
+    VueComponent->>User: Show Post Form
+    User->>VueComponent: Enter Content + Upload Images
+    VueComponent->>Axios: POST /api/v1/posts/store
+    Axios->>LaravelRouter: API Request with FormData
+    LaravelRouter->>AuthMiddleware: Verify Authentication
+    AuthMiddleware->>CreatePostApiController: Allow Access
+    
+    CreatePostApiController->>CreatePostApiController: Validate Request
+    CreatePostApiController->>PostModel: Create New Post
+    PostModel->>Database: INSERT INTO posts
+    Database-->>PostModel: Post ID
+    
+    alt Images Uploaded
+        CreatePostApiController->>Storage: Store Images
+        Storage-->>CreatePostApiController: Image Paths
+        CreatePostApiController->>ImageModel: Create Image Records
+        ImageModel->>Database: INSERT INTO images
+    end
+    
+    CreatePostApiController-->>Axios: Success Response (201)
+    Axios-->>VueComponent: Update State
+    VueComponent->>VueComponent: Refresh Feed
+    VueComponent->>User: Show Success Message
+```
 
 ---
 
 ## 8. Post Update Flow
 
-![System Flow Diagram 9](./docs/diagrams/diagram_9.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant LaravelRouter
+    participant AuthMiddleware
+    participant UpdatePostApiController
+    participant PostModel
+    participant Database
+    
+    User->>Browser: Click "Edit Post"
+    Browser->>Browser: Show Edit Form (Pre-filled)
+    User->>Browser: Modify Content
+    User->>Browser: Click "Update"
+    Browser->>LaravelRouter: PUT /api/v1/posts/{id}
+    LaravelRouter->>AuthMiddleware: Verify Authentication
+    AuthMiddleware->>UpdatePostApiController: Allow Access
+    
+    UpdatePostApiController->>PostModel: Find Post by ID
+    PostModel->>Database: SELECT * FROM posts WHERE id = ?
+    Database-->>PostModel: Post Data
+    
+    UpdatePostApiController->>UpdatePostApiController: Check Ownership
+    
+    alt User is Owner or Admin
+        UpdatePostApiController->>PostModel: Update Post
+        PostModel->>Database: UPDATE posts SET...
+        Database-->>PostModel: Success
+        UpdatePostApiController-->>Browser: Success Response (200)
+        Browser->>User: Show Success Message
+    else Not Authorized
+        UpdatePostApiController-->>Browser: 403 Forbidden
+        Browser->>User: Show Error Message
+    end
+```
 
 ---
 
 ## 9. Like/Unlike Flow
 
-![System Flow Diagram 10](./docs/diagrams/diagram_10.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant VueComponent
+    participant Axios
+    participant LaravelRouter
+    participant LikeController
+    participant LikeModel
+    participant Database
+    
+    User->>VueComponent: Click Like Button
+    VueComponent->>Axios: POST /api/v1/posts/{post}/like-insert-delete
+    Axios->>LaravelRouter: API Request
+    LaravelRouter->>LikeController: likeInsertDeleteToPost()
+    
+    LikeController->>LikeModel: Check if Like Exists
+    LikeModel->>Database: SELECT * FROM likes WHERE...
+    Database-->>LikeModel: Like Data or Null
+    
+    alt Like Exists
+        LikeController->>LikeModel: Delete Like
+        LikeModel->>Database: DELETE FROM likes...
+        Database-->>LikeModel: Success
+        LikeController-->>Axios: Response: "unliked"
+    else Like Doesn't Exist
+        LikeController->>LikeModel: Create Like
+        LikeModel->>Database: INSERT INTO likes...
+        Database-->>LikeModel: Success
+        LikeController-->>Axios: Response: "liked"
+    end
+    
+    Axios-->>VueComponent: Update Like Status
+    VueComponent->>VueComponent: Toggle Like Icon
+    VueComponent->>User: Visual Feedback
+```
 
 ---
 
 ## 10. Comment System Flow
 
-![System Flow Diagram 11](./docs/diagrams/diagram_11.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant VueComponent
+    participant Axios
+    participant LaravelRouter
+    participant PostCommentController
+    participant CommentModel
+    participant Database
+    
+    User->>VueComponent: Type Comment
+    User->>VueComponent: Click "Post Comment"
+    VueComponent->>Axios: POST /api/v1/posts/comments/{postId}
+    Axios->>LaravelRouter: API Request
+    LaravelRouter->>PostCommentController: store()
+    
+    PostCommentController->>PostCommentController: Validate Input
+    PostCommentController->>CommentModel: Create Comment
+    CommentModel->>Database: INSERT INTO comments
+    Database-->>CommentModel: Comment ID
+    CommentModel-->>PostCommentController: Comment Object
+    PostCommentController-->>Axios: Success Response (201)
+    Axios-->>VueComponent: New Comment Data
+    VueComponent->>VueComponent: Add Comment to List
+    VueComponent->>User: Show New Comment
+```
 
 ---
 
 ## 11. Job Application Flow
 
-![System Flow Diagram 12](./docs/diagrams/diagram_12.png)
+```mermaid
+sequenceDiagram
+    participant Student
+    participant Browser
+    participant LaravelRouter
+    participant JobBoardController
+    participant JobApplicationDetailModel
+    participant JobBoardModel
+    participant Database
+    participant Storage
+    
+    Student->>Browser: Browse Jobs
+    Browser->>LaravelRouter: GET /jobs
+    LaravelRouter->>JobBoardController: index()
+    JobBoardController->>JobBoardModel: Get All Active Jobs
+    JobBoardModel->>Database: SELECT * FROM job_boards...
+    Database-->>JobBoardModel: Jobs Data
+    JobBoardModel-->>Browser: Display Jobs List
+    
+    Student->>Browser: Click "Apply" on Job
+    Browser->>LaravelRouter: GET /jobs/{id}/apply
+    LaravelRouter->>JobBoardController: applyJobView()
+    JobBoardController-->>Browser: Show Application Form
+    
+    Student->>Browser: Fill Form + Upload CV
+    Student->>Browser: Submit Application
+    Browser->>LaravelRouter: POST /job/apply
+    LaravelRouter->>JobBoardController: applyJob()
+    
+    JobBoardController->>JobBoardController: Validate Input
+    JobBoardController->>Storage: Store CV File
+    Storage-->>JobBoardController: CV Path
+    
+    JobBoardController->>JobApplicationDetailModel: Create Application
+    JobApplicationDetailModel->>Database: INSERT INTO job_application_details
+    Database-->>JobApplicationDetailModel: Application ID
+    
+    JobBoardController-->>Browser: Success Response
+    Browser->>Student: Show Confirmation Message
+```
 
 ---
 
 ## 12. Admin User Management Flow
 
-![System Flow Diagram 13](./docs/diagrams/diagram_13.png)
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant Browser
+    participant LaravelRouter
+    participant RoleMiddleware
+    participant AdminUserController
+    participant UserModel
+    participant Database
+    
+    Admin->>Browser: Navigate to /admin/users
+    Browser->>LaravelRouter: GET /admin/users
+    LaravelRouter->>RoleMiddleware: Check Role
+    
+    alt Not Admin
+        RoleMiddleware-->>Browser: 403 Forbidden
+    else Is Admin
+        RoleMiddleware->>AdminUserController: index()
+        AdminUserController->>UserModel: Get All Users
+        UserModel->>Database: SELECT * FROM users
+        Database-->>UserModel: Users Data
+        UserModel-->>Browser: Display Users List
+    end
+    
+    Admin->>Browser: Click "Edit User"
+    Browser->>LaravelRouter: GET /admin/users/edit/{id}
+    LaravelRouter->>AdminUserController: edit()
+    AdminUserController->>UserModel: Find User
+    UserModel->>Database: SELECT * FROM users WHERE id = ?
+    Database-->>UserModel: User Data
+    UserModel-->>Browser: Show Edit Form
+    
+    Admin->>Browser: Update User Info
+    Browser->>LaravelRouter: PUT /admin/users/{id}
+    LaravelRouter->>AdminUserController: update()
+    AdminUserController->>UserModel: Update User
+    UserModel->>Database: UPDATE users SET...
+    Database-->>UserModel: Success
+    UserModel-->>Browser: Success Response
+    Browser->>Admin: Show Success Message
+```
 
 ---
 
 ## 13. Event Management Flow
 
-![System Flow Diagram 14](./docs/diagrams/diagram_14.png)
+```mermaid
+graph TD
+    Start["User Access Events"] --> RoleCheck{"Check User Role"}
+    
+    RoleCheck -->|Admin| AdminEventAccess["Admin Event Management<br/>/admin/events"]
+    RoleCheck -->|Alumni/Student/Faculty| PublicEventAccess["Public Event View<br/>/events"]
+    
+    AdminEventAccess --> AdminActions{"Admin Actions"}
+    AdminActions -->|Create| CreateEvent["POST /admin/events<br/>EventController@store"]
+    AdminActions -->|Edit| EditEvent["PUT /admin/events/{id}<br/>EventController@update"]
+    AdminActions -->|Delete| DeleteEvent["DELETE /admin/events/{id}<br/>EventController@destroy"]
+    AdminActions -->|View| ViewEvent["GET /admin/events<br/>EventController@index"]
+    
+    PublicEventAccess --> PublicActions{"Public Actions"}
+    PublicActions -->|View List| ViewEvents["GET /events<br/>EventController@index"]
+    PublicActions -->|View Details| ViewEventDetail["GET /events/{id}<br/>EventController@show"]
+    
+    CreateEvent --> EventModel["Event Model"]
+    EditEvent --> EventModel
+    DeleteEvent --> EventModel
+    ViewEvent --> EventModel
+    ViewEvents --> EventModel
+    ViewEventDetail --> EventModel
+    
+    EventModel --> Database[("MySQL Database<br/>events table")]
+```
 
 ---
 
 ## 14. File Upload and Storage Flow
 
-![System Flow Diagram 15](./docs/diagrams/diagram_15.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant Browser
+    participant LaravelController
+    participant Validator
+    participant Storage
+    participant ImageModel
+    participant Database
+    
+    User->>Browser: Select File(s)
+    Browser->>LaravelController: POST Request with File(s)
+    LaravelController->>Validator: Validate File Type/Size
+    
+    alt Validation Fails
+        Validator-->>Browser: Error Response
+        Browser->>User: Show Error Message
+    else Validation Passes
+        Validator->>LaravelController: Continue
+        LaravelController->>Storage: Store File
+        Storage-->>LaravelController: File Path
+        LaravelController->>ImageModel: Create Image Record
+        ImageModel->>Database: INSERT INTO images
+        Database-->>ImageModel: Image ID
+        ImageModel-->>LaravelController: Image Object
+        LaravelController-->>Browser: Success Response
+        Browser->>User: Show Success Message
+    end
+```
 
 ---
 
 ## 15. Notification System Flow
 
-![System Flow Diagram 16](./docs/diagrams/diagram_16.png)
+```mermaid
+sequenceDiagram
+    participant User
+    participant VueComponent
+    participant Axios
+    participant NotificationController
+    participant Database
+    
+    Note over VueComponent: Component Mounted/Periodic Check
+    
+    VueComponent->>Axios: GET /api/v1/notifications/unread
+    Axios->>NotificationController: getUnreadNotifications()
+    NotificationController->>Database: SELECT * FROM notifications WHERE read_at IS NULL
+    Database-->>NotificationController: Unread Notifications
+    NotificationController-->>Axios: JSON Response
+    Axios-->>VueComponent: Update Notification Badge
+    VueComponent->>User: Display Notification Count
+    
+    User->>VueComponent: Click "Mark All as Read"
+    VueComponent->>Axios: GET /api/v1/notifications/mark-all-as-read
+    Axios->>NotificationController: markAllAsRead()
+    NotificationController->>Database: UPDATE notifications SET read_at = NOW()
+    Database-->>NotificationController: Success
+    NotificationController-->>Axios: Success Response
+    Axios-->>VueComponent: Clear Notification Badge
+    VueComponent->>User: Update UI
+```
 
 ---
 
 ## 16. Database Schema Overview
 
-![System Flow Diagram 17](./docs/diagrams/diagram_17.png)
+```mermaid
+erDiagram
+    USERS ||--o{ POSTS : creates
+    USERS ||--o{ COMMENTS : writes
+    USERS ||--o{ LIKES : gives
+    USERS ||--o{ JOB_BOARDS : posts
+    USERS ||--o{ JOB_APPLICATION_DETAILS : applies
+    USERS ||--o{ EVENTS : manages
+    USERS }o--|| ROLES : has
+    
+    POSTS ||--o{ IMAGES : contains
+    POSTS ||--o{ COMMENTS : has
+    POSTS ||--o{ LIKES : receives
+    
+    COMMENTS ||--o{ LIKES : receives
+    
+    JOB_BOARDS ||--o{ JOB_APPLICATION_DETAILS : receives
+    
+    USERS {
+        int id PK
+        string name
+        string email
+        string password
+        int role_id FK
+        string student_id
+        string phone
+        text address
+        datetime created_at
+        datetime updated_at
+    }
+    
+    ROLES {
+        int id PK
+        string name
+        datetime created_at
+        datetime updated_at
+    }
+    
+    POSTS {
+        int id PK
+        int user_id FK
+        text content
+        datetime created_at
+        datetime updated_at
+    }
+    
+    COMMENTS {
+        int id PK
+        int user_id FK
+        int post_id FK
+        text content
+        datetime created_at
+        datetime updated_at
+    }
+    
+    LIKES {
+        int id PK
+        int user_id FK
+        int likeable_id
+        string likeable_type
+        datetime created_at
+        datetime updated_at
+    }
+    
+    IMAGES {
+        int id PK
+        int imageable_id
+        string imageable_type
+        string path
+        datetime created_at
+        datetime updated_at
+    }
+    
+    JOB_BOARDS {
+        int id PK
+        int user_id FK
+        string title
+        text description
+        string company
+        string location
+        datetime created_at
+        datetime updated_at
+    }
+    
+    JOB_APPLICATION_DETAILS {
+        int id PK
+        int user_id FK
+        int job_board_id FK
+        string cv_path
+        text cover_letter
+        datetime created_at
+        datetime updated_at
+    }
+    
+    EVENTS {
+        int id PK
+        string title
+        text description
+        datetime event_date
+        string location
+        datetime created_at
+        datetime updated_at
+    }
+```
 
 ---
 
@@ -189,13 +753,62 @@ The `StaticDataForHomePageApiController` method interacts with the **Eloquent OR
 
 ## 18. Middleware Flow
 
-![System Flow Diagram 18](./docs/diagrams/diagram_18.png)
+```mermaid
+graph LR
+    Request[HTTP Request] --> Web[Web Middleware Group]
+    Web --> CSRF[CSRF Protection]
+    CSRF --> Session[Session Management]
+    Session --> Cookie[Cookie Encryption]
+    Cookie --> Auth{Auth Middleware}
+    
+    Auth -->|Not Authenticated| Login[Redirect to Login]
+    Auth -->|Authenticated| RoleCheck{Role Middleware}
+    
+    RoleCheck -->|Admin| AdminRoutes[Admin Routes]
+    RoleCheck -->|Alumni| AlumniRoutes[Alumni Routes]
+    RoleCheck -->|Alumni| AlumniRoutes[Alumni Routes]
+    RoleCheck -->|Student| StudentRoutes[Student Routes]
+    RoleCheck -->|Faculty| PublicRoutes
+    RoleCheck -->|Any Authenticated| PublicRoutes[Public Routes]
+    
+    AdminRoutes --> Controller[Controller]
+    AlumniRoutes --> Controller
+    StudentRoutes --> Controller
+    PublicRoutes --> Controller
+    
+    Controller --> Response[HTTP Response]
+```
 
 ---
 
 ## 19. Vue.js Component Structure
 
-![System Flow Diagram 19](./docs/diagrams/diagram_19.png)
+```mermaid
+graph TD
+    App[App Root<br/>resources/js/home/index.js] --> Router[Vue Router]
+    Router --> RouterView[RouterView Component]
+    RouterView --> Home[Home.vue Component]
+    
+    Home --> PostFeed[Post Feed Section]
+    Home --> CreatePost[Create Post Form]
+    Home --> Sidebar[Sidebar Section]
+    
+    PostFeed --> PostCard[Post Card Component]
+    PostCard --> LikeButton[Like Button]
+    PostCard --> CommentSection[Comment Section]
+    PostCard --> ImageGallery[Image Gallery]
+    
+    CreatePost --> ImageUploader[Image Uploader]
+    CreatePost --> TextEditor[Text Editor]
+    
+    Sidebar --> EventsList[Events List]
+    Sidebar --> UsersList[Users List]
+    
+    PostCard -->|Axios| API[Laravel API]
+    CreatePost -->|Axios| API
+    LikeButton -->|Axios| API
+    CommentSection -->|Axios| API
+```
 
 ---
 
@@ -203,7 +816,32 @@ The `StaticDataForHomePageApiController` method interacts with the **Eloquent OR
 
 The system integrates **Chatify**, a Laravel package, to provide real-time messaging capabilities between users.
 
-![System Flow Diagram 20](./docs/diagrams/diagram_20.png)
+```mermaid
+sequenceDiagram
+    participant UserA
+    participant Browser
+    participant ChatifyController
+    participant ChatMessageApi
+    participant Database
+
+    UserA->>Browser: Open Chat / Messenger
+    Browser->>ChatifyController: GET /chatify
+    ChatifyController-->>Browser: Render Chat Interface
+    
+    Browser->>ChatMessageApi: GET /api/v1/chat/message-count
+    ChatMessageApi->>Database: Count Unread Messages
+    Database-->>ChatMessageApi: Count
+    ChatMessageApi-->>Browser: Update Badge
+    
+    UserA->>Browser: Send Message to UserB
+    Browser->>ChatifyController: POST /chatify/sendMessage
+    ChatifyController->>Database: INSERT INTO ch_messages
+    Database-->>ChatifyController: Success
+    
+    ChatifyController-->>Browser: Message Sent UI Update
+    
+    Note right of Browser: Real-time via Pusher (if configured)<br/>or AJAX Polling
+```
 
 ---
 
@@ -211,7 +849,7 @@ The system integrates **Chatify**, a Laravel package, to provide real-time messa
 
 The following steps describe a widespread service request processed by the Alumni Portal, focusing on a typical user interaction (e.g., viewing the home page flow).
 
-**Step 1: User Initiates Request**: An authenticated user (Alumni or Student) logs into the portal and navigates to the home page or dashboard. The browser sends a `GET` request to the application root `/` or specific route.
+**Step 1: User Initiates Request**: An authenticated user (Alumni, Student, or Faculty) logs into the portal and navigates to the home page or dashboard. The browser sends a `GET` request to the application root `/` or specific route.
 
 **Step 2: Server-Side Routing**: The **Laravel Router** captures the request and directs it to the appropriate controller method (e.g., `HomeController@index` or `DashboardController@index`).
 
@@ -259,13 +897,57 @@ The following steps describe a widespread service request processed by the Alumn
 
 ## 21. Security Measures
 
-![System Flow Diagram 21](./docs/diagrams/diagram_21.png)
+```mermaid
+graph TD
+    Security[Security Layers] --> Auth[Authentication]
+    Security --> CSRF[CSRF Protection]
+    Security --> XSS[XSS Prevention]
+    Security --> SQL[SQL Injection Prevention]
+    Security --> FileUpload[File Upload Validation]
+    
+    Auth --> SessionManagement[Session Management]
+    Auth --> PasswordHashing[Password Hashing - bcrypt]
+    
+    CSRF --> TokenVerification[CSRF Token Verification]
+    
+    XSS --> BladeEscaping[Blade Template Escaping]
+    XSS --> InputSanitization[Input Sanitization]
+    
+    SQL --> EloquentORM[Eloquent ORM]
+    SQL --> PreparedStatements[Prepared Statements]
+    
+    FileUpload --> TypeValidation[File Type Validation]
+    FileUpload --> SizeValidation[File Size Validation]
+    FileUpload --> StorageSecurity[Secure Storage Path]
+```
 
 ---
 
 ## 22. Deployment Architecture
 
-![System Flow Diagram 22](./docs/diagrams/diagram_22.png)
+```mermaid
+graph TB
+    subgraph "Production Environment"
+        WebServer[Web Server<br/>Nginx/Apache]
+        PHPServer[PHP-FPM<br/>Laravel Application]
+        DBServer[(MySQL Database)]
+        FileStorage[File Storage<br/>public/storage]
+    end
+    
+    subgraph "Client Side"
+        Browser[Web Browser]
+        VueApp[Vue.js Application]
+    end
+    
+    Browser --> WebServer
+    VueApp --> WebServer
+    WebServer --> PHPServer
+    PHPServer --> DBServer
+    PHPServer --> FileStorage
+    
+    WebServer -.->|Static Assets| Browser
+    PHPServer -.->|API Responses| VueApp
+```
 
 ---
 
@@ -308,10 +990,28 @@ The following steps describe a widespread service request processed by the Alumn
 ## 24. Technology Integration Points
 
 ### Laravel + Vue.js Integration
-![System Flow Diagram 23](./docs/diagrams/diagram_23.png)
+```mermaid
+graph LR
+    Blade[Blade Template] -->|Renders| VueMount[Vue Mount Point<br/>#home-main-content]
+    VueMount -->|Initializes| VueApp[Vue Application]
+    VueApp -->|Uses| VueRouter[Vue Router]
+    VueApp -->|Communicates via| Axios[Axios HTTP Client]
+    Axios -->|Calls| LaravelAPI[Laravel API Routes]
+    LaravelAPI -->|Returns| JSON[JSON Response]
+    JSON -->|Updates| VueApp
+```
 
 ### Asset Compilation
-![System Flow Diagram 24](./docs/diagrams/diagram_24.png)
+```mermaid
+graph LR
+    Source[Source Files] --> Mix[Laravel Mix<br/>webpack.mix.js]
+    Mix -->|Compiles| JS[app.js]
+    Mix -->|Compiles| CSS[app.css]
+    JS --> Public[public/js]
+    CSS --> Public2[public/css]
+    Public --> Browser[Browser]
+    Public2 --> Browser
+```
 
 ---
 

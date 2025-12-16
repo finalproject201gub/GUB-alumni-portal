@@ -102,26 +102,35 @@ sequenceDiagram
 ## 5. Role-Based Access Control
 
 ```mermaid
-graph TD
-    Start[User Login] --> Auth{Authenticated?}
-    Auth -->|No| Login[Login Page]
-    Auth -->|Yes| RoleCheck{Check User Role}
+sequenceDiagram
+    participant User
+    participant Browser
+    participant RoleMiddleware
+    participant AdminController
+    participant AlumniController
+    participant StudentController
+    participant PublicController
     
-    RoleCheck -->|Admin| AdminDash[Admin Dashboard<br/>/admin/dashboard]
-    RoleCheck -->|Alumni| AlumniDash[Alumni Dashboard<br/>/backend/alumni]
-    RoleCheck -->|Student| StudentDash[Student Dashboard<br/>/backend/student]
+    User->>Browser: Login Successful
+    Browser->>RoleMiddleware: Redirect based on Role
     
-    AdminDash --> AdminFeatures[Admin Features:<br/>- Manage Users<br/>- Manage Posts<br/>- Manage Events<br/>- View Job Applicants<br/>- Manage Job Board]
-    
-    AlumniDash --> AlumniFeatures[Alumni Features:<br/>- Post Jobs<br/>- View Applicants<br/>- Download CVs<br/>- Manage Job Board]
-    
-    StudentDash --> StudentFeatures[Student Features:<br/>- View Job Applications<br/>- Apply for Jobs<br/>- View Dashboard]
-    
-    AdminFeatures --> PublicAccess[Public Access]
-    AlumniFeatures --> PublicAccess
-    StudentFeatures --> PublicAccess
-    
-    PublicAccess --> CommonFeatures[Common Features:<br/>- Home Feed<br/>- Profile Management<br/>- View Events<br/>- Alumni List<br/>- Student List<br/>- Job Board]
+    alt Role is Admin (1)
+        RoleMiddleware->>AdminController: Redirect to /admin/dashboard
+        AdminController-->>Browser: Show Admin Dashboard
+        Note right of Browser: Manage Users, Post, Events
+    else Role is Alumni (2)
+        RoleMiddleware->>AlumniController: Redirect to /backend/alumni
+        AlumniController-->>Browser: Show Alumni Dashboard
+        Note right of Browser: Jobs, CVs, Public Features
+    else Role is Student (3)
+        RoleMiddleware->>StudentController: Redirect to /backend/student
+        StudentController-->>Browser: Show Student Dashboard
+        Note right of Browser: Apply Jobs, View Profile
+    else Role is Faculty (4) / Other
+        RoleMiddleware->>PublicController: Redirect to Custom/Public Page
+        PublicController-->>Browser: Show Public View
+        Note right of Browser: Home Feed, Events, Lists
+    end
 ```
 
 ---
@@ -473,7 +482,7 @@ graph TD
     Start["User Access Events"] --> RoleCheck{"Check User Role"}
     
     RoleCheck -->|Admin| AdminEventAccess["Admin Event Management<br/>/admin/events"]
-    RoleCheck -->|Alumni/Student| PublicEventAccess["Public Event View<br/>/events"]
+    RoleCheck -->|Alumni/Student/Faculty| PublicEventAccess["Public Event View<br/>/events"]
     
     AdminEventAccess --> AdminActions{"Admin Actions"}
     AdminActions -->|Create| CreateEvent["POST /admin/events<br/>EventController@store"]
@@ -757,7 +766,9 @@ graph LR
     
     RoleCheck -->|Admin| AdminRoutes[Admin Routes]
     RoleCheck -->|Alumni| AlumniRoutes[Alumni Routes]
+    RoleCheck -->|Alumni| AlumniRoutes[Alumni Routes]
     RoleCheck -->|Student| StudentRoutes[Student Routes]
+    RoleCheck -->|Faculty| PublicRoutes
     RoleCheck -->|Any Authenticated| PublicRoutes[Public Routes]
     
     AdminRoutes --> Controller[Controller]

@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-The GUB Alumni Portal is a Laravel-based web application with Vue.js integration for the home page. The system provides different functionalities for three user roles: **Admin**, **Alumni**, and **Student**.
+The GUB Alumni Portal is a Laravel-based web application with Vue.js integration for the home page. The system provides different functionalities for four user roles: **Admin**, **Alumni**, **Student**, and **Faculty**.
 
 ## 2. Technology Stack
 
@@ -801,7 +801,66 @@ graph TD
 
 ---
 
-## 20. Request Lifecycle Summary
+## 20. Chat System Flow (Chatify Integration)
+
+The system integrates **Chatify**, a Laravel package, to provide real-time messaging capabilities between users.
+
+```mermaid
+sequenceDiagram
+    participant UserA
+    participant Browser
+    participant ChatifyController
+    participant ChatMessageApi
+    participant Database
+
+    UserA->>Browser: Open Chat / Messenger
+    Browser->>ChatifyController: GET /chatify
+    ChatifyController-->>Browser: Render Chat Interface
+    
+    Browser->>ChatMessageApi: GET /api/v1/chat/message-count
+    ChatMessageApi->>Database: Count Unread Messages
+    Database-->>ChatMessageApi: Count
+    ChatMessageApi-->>Browser: Update Badge
+    
+    UserA->>Browser: Send Message to UserB
+    Browser->>ChatifyController: POST /chatify/sendMessage
+    ChatifyController->>Database: INSERT INTO ch_messages
+    Database-->>ChatifyController: Success
+    
+    ChatifyController-->>Browser: Message Sent UI Update
+    
+    Note right of Browser: Real-time via Pusher (if configured)<br/>or AJAX Polling
+```
+
+---
+
+## 21. System Working Flow Summary
+
+The following steps describe a widespread service request processed by the Alumni Portal, focusing on a typical user interaction (e.g., viewing the home page flow).
+
+**Step 1: User Initiates Request**: An authenticated user (Alumni or Student) logs into the portal and navigates to the home page or dashboard. The browser sends a `GET` request to the application root `/` or specific route.
+
+**Step 2: Server-Side Routing**: The **Laravel Router** captures the request and directs it to the appropriate controller method (e.g., `HomeController@index` or `DashboardController@index`).
+
+**Step 3: Authentication and Authorization**: **Laravel Middleware** (`auth`, `role`) verifies the user's identity via session cookies and ensures they have the necessary permissions (Admin, Alumni, Student) to access the requested resource.
+
+**Step 4: Data Retrieval (Server-Side)**: For non-SPA pages, the controller interacts with **Eloquent Models** (e.g., `User`, `JobBoard`) to fetch data directly from the **MySQL Database**.
+
+**Step 5: View Rendering / SPA Initialization**: 
+   - **Blade**: For standard pages, Laravel renders a Blade template populated with data and returns HTML.
+   - **Vue.js**: For the Home Page, Laravel returns a skeleton Blade template that initializes the **Vue.js Application**.
+
+**Step 6: Client-Side Data Fetching (Vue.js)**: If utilizing Vue.js, the component mounts and triggers an **Axios** `GET` request to API endpoints (e.g., `/api/v1/static-data-for-home-page`).
+
+**Step 7: API Processing**: The request hits `routes/web.php` (API prefix). Middleware re-verifies auth. The **API Controller** fetches fresh data (Posts, Events, Users) from the database and returns a **JSON Response**.
+
+**Step 8: Dynamic UI Update**: The Vue.js component receives the JSON data and dynamically updates the DOM to display posts, comments, and events without a page reload.
+
+**Step 9: User Interaction**: The user interacts with the page (e.g., creating a post, applying for a job, chatting). These actions trigger new **POST/PUT** requests, repeating the cycle of Routing -> Auth -> Controller Logic -> Database Update -> JSON/HTML Response.
+
+---
+
+## 22. Request Lifecycle Summary
 
 ### For Blade-Rendered Pages:
 1. **User Request** → Browser sends HTTP request

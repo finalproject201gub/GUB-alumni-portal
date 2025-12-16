@@ -61,6 +61,7 @@ graph TB
     Models --> Database
     Models --> Storage
 ```
+**Summary**: This high-level architecture diagram illustrates the interaction between the Client Layer (Vue.js/Blade), Application Layer (Laravel Routes/Middleware), Controller Layer, and the Data Layer (MySQL/Storage). It highlights how Vue.js communicates via Axios to the API endpoints while standard browser requests are routed through Web Routes.
 
 ---
 
@@ -96,6 +97,7 @@ sequenceDiagram
         Controller->>Browser: Render View
     end
 ```
+**Summary**: The sequence diagram depicts the standard login process where user credentials are verified against the database. Upon success, a session is established, and the `RedirectAuthenticatedUsersController` routes the user to their specific dashboard based on their role (Admin, Alumni, Student) or to the home page (Faculty).
 
 ---
 
@@ -132,6 +134,7 @@ sequenceDiagram
         Note right of Browser: Home Feed, Events, Lists
     end
 ```
+**Summary**: This sequence illustrates the Role-Based Access Control logic. The Role Middleware intercepts authenticated requests and enforces redirection: Admins to `/admin/dashboard`, Alumni to `/backend/alumni`, Students to `/backend/student`, and Faculty/Others to public views.
 
 ---
 
@@ -167,6 +170,7 @@ sequenceDiagram
     VueComponent->>Browser: Render Home Feed
     Browser->>User: Display Home Page
 ```
+**Summary**: This sequence details the home page loading process. The browser fetches the initial Blade template, initializing the Vue app. The Vue component then asynchronously fetches static data (posts, users, events) via Axios to populate the feed dynamically.
 
 ### Step 2: Server-Side Processing
 The Laravel backend processes the GET request to `/api/v1/static-data-for-home-page`.
@@ -183,6 +187,7 @@ graph LR
     H --> I[JSON Response]
     I --> J[Vue Component<br/>Data Binding]
 ```
+**Summary**: This flow represents the server-side handling of the home page data API request. The request is routed through authentication middleware to the `StaticDataForHomePageApiController`, which interacts with models to gather and formatting data for the JSON response.
 
 ### Step 3: Authentication and Authorization
 Laravel middleware verifies the user's authentication status and ensures they have the necessary authorization to access their own profile.
@@ -197,6 +202,7 @@ graph TD
     RoleCheck -->|Invalid Role| Forbidden[403 Forbidden]
     Controller --> Response[Return Response]
 ```
+**Summary**: The Authentication logic is shown here. Middleware intercepts incoming requests to verify session validity. It then checks the user's role to authorize access to specific controllers or return a 403 Forbidden response.
 
 ### Step 4: Data Retrieval
 The `StaticDataForHomePageApiController` method interacts with the **Eloquent ORM** to fetch the current profile data from the **MySQL Database**.
@@ -227,6 +233,7 @@ sequenceDiagram
     
     Controller->>Controller: Format JSON Response
 ```
+**Summary**: This diagram breaks down the data retrieval within the controller. It performs multiple Eloquent queries to fetch Posts (with relations), Users, and Events, combining them into a structured JSON payload for the frontend.
 
 ---
 
@@ -270,6 +277,7 @@ sequenceDiagram
     VueComponent->>VueComponent: Refresh Feed
     VueComponent->>User: Show Success Message
 ```
+**Summary**: The Post Creation flow shows how a user's form submission (content + images) is handled. The Vue component sends `FormData` via Axios. The controller validates the input, creates the Post record, uploads any images to storage, links them in the database, and returns a success response to update the UI.
 
 ---
 
@@ -310,6 +318,7 @@ sequenceDiagram
         Browser->>User: Show Error Message
     end
 ```
+**Summary**: The Post Update flow details the edit process. The API validates the user's permission to edit the post (ownership check) before updating the database record. Unauthorized attempts result in a 403 error.
 
 ---
 
@@ -350,6 +359,7 @@ sequenceDiagram
     VueComponent->>VueComponent: Toggle Like Icon
     VueComponent->>User: Visual Feedback
 ```
+**Summary**: This flow illustrates the toggle logic for 'Likes'. When a user clicks 'Like', the API checks if a like record already exists. If yes, it deletes it (unlike); if no, it creates it (like). The frontend receives the new state to update the icon immediately.
 
 ---
 
@@ -381,6 +391,7 @@ sequenceDiagram
     VueComponent->>VueComponent: Add Comment to List
     VueComponent->>User: Show New Comment
 ```
+**Summary**: The flow details how comments are added to posts. The user submits text, which is validated and stored in the `comments` table linked to the specific post and user. The new comment object is returned to Vue.js to be appended to the comment list dynamically.
 
 ---
 
@@ -426,6 +437,7 @@ sequenceDiagram
     JobBoardController-->>Browser: Success Response
     Browser->>Student: Show Confirmation Message
 ```
+**Summary**: This sequence demonstrates the Job Application process. A student views jobs, submits an application with a CV file. The `JobBoardController` stores the CV, creates a `JobApplicationDetail` record linking the student to the job, and confirms the submission.
 
 ---
 
@@ -472,6 +484,7 @@ sequenceDiagram
     UserModel-->>Browser: Success Response
     Browser->>Admin: Show Success Message
 ```
+**Summary**: This flow covers the Admin's ability to manage users (CRUD). Admins can view the user list, edit user details (like roles or status), and update records in the database via the `AdminUserController`.
 
 ---
 
@@ -503,6 +516,7 @@ graph TD
     
     EventModel --> Database[("MySQL Database<br/>events table")]
 ```
+**Summary**: The Event Management flow contrasts Admin vs. Public access. Admins can Create, Edit, and Delete events via `AdminEventAccess`, while Alumni, Students, and Faculty have read-only access to view the event list and details via `PublicEventAccess`.
 
 ---
 
@@ -537,6 +551,7 @@ sequenceDiagram
         Browser->>User: Show Success Message
     end
 ```
+**Summary**: This sequence breaks down the generic file upload process used across the system (e.g., for posts or CVs). It emphasizes server-side validation of file types/sizes before storage and database record creation.
 
 ---
 
@@ -569,6 +584,7 @@ sequenceDiagram
     Axios-->>VueComponent: Clear Notification Badge
     VueComponent->>User: Update UI
 ```
+**Summary**: This flow shows how the Notification system works. The frontend polls the Unread Notification API to update the badge count. When the user checks notifications, a 'Mark All Read' request updates the `read_at` timestamp in the database.
 
 ---
 
@@ -678,6 +694,7 @@ erDiagram
         datetime updated_at
     }
 ```
+**Summary**: The ER Diagram provides a visual overview of the database structure, highlighting key relationships: Users creating Posts/Comments/Likes, the polymorphic relationship for Images and Likes, and the linking of Job Applications to Job Boards and Users.
 
 ---
 
@@ -778,6 +795,7 @@ graph LR
     
     Controller --> Response[HTTP Response]
 ```
+**Summary**: This flowchart visualizes the middleware pipeline. Every request traverses through Web Middleware (CSRF, Session) and then hits the Auth Middleware. Authenticated requests are further filtered by Role Middleware to ensure users only access their authorized routes.
 
 ---
 
@@ -809,6 +827,7 @@ graph TD
     LikeButton -->|Axios| API
     CommentSection -->|Axios| API
 ```
+**Summary**: This diagram breaks down the Vue.js frontend structure. It shows how the `App Root` mounts `Home.vue`, which is composed of modular child components like `PostFeed`, `CreatePost`, `Sidebar`, and `PostCard`, each interacting with the Laravel API.
 
 ---
 
@@ -842,6 +861,7 @@ sequenceDiagram
     
     Note right of Browser: Real-time via Pusher (if configured)<br/>or AJAX Polling
 ```
+**Summary**: The Chat System flow (via Chatify) shows the real-time interaction. Users send messages which are stored in `ch_messages`. The recipient's browser updates via polling or real-time events to display the new message count and content.
 
 ---
 
